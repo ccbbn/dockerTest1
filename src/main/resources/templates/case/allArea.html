@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Data Time</th>
+        <th>Inform Overall</th>
+        <th>Inform Cause</th>
+        <th>Inform Grade</th>
+        <th>Inform Data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="overall : ${overall}">
+        <td th:text="${overall.getDataTime()}"></td>
+        <td th:text="${overall.getInformOverall()}"></td>
+        <td th:text="${overall.getInformCause()}"></td>
+        <td>
+    <span th:each="region : ${#strings.arraySplit(overall.getInformGrade(), ',')}">
+        <span th:text="${#strings.trim(region)}"/><br>
+    </span>
+        </td>
+        <td th:text="${overall.getInformData()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+</body>
+</html>
