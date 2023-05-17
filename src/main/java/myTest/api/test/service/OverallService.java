@@ -2,17 +2,26 @@ package myTest.api.test.service;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import myTest.api.test.domain.Overall;
 import myTest.api.test.repository.OverallRepository;
+
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OverallService {
-    private static OverallRepository overallRepository;
+
+    private final OverallRepository overallRepository;
 
 
+    public List<Overall> findAll(){
+        return overallRepository.findAll();
+    }
 
-//    public Overall findall();
-
+    public void save(Overall overall){
+        overallRepository.save(overall);
+    }
 }

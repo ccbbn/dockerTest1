@@ -7,10 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Overall{
 
     @jakarta.persistence.Id
@@ -25,8 +26,6 @@ public class Overall{
     private String informCode;
 
 
-    public Overall() {
-    }
 }
 
 

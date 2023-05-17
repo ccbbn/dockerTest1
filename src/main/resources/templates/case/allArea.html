@@ -5,9 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
-
-
 <table>
     <thead>
     <tr>
@@ -19,24 +16,20 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="overall : ${overall}">
-        <td th:text="${overall.getDataTime()}"></td>
-        <td th:text="${overall.getInformOverall()}"></td>
-        <td th:text="${overall.getInformCause()}"></td>
+    <tr th:each="each : ${overallList}">
+        <td th:text="${each.getDataTime()}"></td>
+        <td th:text="${each.getInformOverall()}"></td>
+        <td th:text="${each.getInformCause()}"></td>
         <td>
-    <span th:each="region : ${#strings.arraySplit(overall.getInformGrade(), ',')}">
-        <span th:text="${#strings.trim(region)}"/><br>
-    </span>
+        <span th:each="region : ${#strings.arraySplit(each.getInformGrade(), ',')}">
+            <span th:text="${#strings.trim(region)}"/><br>
+        </span>
         </td>
-        <td th:text="${overall.getInformData()}"></td>
+        <td th:text="${each.getInformData()}"></td>
     </tr>
     </tbody>
+
 </table>
-
-
-
-
-
 
 
 </body>

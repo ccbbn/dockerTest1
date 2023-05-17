@@ -2,10 +2,12 @@ package myTest.api.test.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import myTest.api.test.domain.Overall;
 import myTest.api.test.domain.Sido;
 import myTest.api.test.repository.OverallRepository;
 import myTest.api.test.repository.SidoRepository;
+import myTest.api.test.service.OverallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,16 +24,17 @@ import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
+@AllArgsConstructor
 @Controller
 public class OverallController {
 
     private final OverallRepository overallRepository;
+    private final OverallService overallService;
 
-    @Autowired
-    public OverallController(OverallRepository overallRepository) {
-        this.overallRepository = overallRepository;
-    }
+
+
 
     @GetMapping("/overall")
     public String api1(Model model) throws IOException {
@@ -40,7 +44,8 @@ public class OverallController {
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수(조회 날짜로 검색 시 사용 안함)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호(조회 날짜로 검색 시 사용 안함)*/
 //        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-05-14", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
-        urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode("2023-05-17", "UTF-8"));
+//        LocalDate.now().format(DateTimeFormatter.ISO_DATE)
         urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM25", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -91,27 +96,64 @@ public class OverallController {
 
             overall = new Overall();
 
-            overall.setDataTime(dataTime);
-            overall.setInformOverall(informOverall);
-            overall.setInformCause(informCause);
-            overall.setInformGrade(informGrade);
-            overall.setInformData(informData);
 
-            overall.setInformCode(informCode);
-            overallRepository.save(overall);
+//            LocalDateTime now = LocalDateTime.now();
+//            String hour = dataTime.substring(11, 13);
 
-            System.out.println("인폰코드");
-            System.out.println(informCode);
 
+
+
+            LocalDateTime condition1 = LocalDateTime.parse(dataTime.substring(0, 14), DateTimeFormatter.ofPattern("yyyy-MM-dd HH시"));
+
+
+//            boolean condition1 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("23"));
+//            boolean condition2 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("17"));
+//            boolean condition3 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("11"));
+//            boolean condition4 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("05"));
+
+
+//            boolean condition1 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("23")) ||
+//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("17")) ||
+//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("11")) ||
+//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("05"));
+
+
+
+
+
+            if (condition1.isAfter(LocalDateTime.now())) {
+                overall.setDataTime(dataTime);
+                overall.setInformOverall(informOverall);
+                overall.setInformCause(informCause);
+                overall.setInformGrade(informGrade);
+                overall.setInformData(informData);
+
+                overall.setInformCode(informCode);
+                overallService.save(overall);
+
+                System.out.println("인폰코드");
+                System.out.println(informCode);
+
+            }
+            else System.out.println("만료됨");
 
         }
 
-        model.addAttribute("overall", overall);
 
 
 
+
+
+        List<Overall> overallList = overallService.findAll();
+
+
+
+        model.addAttribute("overallList",overallList );
+
+
+
+//        return "case/map";
         return "case/allArea";
-
     }
 
 
