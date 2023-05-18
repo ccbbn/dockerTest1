@@ -2,7 +2,7 @@ package myTest.api.test.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
+
 import jdk.jfr.Frequency;
 import myTest.api.test.repository.SidoRepository;
 import myTest.api.test.domain.Sido;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,7 +48,7 @@ public class SidoController {
 
 
 
-    @PostConstruct
+//    @PostConstruct
     @Transactional
     public void init() throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"); /*URL*/

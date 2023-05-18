@@ -10,6 +10,7 @@ import myTest.api.test.repository.SidoRepository;
 import myTest.api.test.service.OverallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,10 @@ import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Controller
@@ -36,6 +40,7 @@ public class OverallController {
 
 
 
+    @Transactional
     @GetMapping("/overall")
     public String api1(Model model) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth"); /*URL*/
@@ -44,8 +49,8 @@ public class OverallController {
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수(조회 날짜로 검색 시 사용 안함)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호(조회 날짜로 검색 시 사용 안함)*/
 //        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-05-14", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
-        urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode("2023-05-17", "UTF-8"));
-//        LocalDate.now().format(DateTimeFormatter.ISO_DATE)
+        urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
+//
         urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM25", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -86,75 +91,65 @@ public class OverallController {
             String informOverall = itemNode.path("informOverall").asText();
             String informCause = itemNode.path("informCause").asText();
             String informGrade = itemNode.path("informGrade").asText();
-
-
             String informData = itemNode.path("informData").asText();
-
             String informCode = itemNode.path("informCode").asText();
-
-
-
-            overall = new Overall();
-
-
-//            LocalDateTime now = LocalDateTime.now();
-//            String hour = dataTime.substring(11, 13);
-
-//32132
 
 
             LocalDateTime condition1 = LocalDateTime.parse(dataTime.substring(0, 14), DateTimeFormatter.ofPattern("yyyy-MM-dd HH시"));
 
+            overall = new Overall();
 
-//            boolean condition1 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("23"));
-//            boolean condition2 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("17"));
-//            boolean condition3 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("11"));
-//            boolean condition4 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("05"));
+            if ((condition1.getHour() > LocalDateTime.now().getHour() - 6) && (Objects.equals(informData, LocalDate.now().format(DateTimeFormatter.ISO_DATE)))) {
 
-
-//            boolean condition1 = (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("23")) ||
-//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("17")) ||
-//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("11")) ||
-//            (Integer.parseInt(hour) >= now.getHour()) && (hour.equals("05"));
-
-
-
-
-
-            if (condition1.isAfter(LocalDateTime.now())) {
                 overall.setDataTime(dataTime);
                 overall.setInformOverall(informOverall);
                 overall.setInformCause(informCause);
                 overall.setInformGrade(informGrade);
                 overall.setInformData(informData);
-
                 overall.setInformCode(informCode);
                 overallService.save(overall);
 
-                System.out.println("인폰코드");
-                System.out.println(informCode);
 
-            }
-            else System.out.println("만료됨");
+
+
+                String[] informGradeList = informGrade.split(",");
+
+                overall.setSeoul(informGradeList[0].substring(informGradeList[0].length() - 2));
+                overall.setJeju(informGradeList[1].substring(informGradeList[1].length() - 2));
+                overall.setJeonnam(informGradeList[2].substring(informGradeList[2].length() - 2));
+                overall.setJenbuk(informGradeList[3].substring(informGradeList[3].length() - 2));
+                overall.setGwangju(informGradeList[4].substring(informGradeList[4].length() - 2));
+                overall.setGyeongnam(informGradeList[5].substring(informGradeList[5].length() - 2));
+                overall.setGyeongbuk(informGradeList[6].substring(informGradeList[6].length() - 2));
+                overall.setUlsan(informGradeList[7].substring(informGradeList[7].length() - 2));
+                overall.setDaegu(informGradeList[8].substring(informGradeList[8].length() - 2));
+                overall.setBusan(informGradeList[9].substring(informGradeList[9].length() - 2));
+                overall.setChungnam(informGradeList[10].substring(informGradeList[10].length() - 2));
+                overall.setChungbuk(informGradeList[11].substring(informGradeList[11].length() - 2));
+                overall.setSejong(informGradeList[12].substring(informGradeList[12].length() - 2));
+                overall.setDaejeon(informGradeList[13].substring(informGradeList[13].length() - 2));
+                overall.setYeongdong(informGradeList[14].substring(informGradeList[14].length() - 2));
+                overall.setYeongseo(informGradeList[15].substring(informGradeList[15].length() - 2));
+                overall.setGyeonggiSouth(informGradeList[16].substring(informGradeList[16].length() - 2));
+                overall.setGyeonggiNorth(informGradeList[17].substring(informGradeList[17].length() - 2));
+                overall.setIncheon(informGradeList[18].substring(informGradeList[18].length() - 2));
+
+
+                List<Overall> overallList = overallService.findAll();
+                model.addAttribute("overallList", overallList);
+                System.out.println(overallList);
+
+
+
+            } else System.out.println("못불러옴");
 
         }
 
 
 
-
-
-
-        List<Overall> overallList = overallService.findAll();
-
-
-
-        model.addAttribute("overallList",overallList );
-
-
-
-//        return "case/map";
-        return "case/allArea";
-    }
+        return "case/map";
+//            return "case/allArea";
+        }
 
 
 

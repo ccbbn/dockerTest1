@@ -2,7 +2,7 @@ package myTest.api.test.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
+
 import myTest.api.test.domain.Sido;
 import myTest.api.test.repository.SidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
