@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="/JS/main.js" th:inline="javascript"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<form>
+  <input  type="text" th:id="'sample6_address_'" onclick="sample6_execDaumPostcode()" placeholder="주소를 검색해" >
+  <button type="button" onclick="sendAddress()"><span class="jsx-2356851769 sr-only">검색</span></button>
+
+</form>
+
+</body>
+
+
+
+<script>
+  function sendAddress() {
+    var address = document.getElementById("sample6_address_").value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/search?keyword=" + encodeURIComponent(address), true);
+    xhr.send();
+  }
+</script>
+</html>

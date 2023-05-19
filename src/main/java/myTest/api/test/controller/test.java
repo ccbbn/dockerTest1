@@ -1,8 +1,12 @@
-package myTest.api.test;
+package myTest.api.test.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -11,11 +15,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+
+
+
+@Controller
 public class test {
 
 
-    public static void searchArr(String keyword) {
+
+    @GetMapping("test/inputAddress")
+    public String test(){
+        return "main/inputAddress";
+    }
+
+
+
+
+    @Transactional
+    @GetMapping("/search")
+    public void searchArr(@RequestParam String keyword) {
         String apiURL = "http://api.vworld.kr/req/address";
+        System.out.println(keyword);
+
 
         try {
             int responseCode = 0;
@@ -23,7 +44,7 @@ public class test {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
 
-//            String keyword = "서울 영등포구 영중로 134-1 문성빌딩 704호";
+    //            String keyword = "서울 영등포구 영중로 134-1 문성빌딩 704호";
             String text_content = URLEncoder.encode(keyword.toString(), "utf-8");
 
             // post request
@@ -66,18 +87,31 @@ public class test {
             String jsonString = response.toString();
 
 
-// Jackson ObjectMapper 객체 생성
+    // Jackson ObjectMapper 객체 생성
             ObjectMapper objectMapper = new ObjectMapper();
 
-// JSON 파싱
+    // JSON 파싱
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
 
             String x = rootNode.get("response").get("result").get("point").get("x").asText();
             String y = rootNode.get("response").get("result").get("point").get("y").asText();
 
+
+            //x: 경도 y:위도
             System.out.println("x: " + x);
             System.out.println("y: " + y);
+
+
+
+//
+//            127.100436334
+//            37.491492200
+//
+//
+//
+//            126.777115923
+//            37.489765268
 
 
 

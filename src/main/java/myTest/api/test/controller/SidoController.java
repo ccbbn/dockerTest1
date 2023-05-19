@@ -41,14 +41,7 @@ public class SidoController {
 
 
 
-
-
-
-
-
-
-
-//    @PostConstruct
+    @PostConstruct
     @Transactional
     public void init() throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"); /*URL*/

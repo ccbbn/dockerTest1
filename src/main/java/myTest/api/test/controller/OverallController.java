@@ -147,8 +147,8 @@ public class OverallController {
 
 
 
-        return "case/map";
-//            return "case/allArea";
+//        return "case/map";
+            return "case/allArea";
         }
 
 
