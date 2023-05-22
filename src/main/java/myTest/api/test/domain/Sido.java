@@ -3,10 +3,7 @@ package myTest.api.test.domain;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -19,7 +16,14 @@ public class Sido {
     private Long Id;
 
     private String sidoName;
+
     private String stationName;
+
+
+    @OneToOne
+    @JoinColumn(name = "sido_station_id")
+    private SidoStation sidoStation;
+
     private String dataTime;
     private String pm10Value;
     private String pm25Value;

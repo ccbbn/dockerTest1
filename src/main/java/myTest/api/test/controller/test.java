@@ -14,8 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
-
+import java.util.Objects;
 
 
 @Controller
@@ -25,7 +24,7 @@ public class test {
 
     @GetMapping("test/inputAddress")
     public String test(){
-        return "main/inputAddress";
+        return "main/inputAddress2";
     }
 
 
@@ -33,7 +32,7 @@ public class test {
 
     @Transactional
     @GetMapping("/search")
-    public void searchArr(@RequestParam String keyword) {
+    public String searchArr(@RequestParam String keyword) {
         String apiURL = "http://api.vworld.kr/req/address";
         System.out.println(keyword);
 
@@ -104,23 +103,34 @@ public class test {
 
 
 
-//
-//            127.100436334
-//            37.491492200
-//
-//
-//
-//            126.777115923
-//            37.489765268
+
+            double a2 = 127.100436334;
+            double a1 = 37.491492200;
 
 
 
+            double b2 = 126.777115923;
+            double b1 = 37.489765268;
 
+
+            System.out.println(distance(a1,a2,b1,b2,"kilo"));
+
+
+///주소를 검색... 내위치에서 가장 가까운 곳을 찾음. 거리표시. 정보표시.
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+
+
+
+
+
+        return "redirect:/";
     }
 
     private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
@@ -132,9 +142,9 @@ public class test {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
 
-        if (unit == "kilo") {
+        if (Objects.equals(unit, "kilo")) {
             dist = dist * 1.609344;
-        } else if(unit == "meter"){
+        } else if(Objects.equals(unit, "meter")){
             dist = dist * 1609.344;
         }
         return (dist);
