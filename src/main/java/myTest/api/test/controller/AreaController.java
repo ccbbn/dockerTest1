@@ -1,20 +1,15 @@
 package myTest.api.test.controller;
 
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jdk.jfr.Frequency;
-import myTest.api.test.domain.Sido;
-import myTest.api.test.repository.SidoRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import myTest.api.test.domain.SidoStation;
+import myTest.api.test.repository.AreaRepository;
+import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,23 +17,17 @@ import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import myTest.api.test.domain.Area;
+@AllArgsConstructor
+@Controller
+public class AreaController {
+
+    private final AreaRepository areaRepository;
 
 
 
-@RestController
-public class SidoController {
-
-    private final SidoRepository sidoRepository;
-    @Autowired
-    public SidoController(SidoRepository sidoRepository) {
-        this.sidoRepository = sidoRepository;
-    }
 
 
-
-//    @GetMapping("search")
-//    public String Ser
-//
 
 
 
@@ -88,19 +77,36 @@ public class SidoController {
             String pm10Grade = itemNode.path("pm10Grade").asText();
             String pm25Grade = itemNode.path("pm25Grade").asText();
 
-            Sido sido = new Sido();
+//            Area area = new Area();
 
-            sido.setSidoName(sidoName);
-            sido.setStationName(stationName);
-            sido.setDataTime(dateTime);
-            sido.setPm10Value(pm10Value);
-            sido.setPm25Value(pm25Value);
-            sido.setPm10Grade(pm10Grade);
-            sido.setPm25Grade(pm25Grade);
 
-            sidoRepository.save(sido);
+            //String sidoName, String stationName, String addr, String x, String y, String dataTime, String pm10Value, String pm25Value, String pm10Grade, String pm25Grade
+//            areaRepository.save(new Area(sidoName,stationName,"서울 강남구 학동로 426 강남구청 별관 1동","127.0476845","37.517554",dateTime,pm10Value,pm25Value,pm10Grade,pm25Grade));
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+//            area.setSidoName(sidoName);
+//            area.setStationName(stationName);
+//            area.setDataTime(dateTime);
+//            area.setPm10Value(pm10Value);
+//            area.setPm25Value(pm25Value);
+//            area.setPm10Grade(pm10Grade);
+//            area.setPm25Grade(pm25Grade);
+//
+//            area.save(sido);
         }
     }
-
 
 }

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import myTest.api.test.domain.Overall;
-import myTest.api.test.domain.Sido;
+
 import myTest.api.test.repository.OverallRepository;
-import myTest.api.test.repository.SidoRepository;
+
 import myTest.api.test.service.OverallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

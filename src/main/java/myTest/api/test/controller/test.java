@@ -3,6 +3,11 @@ package myTest.api.test.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import myTest.api.test.domain.MyLocation;
+import myTest.api.test.domain.Sido;
+import myTest.api.test.domain.SidoStation;
+import myTest.api.test.service.MyLocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +22,14 @@ import java.net.URLEncoder;
 import java.util.Objects;
 
 
+@AllArgsConstructor
 @Controller
 public class test {
+
+    private final MyLocationService myLocationService;
+
+
+
 
 
 
@@ -97,6 +108,12 @@ public class test {
             String y = rootNode.get("response").get("result").get("point").get("y").asText();
 
 
+            myLocationService.save(new MyLocation(x,y));
+
+
+
+
+
             //x: 경도 y:위도
             System.out.println("x: " + x);
             System.out.println("y: " + y);
@@ -122,6 +139,11 @@ public class test {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+
+
 
 
 

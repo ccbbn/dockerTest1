@@ -12,23 +12,23 @@ import javax.persistence.*;
 @Data
 @RequiredArgsConstructor
 public class SidoStation {
-
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    String addr;
-    String x;
-    String y;
-    String stationName;
+
+    private String addr;
+    private String x;
+    private String y;
+    private String stationName;
 
     @OneToOne(mappedBy = "sidoStation")
     private Sido sido;
 
     public SidoStation(String addr, String x, String y, String stationName) {
-        this.addr= addr;
-        this.x =x;
-        this.y =y;
-        this.stationName=stationName;
+        this.addr = addr;
+        this.x = x;
+        this.y = y;
+        this.stationName = stationName;
 
     }
 }

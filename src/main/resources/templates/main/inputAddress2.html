@@ -19,26 +19,5 @@
 
 
 
-<script>
-  function sendAddress() {
-    var address = document.getElementById("sample6_address_").value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/search?keyword=" + encodeURIComponent(address), true);
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        // 응답을 성공적으로 처리한 후 여기에서 처리합니다
-        // 페이지를 프로그래밍 방식으로 리다이렉트합니다
-        window.location.href = "/redirect";
-      } else {
-        // 에러 응답을 처리합니다
-        console.log("에러:", xhr.status);
-      }
-    };
-
-
-
-    xhr.send();
-  }
-</script>
 </html>
