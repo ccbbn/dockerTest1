@@ -113,7 +113,6 @@ public class SidoController {
     @PostConstruct
     @Transactional
     public void initStation() {
-
         List<Sido> sidoList = sidoService.findAll();
         sidoStationService.save(new SidoStation("서울 강남구 학동로 426 강남구청 별관 1동","127.0476845","37.517554","강남구",sidoList));
         sidoStationService.save(new SidoStation("서울 강동구 구천면로 42길 59 천호1동 주민센터","127.1368025","37.5450092","강동구",sidoList));
