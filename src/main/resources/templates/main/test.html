@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>미세먼지 예보</title>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 37.5, lng: 127.0}, // 지도의 초기 중심 좌표 설정
+        zoom: 10 // 초기 줌 레벨 설정
+      });
+
+      // 클릭 이벤트 핸들러
+      function handleClick(event) {
+        var address = event.target.getAttribute('data-address');
+        var x = event.target.getAttribute('data-x');
+        var y = event.target.getAttribute('data-y');
+
+        var marker = new google.maps.Marker({
+          position: {lat: parseFloat(x), lng: parseFloat(y)}, // 마커의 위치 설정
+          map: map // 마커를 지도에 표시
+        });
+
+        // 정보 창 생성
+        var infoWindow = new google.maps.InfoWindow({
+          content: '<div>' + address + '</div>' // 정보 창에 표시할 내용 설정
+        });
+
+        // 마커를 클릭하면 정보 창 열기
+        marker.addListener('click', function() {
+          infoWindow.open(map, marker);
+        });
+      }
+
+      // 클릭 이벤트 등록
+      var cells = document.getElementsByClassName('address-cell');
+      Array.from(cells).forEach(function(cell) {
+        cell.addEventListener('click', handleClick);
+      });
+    }
+  </script>
+</head>
+<body>
+<h1>미세먼지 예보</h1>
+<table>
+  <tr th:each="forecast : ${sidoStations}">
+    <td class="address-cell" th:text="${forecast.getAddr()}"
+        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()}"></td>
+    <!-- 나머지 열들... -->
+  </tr>
+</table>
+<div id="map"></div>
+<script>
+  // 지도 초기화
+  initMap();
+</script>
+</body>
+</html>

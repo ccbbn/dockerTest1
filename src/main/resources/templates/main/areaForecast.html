@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>미세먼지 예보</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>나의 거주지 주변 미세먼지 예보</h1>
+<h1 th:text="${area}"></h1>
+
+<table>
+    <tr>
+        <th>시도명</th>
+        <th>측정소명</th>
+        <th>측정소 주소</th>
+        <th>측정소와의 거리(km)</th>
+        <th>측정일시</th>
+        <th>PM10</th>
+        <th>PM2.5</th>
+        <th>PM10 등급</th>
+        <th>PM2.5 등급</th>
+    </tr>
+    <!-- 반복문을 통해 미세먼지 정보를 출력 -->
+    <tr th:each="forecast : ${sidoStations}">
+        <td th:text="${forecast.getSido().getSidoName()}"></td>
+        <td th:text="${forecast.getStationName()}"></td>
+        <td th:text="${forecast.getAddr()}"></td>
+        <td th:text="${forecast.getDistanceDifference()}"></td>
+        <td th:text="${forecast.getSido().getDataTime()}"></td>
+        <td th:text="${forecast.getSido().getPm10Value()}"></td>
+        <td th:text="${forecast.getSido().getPm25Value()}"></td>
+        <td th:text="${forecast.getSido().getPm10Value()}"></td>
+        <td th:text="${forecast.getSido().getPm25Grade()}"></td>
+
+    </tr>
+</table>
+</body>
+</html>
+
+
+
+
+</body>
+</html>
