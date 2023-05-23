@@ -14,20 +14,9 @@ import java.util.Optional;
 public class MyLocationService {
 
     private final MyLocationRepository myLocationRepository;
-    private final SidoStationService sidoStationService;
-
 
     public MyLocation save(MyLocation myLocation) {
         return myLocationRepository.save(myLocation);
     }
-
-
-    public Optional<MyLocation> findArea(Long id) {
-        return myLocationRepository.findById(id);
-    }
-
-
-
-
 
 }

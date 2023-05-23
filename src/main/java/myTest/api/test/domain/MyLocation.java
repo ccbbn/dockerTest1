@@ -16,14 +16,11 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 public class MyLocation {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
     String x;
     String y;
-
 
     public MyLocation(String x, String y) {
         this.x = x;

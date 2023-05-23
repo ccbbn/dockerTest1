@@ -15,7 +15,6 @@ public class Sido {
     private Long Id;
 
     private String sidoName;
-
     private String dataTime;
     private String pm10Value;
     private String pm25Value;
@@ -23,20 +22,9 @@ public class Sido {
     private String pm25Grade;
     private String stationName;
 
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SIDOSTATION_ID")
+    @OneToOne(mappedBy = "sido")
     private SidoStation sidoStation;
 
 
-    public Sido(String sidoName, String dataTime, String pm10Value, String pm25Value, String pm10Grade, String pm25Grade) {
-        this.sidoName = sidoName;
-        this.dataTime = dataTime;
-        this.pm10Value = pm10Value;
-        this.pm25Value = pm25Value;
-        this.pm25Grade = pm25Grade;
-        this.pm10Grade = pm10Grade;
 
-
-    }
 }

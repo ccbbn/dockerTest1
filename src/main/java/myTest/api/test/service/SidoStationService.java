@@ -8,6 +8,7 @@ import myTest.api.test.repository.SidoStationRepository;
 import org.hibernate.usertype.LoggableUserType;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -27,12 +28,5 @@ public class SidoStationService {
 
     }
 
-    public List<SidoStation> findStation(String stationName) {
-        Sido sido = sidoRepository.findByStationName(stationName);
-        List<SidoStation> sidoStationList = sidoStationRepository.findBySido(sido);
-
-        return sidoStationList;
-
-    }
 
 }

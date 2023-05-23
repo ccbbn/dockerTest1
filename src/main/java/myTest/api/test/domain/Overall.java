@@ -24,10 +24,7 @@ public class Overall{
     private String informCause;
     private String informGrade;
     private String informData;
-
     private String informCode;
-
-
 
     private String seoul;
     private String jeju;

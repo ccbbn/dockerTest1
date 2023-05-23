@@ -16,7 +16,6 @@ public class OverallService {
 
     private final OverallRepository overallRepository;
 
-
     public List<Overall> findAll(){
         return overallRepository.findAll();
     }

@@ -34,11 +34,7 @@ import java.util.Objects;
 @Controller
 public class OverallController {
 
-    private final OverallRepository overallRepository;
     private final OverallService overallService;
-
-
-
 
     @Transactional
     @GetMapping("/overall")

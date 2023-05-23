@@ -10,12 +10,7 @@ import java.util.List;
 
 @Repository
 public interface SidoRepository extends JpaRepository<Sido, Long> {
-
-    Sido findByStationName(String stationName);
-
-    Sido findBySidoName(String sidoName);
-
-
+    List<Sido> findAll();
 
 
 }
