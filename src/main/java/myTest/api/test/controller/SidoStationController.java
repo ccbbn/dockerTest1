@@ -102,6 +102,10 @@ public class SidoStationController {
             String x = rootNode.get("response").get("result").get("point").get("x").asText();
             String y = rootNode.get("response").get("result").get("point").get("y").asText();
 
+            model.addAttribute("x",Double.parseDouble(x));
+            model.addAttribute("y",Double.parseDouble(y));
+
+
             myLocationService.save(new MyLocation(x, y));
 
             List<Double> km = new ArrayList<>();
@@ -122,6 +126,13 @@ public class SidoStationController {
 
             model.addAttribute("sidoStations", sidoStations);  // xx시 xx구 까지 일치한 거 보여줌
             model.addAttribute("area",area);
+
+
+
+
+
+
+
 
             model.addAttribute("km", km);
             System.out.println(km);

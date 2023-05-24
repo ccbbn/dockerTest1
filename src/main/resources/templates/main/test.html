@@ -4,56 +4,282 @@
   <meta charset="UTF-8">
   <title>미세먼지 예보</title>
   <style>
+
     #map {
-      height: 400px;
+      height: 800px;
       width: 100%;
     }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 120px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+    .wrap * {padding: 0;margin: 0;}
+    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+    .info .body {position: relative;overflow: hidden;}
+    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+
+
+
+
+
+
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1625fc3cbc30de55dc862451dba3915d&libraries=services"></script>
   <script>
     function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 37.5, lng: 127.0}, // 지도의 초기 중심 좌표 설정
-        zoom: 10 // 초기 줌 레벨 설정
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng([[${y}]], [[${x}]]), // 지도의 초기 중심 좌표 설정
+        level: 5 // 초기 줌 레벨 설정
+      };
+
+      var map = new kakao.maps.Map(container, options);
+
+      // "현재 주소" 마커 생성
+      var markerPosition = new kakao.maps.LatLng([[${y}]], [[${x}]]);
+      currentMarker = new kakao.maps.Marker({
+        map: map,
+        position: markerPosition
       });
 
-      // 클릭 이벤트 핸들러
-      function handleClick(event) {
-        var address = event.target.getAttribute('data-address');
-        var x = event.target.getAttribute('data-x');
-        var y = event.target.getAttribute('data-y');
+      currentInfowindow = new kakao.maps.InfoWindow({
 
-        var marker = new google.maps.Marker({
-          position: {lat: parseFloat(x), lng: parseFloat(y)}, // 마커의 위치 설정
-          map: map // 마커를 지도에 표시
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>'
+      });
+      currentInfowindow.open(map, currentMarker);
+
+      currentMarker.setVisible(false);
+
+
+
+
+      // 주소 목록에 대한 마커 표시
+      var addressCells = document.getElementsByClassName('address-cell');
+      Array.from(addressCells).forEach(function(cell) {
+        var address = cell.getAttribute('data-address');
+        var x = parseFloat(cell.getAttribute('data-x'));
+        var y = parseFloat(cell.getAttribute('data-y'));
+
+        var pm10Grade = cell.getAttribute('data-pm10-grade');
+
+
+
+
+        var markerPosition = new kakao.maps.LatLng(y, x);
+        var marker = new kakao.maps.Marker({
+          position: markerPosition,
+          map: map
         });
 
-        // 정보 창 생성
-        var infoWindow = new google.maps.InfoWindow({
-          content: '<div>' + address + '</div>' // 정보 창에 표시할 내용 설정
+
+        var content = '<div class="wrap">' +
+                '    <div class="info">' +
+                '        <div class="body">' +
+                '            <div class="img">' +
+                '                <img src="/img/level1.svg" width="73" height="71">' +
+                '           </div>' +
+                '            <div class="desc">' +
+                '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
+                '</div>';
+
+// 마커 위에 커스텀오버레이를 표시합니다
+// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+        var overlay = new kakao.maps.CustomOverlay({
+          content: content,
+          map: map,
+          position: markerPosition,
+          xAnchor: 0.3,
+          yAnchor: 0.91
         });
 
-        // 마커를 클릭하면 정보 창 열기
-        marker.addListener('click', function() {
-          infoWindow.open(map, marker);
-        });
-      }
 
-      // 클릭 이벤트 등록
-      var cells = document.getElementsByClassName('address-cell');
-      Array.from(cells).forEach(function(cell) {
-        cell.addEventListener('click', handleClick);
+
+        overlay.setMap(map);
+
+        // var infowindow = new kakao.maps.InfoWindow({
+        //   content: '<div style="width:200px;text-align:center;padding:6px 0;">' + address + '</div>',
+        //   position: markerPosition
+        // });
+
+        // if (pm10Grade === "1") {
+        //   var infowindow = new kakao.maps.InfoWindow({
+        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#00a9fe;" >' + '<img src="/img/level1.png" alt="매우좋음">' + address + '</div>',
+        //     position: markerPosition
+        //   });
+        // }
+        //
+        // if (pm10Grade === "2") {
+        //   var infowindow = new kakao.maps.InfoWindow({
+        //     content: '<div style="width:200px; height: 100px; text-align:center;padding:6px 0;background-color:#51ca66;">' + '<img src="/img/level2.png" alt="좋음">' + address + '</div>',
+        //     position: markerPosition
+        //   });
+        // }
+        //
+        // if (pm10Grade === "3") {
+        //   var infowindow = new kakao.maps.InfoWindow({
+        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#fde801;">' + '<img src="/img/level3.png" alt="나쁨">' + address + '</div>',
+        //     position: markerPosition
+        //   });
+        // }
+        //
+        // if (pm10Grade === "4") {
+        //   var infowindow = new kakao.maps.InfoWindow({
+        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#fd0042;">' + '<img src="/img/level4.png" alt="매우나쁨">' + address + '</div>',
+        //     position: markerPosition
+        //   });
+        // }
+        //
+        // if (pm10Grade === null) {
+        //   var infowindow = new kakao.maps.InfoWindow({
+        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:lightslategray;">' + '<img src="/img/inspection.png" alt="측정소오류">' + "측정소 오류" + '</div>',
+        //     position: markerPosition
+        //   });
+        // }
+
+
+
+
+
+        // if (pm10Grade === "1") {
+        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#00a9fe;" >' +'<img src="/img/level1.png" alt="매우좋음">'+ address + '</div>');
+        // } else if (pm10Grade === "2") {
+        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#51ca66;">' + '<img src="/img/level2.png" alt="좋음">' +address + '</div>');
+        // } else if (pm10Grade === "3") {
+        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#fde801;">' + '<img src="/img/level3.png" alt="나쁨">'+address + '</div>');
+        // } else if (pm10Grade === "4") {
+        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#fd0042;">' + '<img src="/img/level4.png" alt="매우나쁨">'+address + '</div>');
+        // } else if (pm10Grade === null) {
+        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:lightslategray;">' + '<img src="/img/inspection.png" alt="측정소오류">' + "측정소 오류" + '</div>');
+        // }
+
+
+        // infowindow.open(map, marker);
+
+        marker.setVisible(false);
       });
     }
+
+    function moveToLocation(element) {
+      var address = element.getAttribute('data-address');
+      var x = parseFloat(element.getAttribute('data-x'));
+      var y = parseFloat(element.getAttribute('data-y'));
+
+      var mapContainer = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(y, x),
+        level: 5
+      };
+
+      var map = new kakao.maps.Map(mapContainer, options);
+
+      // "현재 주소" 마커 유지
+      currentMarker.setMap(map);
+      currentMarker.setPosition(new kakao.maps.LatLng([[${y}]], [[${x}]]));
+
+      // 현재 주소 인포윈도우 유지
+      currentInfowindow.close();
+      currentInfowindow.setContent('<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>');
+      currentInfowindow.open(map, currentMarker);
+
+
+      var addressCells = document.getElementsByClassName('address-cell');
+      Array.from(addressCells).forEach(function(cell) {
+        var address = cell.getAttribute('data-address');
+        var x = parseFloat(cell.getAttribute('data-x'));
+        var y = parseFloat(cell.getAttribute('data-y'));
+
+        var markerPosition = new kakao.maps.LatLng(y, x);
+        var marker = new kakao.maps.Marker({
+          position: markerPosition,
+          map: map
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+          content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
+          position: markerPosition
+        });
+
+        infowindow.open(map, marker);
+      });
+
+
+
+      // 클릭된 주소에 대한 마커 생성 및 표시
+      var markerPosition = new kakao.maps.LatLng(y, x);
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+        map: map
+      });
+
+      // 클릭된 주소 인포윈도우 생성 및 표시
+      var infowindow = new kakao.maps.InfoWindow({
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
+        position: markerPosition
+      });
+      infowindow.open(map, marker);
+    }
+
+
+
+    // 지도 초기화
+    initMap();
+
+
+
   </script>
 </head>
 <body>
-<h1>미세먼지 예보</h1>
+<h1>나의 거주지 주변 미세먼지 예보</h1>
+<h1 th:text="${area}"></h1>
+
 <table>
-  <tr th:each="forecast : ${sidoStations}">
-    <td class="address-cell" th:text="${forecast.getAddr()}"
-        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()}"></td>
-    <!-- 나머지 열들... -->
+  <tr>
+    <th>시도명</th>
+    <th>측정소명</th>
+    <th>측정소 주소</th>
+    <th>측정소와의 거리(km)</th>
+    <th>측정일시</th>
+    <th>PM10</th>
+    <th>PM2.5</th>
+    <th>PM10 등급</th>
+    <th>PM2.5 등급</th>
+  </tr>
+  <!-- 반복문을 통해 미세먼지 정보를 출력 -->
+  <tr th:each="forecast : ${sidoStations}" >
+    <td th:text="${forecast.getSido().getSidoName()}"></td>
+    <td th:text="${forecast.getStationName()}"></td>
+    <td th:text="${forecast.getAddr()}"
+        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()}, data-pm10-grade=${forecast.getSido().getPm10Grade()}"
+        onclick="moveToLocation(this)"  class="address-cell"></td>
+    <td th:text="${forecast.getDistanceDifference()}"></td>
+    <td th:text="${forecast.getSido().getDataTime()}"></td>
+    <td th:text="${forecast.getSido().getPm10Value()}"></td>
+    <td th:text="${forecast.getSido().getPm25Value()}"></td>
+    <td th:text="${forecast.getSido().getPm10Grade()}"></td>
+    <td th:text="${forecast.getSido().getPm25Grade()}"></td>
+
   </tr>
 </table>
 <div id="map"></div>
@@ -63,3 +289,6 @@
 </script>
 </body>
 </html>
+
+
+

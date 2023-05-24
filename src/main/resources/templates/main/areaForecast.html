@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>미세먼지 예보</title>
     <style>
+
+        #map {
+            height: 800px;
+            width: 100%;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -19,6 +25,70 @@
             background-color: #f2f2f2;
         }
     </style>
+
+
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1625fc3cbc30de55dc862451dba3915d&libraries=services"></script>
+    <script>
+        function initMap() {
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng([[${y}]], [[${x}]]), // 지도의 초기 중심 좌표 설정
+                level: 5 // 초기 줌 레벨 설정
+            };
+
+            var map = new kakao.maps.Map(container, options);
+
+
+            // "현재 주소" 마커 생성
+            var markerPosition = new kakao.maps.LatLng([[${y}]], [[${x}]]);
+            currentMarker = new kakao.maps.Marker({
+                map: map,
+                position: markerPosition
+            });
+
+            currentInfowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>'
+            });
+            currentInfowindow.open(map, currentMarker);
+        }
+
+
+
+        function moveToLocation(element) {
+            var address = element.getAttribute('data-address');
+            var x = parseFloat(element.getAttribute('data-x'));
+            var y = parseFloat(element.getAttribute('data-y'));
+
+            var mapContainer = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(y, x),
+                level: 5
+            };
+
+            var map = new kakao.maps.Map(mapContainer, options);
+
+            var markerPosition = new kakao.maps.LatLng(y, x);
+            var marker = new kakao.maps.Marker({
+                position: markerPosition,
+                map: map
+            });
+
+            if (currentMarker && currentInfowindow) {
+                currentMarker.setMap(map);
+                currentInfowindow.open(map, currentMarker);
+            }
+
+
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
+                position: markerPosition
+            });
+
+            infowindow.open(map);
+        }
+
+
+    </script>
 </head>
 <body>
 <h1>나의 거주지 주변 미세먼지 예보</h1>
@@ -40,7 +110,9 @@
     <tr th:each="forecast : ${sidoStations}">
         <td th:text="${forecast.getSido().getSidoName()}"></td>
         <td th:text="${forecast.getStationName()}"></td>
-        <td th:text="${forecast.getAddr()}"></td>
+        <td th:text="${forecast.getAddr()}"
+            th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()}"
+            onclick="moveToLocation(this)" >></td>
         <td th:text="${forecast.getDistanceDifference()}"></td>
         <td th:text="${forecast.getSido().getDataTime()}"></td>
         <td th:text="${forecast.getSido().getPm10Value()}"></td>
@@ -50,6 +122,11 @@
 
     </tr>
 </table>
+<div id="map"></div>
+<script>
+    // 지도 초기화
+    initMap();
+</script>
 </body>
 </html>
 
