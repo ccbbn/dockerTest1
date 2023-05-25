@@ -25,24 +25,50 @@
       background-color: #f2f2f2;
     }
 
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 120px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+
+    .wrap {position: absolute;left: 0;bottom: 40px;width: 220px;height: 130px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 18px; font-family: 'Do Hyeon', sans-serif; line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
-    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap .info {width: 286px;height: 100px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .body {position: relative;overflow: hidden;}
-    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
-    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+    .info1 .body {position: relative;overflow: hidden;}
+    .info1 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
+    .info1 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info1:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #00a9fe;}
+
+    .info2 .body {position: relative;overflow: hidden;}
+    .info2 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
+    .info2 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #51ca66;}
+
+    .info3 .body {position: relative;overflow: hidden;}
+    .info3 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
+    .info3 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info3:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #fde801;}
+
+    .info4 .body {position: relative;overflow: hidden;}
+    .info4 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
+    .info4 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info4:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #fd0042;}
+
+    .infoNull .body {position: relative;overflow: hidden;}
+    .infoNull .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
+    .infoNull .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .infoNull:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid lightslategray;}
 
 
-
-
-
+    .status {
+      position: absolute;
+      bottom: 20px;
+      left: 25px;
+      font-size: 20px;
+      color: #000;
+    }
 
   </style>
 
 
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Do+Hyeon&family=Stylish&display=swap" rel="stylesheet">
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1625fc3cbc30de55dc862451dba3915d&libraries=services"></script>
   <script>
     function initMap() {
@@ -79,8 +105,11 @@
         var x = parseFloat(cell.getAttribute('data-x'));
         var y = parseFloat(cell.getAttribute('data-y'));
 
+        var km= cell.getAttribute('data-distance-difference');
         var pm10Grade = cell.getAttribute('data-pm10-grade');
-
+        var pm25Grade = cell.getAttribute('data-pm25-grade');
+        var pm10Value= cell.getAttribute('data-pm10-value');
+        var pm25Value= cell.getAttribute('data-pm25-value');
 
 
 
@@ -90,19 +119,88 @@
           map: map
         });
 
+        if (pm10Grade === "1") {
+          var content = '<div class="wrap">' +
+                  '    <div class="info1" style="background-color:#00a9fe;">' +
+                  '        <div class="body">' +
+                  '            <div class="img">' +
+                  '                <img src="/img/level1.svg" width="73" height="71">' +
+                  '           </div>' +
+                  '            <div class="desc">' +
+                  '                <div class="ellipsis">'+'미세먼지 농도 : ' + '<p>' + pm10Value +' ㎍/㎥'+'</p>'+'</div>' +
+                  '            </div>' +
+                  '        </div>' +
+                  '                <div class="status">좋음</div>' + // 상태 텍스트를 추가한 부분
+                  '    </div>' +
+                  '</div>';
+        }
+        else if (pm10Grade === "2") {
+          var content = '<div class="wrap">' +
+                  '    <div class="info2" style="background-color:#51ca66;" >' +
+                  '        <div class="body">' +
+                  '            <div class="img">' +
+                  '                <img src="/img/level2.svg" width="73" height="71">' +
+                  '           </div>' +
+                  '            <div class="desc">' +
+                  '                <div class="ellipsis">address</div>' +
+                  '            </div>' +
+                  '        </div>' +
+                  '    </div>' +
+                  '</div>';
+        }
+        else if (pm10Grade === "3") {
+            var content = '<div class="wrap">' +
+                    '    <div class="info3" style="background-color:#fde801;" >' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="/img/level3.svg" width="73" height="71">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">address</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</div>';
 
-        var content = '<div class="wrap">' +
-                '    <div class="info">' +
-                '        <div class="body">' +
-                '            <div class="img">' +
-                '                <img src="/img/level1.svg" width="73" height="71">' +
-                '           </div>' +
-                '            <div class="desc">' +
-                '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-                '            </div>' +
-                '        </div>' +
-                '    </div>' +
-                '</div>';
+          // 추가된 부분
+        }
+        else if (pm10Grade === "4") {
+          var content = '<div class="wrap">' +
+                  '    <div class="info4" style="background-color:#fd0042;" >' +
+                  '        <div class="body">' +
+                  '            <div class="img">' +
+                  '                <img src="/img/level4.svg" width="73" height="71">' +
+                  '           </div>' +
+                  '            <div class="desc">' +
+                  '                <div class="ellipsis">address</div>' +
+                  '            </div>' +
+                  '        </div>' +
+                  '    </div>' +
+                  '</div>';
+
+          // 추가된 부분
+
+        }
+
+        else if (pm10Grade === "4") {
+          var content = '<div class="wrap">' +
+                  '    <div class="infoNull" style="background-color:lightslategray;" >' +
+                  '        <div class="body">' +
+                  '            <div class="img">' +
+                  '                <img src="/img/inspection.svg" width="73" height="71">' +
+                  '           </div>' +
+                  '            <div class="desc">' +
+                  '                <div class="ellipsis">address</div>' +
+                  '            </div>' +
+                  '        </div>' +
+                  '    </div>' +
+                  '</div>';
+
+          // 추가된 부분
+
+        }
+
+
 
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
@@ -113,69 +211,10 @@
           xAnchor: 0.3,
           yAnchor: 0.91
         });
-
-
+        //
 
         overlay.setMap(map);
 
-        // var infowindow = new kakao.maps.InfoWindow({
-        //   content: '<div style="width:200px;text-align:center;padding:6px 0;">' + address + '</div>',
-        //   position: markerPosition
-        // });
-
-        // if (pm10Grade === "1") {
-        //   var infowindow = new kakao.maps.InfoWindow({
-        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#00a9fe;" >' + '<img src="/img/level1.png" alt="매우좋음">' + address + '</div>',
-        //     position: markerPosition
-        //   });
-        // }
-        //
-        // if (pm10Grade === "2") {
-        //   var infowindow = new kakao.maps.InfoWindow({
-        //     content: '<div style="width:200px; height: 100px; text-align:center;padding:6px 0;background-color:#51ca66;">' + '<img src="/img/level2.png" alt="좋음">' + address + '</div>',
-        //     position: markerPosition
-        //   });
-        // }
-        //
-        // if (pm10Grade === "3") {
-        //   var infowindow = new kakao.maps.InfoWindow({
-        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#fde801;">' + '<img src="/img/level3.png" alt="나쁨">' + address + '</div>',
-        //     position: markerPosition
-        //   });
-        // }
-        //
-        // if (pm10Grade === "4") {
-        //   var infowindow = new kakao.maps.InfoWindow({
-        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:#fd0042;">' + '<img src="/img/level4.png" alt="매우나쁨">' + address + '</div>',
-        //     position: markerPosition
-        //   });
-        // }
-        //
-        // if (pm10Grade === null) {
-        //   var infowindow = new kakao.maps.InfoWindow({
-        //     content: '<div style="width:200px;text-align:center;padding:6px 0;background-color:lightslategray;">' + '<img src="/img/inspection.png" alt="측정소오류">' + "측정소 오류" + '</div>',
-        //     position: markerPosition
-        //   });
-        // }
-
-
-
-
-
-        // if (pm10Grade === "1") {
-        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#00a9fe;" >' +'<img src="/img/level1.png" alt="매우좋음">'+ address + '</div>');
-        // } else if (pm10Grade === "2") {
-        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#51ca66;">' + '<img src="/img/level2.png" alt="좋음">' +address + '</div>');
-        // } else if (pm10Grade === "3") {
-        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#fde801;">' + '<img src="/img/level3.png" alt="나쁨">'+address + '</div>');
-        // } else if (pm10Grade === "4") {
-        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:#fd0042;">' + '<img src="/img/level4.png" alt="매우나쁨">'+address + '</div>');
-        // } else if (pm10Grade === null) {
-        //   infowindow.setContent('<div style="width:200px;text-align:center;padding:6px 0;background-color:lightslategray;">' + '<img src="/img/inspection.png" alt="측정소오류">' + "측정소 오류" + '</div>');
-        // }
-
-
-        // infowindow.open(map, marker);
 
         marker.setVisible(false);
       });
@@ -271,7 +310,11 @@
     <td th:text="${forecast.getSido().getSidoName()}"></td>
     <td th:text="${forecast.getStationName()}"></td>
     <td th:text="${forecast.getAddr()}"
-        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()}, data-pm10-grade=${forecast.getSido().getPm10Grade()}"
+        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()},
+         data-pm10-grade=${forecast.getSido().getPm10Grade()}, data-pm10-value=${forecast.getSido().getPm10Value()},
+         data-pm25-grade=${forecast.getSido().getPm25Grade()}, data-pm25-value=${forecast.getSido().getPm25Value()},
+         data-distance-difference=${forecast.getDistanceDifference()}"
+
         onclick="moveToLocation(this)"  class="address-cell"></td>
     <td th:text="${forecast.getDistanceDifference()}"></td>
     <td th:text="${forecast.getSido().getDataTime()}"></td>
