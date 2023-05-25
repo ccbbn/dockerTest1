@@ -26,40 +26,40 @@
     }
 
 
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 220px;height: 130px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 18px; font-family: 'Do Hyeon', sans-serif; line-height: 1.5;}
+    .wrap {position: absolute;left: 35px;bottom: -6px;width: 220px;height: 130px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 18px; font-family: 'Do Hyeon', sans-serif; line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
     .wrap .info {width: 286px;height: 100px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
     .info1 .body {position: relative;overflow: hidden;}
     .info1 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
-    .info1 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info1 .img {position: absolute;top: 9px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
     .info1:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #00a9fe;}
 
     .info2 .body {position: relative;overflow: hidden;}
     .info2 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
-    .info2 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info2 .img {position: absolute;top: 9px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
     .info2:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #51ca66;}
 
     .info3 .body {position: relative;overflow: hidden;}
     .info3 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
-    .info3 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info3 .img {position: absolute;top: 9px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
     .info3:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #fde801;}
 
     .info4 .body {position: relative;overflow: hidden;}
     .info4 .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
-    .info4 .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .info4 .img {position: absolute;top: 9px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
     .info4:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid #fd0042;}
 
     .infoNull .body {position: relative;overflow: hidden;}
     .infoNull .desc {position: relative;margin: 35px 0 0 90px;height: 75px;}
-    .infoNull .img {position: absolute;top: 13px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
+    .infoNull .img {position: absolute;top: 9px;left: 5px;width: 73px;height: 71px;overflow: hidden;}
     .infoNull:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 8px;width: 0;height: 0;border-left: 12px solid transparent;border-right: 12px solid transparent;border-top: 14px solid lightslategray;}
 
 
     .status {
       position: absolute;
-      bottom: 20px;
+      bottom: 25px;
       left: 25px;
       font-size: 20px;
       color: #000;
@@ -119,88 +119,170 @@
           map: map
         });
 
-        if (pm10Grade === "1") {
-          var content = '<div class="wrap">' +
-                  '    <div class="info1" style="background-color:#00a9fe;">' +
-                  '        <div class="body">' +
-                  '            <div class="img">' +
-                  '                <img src="/img/level1.svg" width="73" height="71">' +
-                  '           </div>' +
-                  '            <div class="desc">' +
-                  '                <div class="ellipsis">'+'미세먼지 농도 : ' + '<p>' + pm10Value +' ㎍/㎥'+'</p>'+'</div>' +
-                  '            </div>' +
-                  '        </div>' +
-                  '                <div class="status">좋음</div>' + // 상태 텍스트를 추가한 부분
-                  '    </div>' +
-                  '</div>';
-        }
-        else if (pm10Grade === "2") {
-          var content = '<div class="wrap">' +
-                  '    <div class="info2" style="background-color:#51ca66;" >' +
-                  '        <div class="body">' +
-                  '            <div class="img">' +
-                  '                <img src="/img/level2.svg" width="73" height="71">' +
-                  '           </div>' +
-                  '            <div class="desc">' +
-                  '                <div class="ellipsis">address</div>' +
-                  '            </div>' +
-                  '        </div>' +
-                  '    </div>' +
-                  '</div>';
-        }
-        else if (pm10Grade === "3") {
-            var content = '<div class="wrap">' +
+
+
+
+        var onOff = false;
+
+        var content;
+        if (onOff === true) {
+          if (pm10Grade === "1") {
+            content = '<div class="wrap">' +
+                    '    <div class="info1" style="background-color:#00a9fe;">' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="/img/level1.svg" width="73" height="71">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">' + '미세먼지 농도 : ' + '<p>' + pm10Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '                <div class="status">좋음</div>' + // 상태 텍스트를 추가한 부분
+                    '    </div>' +
+                    '</div>';
+          } else if (pm10Grade === "2") {
+            content = '<div class="wrap">' +
+                    '    <div class="info2" style="background-color:#51ca66;" >' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="/img/level2.svg" width="73" height="71">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">' + '미세먼지 농도 : ' + '<p>' + pm10Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '                <div class="status">보통</div>' + // 상태 텍스트를 추가한 부분
+                    '    </div>' +
+                    '</div>';
+          } else if (pm10Grade === "3") {
+            content = '<div class="wrap">' +
                     '    <div class="info3" style="background-color:#fde801;" >' +
                     '        <div class="body">' +
                     '            <div class="img">' +
                     '                <img src="/img/level3.svg" width="73" height="71">' +
                     '           </div>' +
                     '            <div class="desc">' +
-                    '                <div class="ellipsis">address</div>' +
+                    '                <div class="ellipsis">' + '미세먼지 농도 : ' + '<p>' + pm10Value + ' ㎍/㎥' + '</p>' + '</div>' +
                     '            </div>' +
                     '        </div>' +
+                    '                <div class="status">나쁨</div>' + // 상태 텍스트를 추가한 부분
                     '    </div>' +
                     '</div>';
 
-          // 추가된 부분
+            // 추가된 부분
+          } else if (pm10Grade === "4") {
+            content = '<div class="wrap">' +
+                    '    <div class="info4" style="background-color:#fd0042;" >' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="/img/level4.svg" width="73" height="71">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">' + '미세먼지 농도 : ' + '<p>' + pm10Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '                <div class="status">매우 나쁨</div>' + // 상태 텍스트를 추가한 부분
+                    '    </div>' +
+                    '</div>';
+
+            // 추가된 부분
+
+          } else if (pm10Grade === null) {
+            content = '<div class="wrap">' +
+                    '    <div class="infoNull" style="background-color:lightslategray;" >' +
+                    '        <div class="body">' +
+                    '            <div class="img">' +
+                    '                <img src="/img/inspection.svg" width="73" height="71">' +
+                    '           </div>' +
+                    '            <div class="desc">' +
+                    '                <div class="ellipsis">' + ' 미세먼지 농도 : ' + '<p>' + '측정불가' + ' ㎍/㎥' + '</p>' + '</div>' +
+                    '            </div>' +
+                    '        </div>' +
+                    '                <div class="status">측정불가</div>' + // 상태 텍스트를 추가한 부분
+                    '    </div>' +
+                    '</div>';
+
+            // 추가된 부분
+
+          } else if(onOff === false){
+            if (pm25Grade === "1") {
+              content = '<div class="wrap">' +
+                      '    <div class="info1" style="background-color:yellow;">' +
+                      '        <div class="body">' +
+                      '            <div class="img">' +
+                      '                <img src="/img/level1.svg" width="73" height="71">' +
+                      '           </div>' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' + '초미세먼지 농도 : ' + '<p>' + pm25Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                      '            </div>' +
+                      '        </div>' +
+                      '                <div class="status">좋음</div>' + // 상태 텍스트를 추가한 부분
+                      '    </div>' +
+                      '</div>';
+            } else if (pm25Grade === "2") {
+              content = '<div class="wrap">' +
+                      '    <div class="info2" style="background-color:#51ca66;" >' +
+                      '        <div class="body">' +
+                      '            <div class="img">' +
+                      '                <img src="/img/level2.svg" width="73" height="71">' +
+                      '           </div>' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' + '초미세먼지 농도 : ' + '<p>' + pm25Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                      '            </div>' +
+                      '        </div>' +
+                      '                <div class="status">보통</div>' + // 상태 텍스트를 추가한 부분
+                      '    </div>' +
+                      '</div>';
+            } else if (pm25Grade === "3") {
+              content = '<div class="wrap">' +
+                      '    <div class="info3" style="background-color:#fde801;" >' +
+                      '        <div class="body">' +
+                      '            <div class="img">' +
+                      '                <img src="/img/level3.svg" width="73" height="71">' +
+                      '           </div>' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' + '초미세먼지 농도 : ' + '<p>' + pm25Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                      '            </div>' +
+                      '        </div>' +
+                      '                <div class="status">나쁨</div>' + // 상태 텍스트를 추가한 부분
+                      '    </div>' +
+                      '</div>';
+
+            } else if (pm25Grade === "4") {
+              content = '<div class="wrap">' +
+                      '    <div class="info4" style="background-color:#fd0042;" >' +
+                      '        <div class="body">' +
+                      '            <div class="img">' +
+                      '                <img src="/img/level4.svg" width="73" height="71">' +
+                      '           </div>' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' + '초미세먼지 농도 : ' + '<p>' + pm25Value + ' ㎍/㎥' + '</p>' + '</div>' +
+                      '            </div>' +
+                      '        </div>' +
+                      '                <div class="status">매우 나쁨</div>' + // 상태 텍스트를 추가한 부분
+                      '    </div>' +
+                      '</div>';
+
+              // 추가된 부분
+
+            } else if (pm25Grade === null) {
+              content = '<div class="wrap">' +
+                      '    <div class="infoNull" style="background-color:lightslategray;" >' +
+                      '        <div class="body">' +
+                      '            <div class="img">' +
+                      '                <img src="/img/inspection.svg" width="73" height="71">' +
+                      '           </div>' +
+                      '            <div class="desc">' +
+                      '                <div class="ellipsis">' + '초미세먼지 농도 : ' + '<p>' + '측정불가' + ' ㎍/㎥' + '</p>' + '</div>' +
+                      '            </div>' +
+                      '        </div>' +
+                      '                <div class="status">측정불가</div>' + // 상태 텍스트를 추가한 부분
+                      '    </div>' +
+                      '</div>';
+
+            }
+          }
         }
-        else if (pm10Grade === "4") {
-          var content = '<div class="wrap">' +
-                  '    <div class="info4" style="background-color:#fd0042;" >' +
-                  '        <div class="body">' +
-                  '            <div class="img">' +
-                  '                <img src="/img/level4.svg" width="73" height="71">' +
-                  '           </div>' +
-                  '            <div class="desc">' +
-                  '                <div class="ellipsis">address</div>' +
-                  '            </div>' +
-                  '        </div>' +
-                  '    </div>' +
-                  '</div>';
-
-          // 추가된 부분
-
-        }
-
-        else if (pm10Grade === "4") {
-          var content = '<div class="wrap">' +
-                  '    <div class="infoNull" style="background-color:lightslategray;" >' +
-                  '        <div class="body">' +
-                  '            <div class="img">' +
-                  '                <img src="/img/inspection.svg" width="73" height="71">' +
-                  '           </div>' +
-                  '            <div class="desc">' +
-                  '                <div class="ellipsis">address</div>' +
-                  '            </div>' +
-                  '        </div>' +
-                  '    </div>' +
-                  '</div>';
-
-          // 추가된 부분
-
-        }
-
-
 
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
@@ -219,6 +301,11 @@
         marker.setVisible(false);
       });
     }
+
+
+
+
+
 
     function moveToLocation(element) {
       var address = element.getAttribute('data-address');
@@ -293,6 +380,7 @@
 <h1>나의 거주지 주변 미세먼지 예보</h1>
 <h1 th:text="${area}"></h1>
 
+
 <table>
   <tr>
     <th>시도명</th>
@@ -325,10 +413,27 @@
 
   </tr>
 </table>
+
+<div>
+  <button onclick="setVariableValue('true')">미세먼지</button>
+  <button onclick="setVariableValue('false')">초미세먼지</button>
+</div>
+
 <div id="map"></div>
 <script>
   // 지도 초기화
   initMap();
+  function setVariableValue(value) {
+    // value에 따라 pm10Grade와 pm25Grade 값을 설정
+    if (value === 'true') {
+      onOff = true;
+    } else if (value === 'false') {
+      onOff = false;
+    }
+  }
+
+
+
 </script>
 </body>
 </html>
