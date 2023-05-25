@@ -37,6 +37,7 @@ public class SidoStationController {
         int firstSpaceIndex = area.indexOf(" ");
         int secondSpaceIndex = area.indexOf(" ", firstSpaceIndex + 1);  // 두 번째 공백 문자의 인덱스
         String areaState = area.substring(0, secondSpaceIndex);
+        System.out.println(areaState);
 
         List<SidoStation> sidoStations = sidoStationService.findByAddrStartingWith(areaState);
 
