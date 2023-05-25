@@ -78,14 +78,12 @@
     let onOff = true;
 
 
-
-
     // function initMap() {
 
     function setVariableValue(value) {
-      if (value === 'true') {
+      if (value === 'pm10') {
         onOff = true;
-      } else if (value === 'false') {
+      } else if (value === 'pm25') {
         onOff = false;
       }
 
@@ -299,8 +297,6 @@
             }
           }
 
-
-
 // 마커 위에 커스텀오버레이를 표시합니다
 // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
         let overlay = new kakao.maps.CustomOverlay({
@@ -316,6 +312,8 @@
 
 
         marker.setVisible(false);
+
+
       });
     }
 
@@ -325,6 +323,8 @@
 
 
     function moveToLocation(element) {
+
+
       let address = element.getAttribute('data-address');
       let x = parseFloat(element.getAttribute('data-x'));
       let y = parseFloat(element.getAttribute('data-y'));
@@ -337,16 +337,25 @@
 
       let map = new kakao.maps.Map(mapContainer, options);
 
-      // "현재 주소" 마커 유지
-      currentMarker.setMap(map);
-      currentMarker.setPosition(new kakao.maps.LatLng([[${y}]], [[${x}]]));
+      let markerPosition = new kakao.maps.LatLng([[${y}]], [[${x}]]);
+      let currentMarker = new kakao.maps.Marker({
+        map: map,
+        position: markerPosition
+      });
 
-      // 현재 주소 인포윈도우 유지
-      currentInfowindow.close();
-      currentInfowindow.setContent('<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>');
+      let currentInfowindow = new kakao.maps.InfoWindow({
+
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>'
+      });
       currentInfowindow.open(map, currentMarker);
 
+      currentMarker.setVisible(false);
 
+
+
+
+
+      //
       let addressCells = document.getElementsByClassName('address-cell');
       Array.from(addressCells).forEach(function(cell) {
         let address = cell.getAttribute('data-address');
@@ -365,28 +374,30 @@
         });
 
         infowindow.open(map, marker);
+        marker.setVisible(false);
       });
 
+
+
+
+      //
+      // setVariableValue('pm10');
 
 
       // 클릭된 주소에 대한 마커 생성 및 표시
-      let markerPosition = new kakao.maps.LatLng(y, x);
-      let marker = new kakao.maps.Marker({
-        position: markerPosition,
-        map: map
-      });
-
-      // 클릭된 주소 인포윈도우 생성 및 표시
-      let infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
-        position: markerPosition
-      });
-      infowindow.open(map, marker);
+    // let markerPosition = new kakao.maps.LatLng(y, x);
+    // let marker = new kakao.maps.Marker({
+    //   position: markerPosition,
+    //   map: map
+    // });
+    //
+    // // 클릭된 주소 인포윈도우 생성 및 표시
+    // let infowindow = new kakao.maps.InfoWindow({
+    //   content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
+    //   position: markerPosition
+    // });
+    // infowindow.open(map, marker);
     }
-
-
-
-    // 지도 초기화
 
 
 
@@ -432,15 +443,15 @@
 </table>
 
 <div>
-  <button onclick="setVariableValue('true')">미세먼지</button>
-  <button onclick="setVariableValue('false')">초미세먼지</button>
+  <button onclick="setVariableValue('pm10')">미세먼지</button>
+  <button onclick="setVariableValue('pm25')">초미세먼지</button>
 </div>
 
 <div id="map"></div>
 <script>
   // 지도 초기화
   // initMap();
-  setVariableValue('true');
+  setVariableValue('pm10');
 
 </script>
 </body>
