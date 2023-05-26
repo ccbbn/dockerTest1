@@ -84,14 +84,37 @@ public class SidoController {
 
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
         for (JsonNode itemNode : dataNode) {
+
+
             String sidoName = itemNode.path("sidoName").asText();
             String stationName = itemNode.path("stationName").asText();
+
+
             String dateTime = itemNode.path("dataTime").asText();
             String pm10Value = itemNode.path("pm10Value").asText();
-
             String pm25Value = itemNode.path("pm25Value").asText();
             String pm10Grade = itemNode.path("pm10Grade").asText();
             String pm25Grade = itemNode.path("pm25Grade").asText();
+
+            if (dateTime.equals("null") || dateTime.equals("-")) {
+                dateTime = "측정소 오류";
+            }
+
+            if ((pm10Value.equals("null") || pm10Value.equals("-")) ||
+                (pm10Grade.equals("null") || pm10Grade.equals("-"))) {
+                pm10Value = "측정소 오류";
+                pm10Grade = "측정소 오류";
+            }
+
+            if ((pm25Value.equals("null") || pm25Value.equals("-")) ||
+                (pm25Grade.equals("null") || pm25Grade.equals("-"))){
+                pm25Value = "측정소 오류";
+                pm25Grade = "측정소 오류";
+            }
+
+
+
+
 
             Sido sido = new Sido();
 

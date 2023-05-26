@@ -34,10 +34,8 @@ public class test {
 
 
     @GetMapping("test/inputAddress")
-    public String test(){
-        return "main/inputAddress2";
-    }
-
+//    public String test(){return "main/inputAddress2";}
+    public String test(){return "main/test";}
 
 
 

@@ -1,115 +1,19 @@
 <!DOCTYPE html>
 <html>
-<script src="/JS/main.js" th:inline="javascript"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 <head>
   <meta charset="UTF-8">
   <title>미세먼지 예보</title>
   <style>
 
-    .container {  display: grid;
-      grid-template-columns: 0.1fr 0.9fr 4.8fr 0.1fr;
-      grid-template-rows: 0.4fr 680px 0.1fr;
-      gap: 15px 15px;
-      grid-auto-flow: row;
-      grid-template-areas:
-    "header header header header"
-    ". areaList map ."
-    "footer footer footer footer";
-    }
-
-
-
-    .header { grid-area: header; }
-
-    .footer { grid-area: footer; }
-
-    /*.areaList { grid-area: areaList; }*/
-
-    .areaList {
-      grid-area: areaList;
-      overflow-y: auto;  /* Add scrollable behavior */
-    }
-
-    #map { grid-area: map; }
-
-
     #map {
+      height: 800px;
       width: 100%;
-      height: 100%;
     }
 
-    #map1 { grid-area: map; }
-
-
-    #map1 {
-        width: 100%;
-        height: 100%;
+    table {
+      border-collapse: collapse;
+      width: 100%;
     }
-
-
-
-
-    .forecast-item {
-      background-color: #f5f5f5;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .forecast-item .label {
-      font-weight: bold;
-      color: #555;
-      margin-right: 5px;
-    }
-
-    .forecast-item .value {
-      color: #333;
-    }
-
-
-    .button-group {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: -10px;
-      margin-left: 230px;
-    }
-
-    .button-group button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 20px;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .button-group button:nth-child(1) {
-      background-color: #ff9f9f; /* First button color */
-    }
-
-    .button-group button:nth-child(2) {
-      background-color: #9fcaff; /* Second button color */
-    }
-
-    .button-group button:hover {
-      opacity: 0.8;
-    }
-
-    .button-group button:focus {
-      outline: none;
-    }
-
-    .button-group button:first-child {
-      margin-right: 10px;
-    }
-
-
 
     th, td {
       border: 1px solid black;
@@ -166,21 +70,12 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Do+Hyeon&family=Stylish&display=swap" rel="stylesheet">
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1625fc3cbc30de55dc862451dba3915d&libraries=services"></script>
-
-
-    <script>
-
-
-
-
-
+  <script>
 
 
 
 
     let onOff = true;
-
-    let tableData = [];
 
 
     // function initMap() {
@@ -209,8 +104,7 @@
 
       let currentInfowindow = new kakao.maps.InfoWindow({
 
-
-        content: '<div style="width:150px;text-align:center;padding:6px 0;" >현재 주소</div>'
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">현재 주소</div>'
       });
       currentInfowindow.open(map, currentMarker);
 
@@ -420,28 +314,7 @@
         marker.setVisible(false);
 
 
-
-
-
-
-
       });
-
-   // 테이블 데이터를 저장할 배열
-      var listContainer = document.getElementById('list');
-      for (var i = 0; i < tableData.length; i++) {
-        var item = tableData[i];
-
-        // 리스트 아이템 생성
-        var listItem = document.createElement('div');
-        listItem.setAttribute('data-address', item.address);
-        listItem.setAttribute('data-x', item.x);
-        listItem.setAttribute('data-y', item.y);
-        // 필요한 데이터 추가 설정
-
-
-        listContainer.appendChild(listItem);
-      }
 
 
 
@@ -690,96 +563,56 @@
 
 
 
-    </script>
+  </script>
 </head>
 <body>
-
-<div class="container">
-
-  <div class="header">
-    <h1>나의 거주지 주변 미세먼지 예보</h1>
-    <h1 th:text="${area}"></h1>
-
-      <form action="/findSidoStationNearBy" method="get">
-          <label>
-              <input type="text" name="area" th:id="'sample6_address_'"  onclick="sample6_execDaumPostcode()" placeholder="주소를 검색해">
-          </label>
-          <button type="submit"><span class="jsx-2356851769 sr-only">검색</span></button>
-      </form>
-  </div>
+<h1>나의 거주지 주변 미세먼지 예보</h1>
+<h1 th:text="${area}"></h1>
 
 
-  <div class="areaList">
+<table>
+  <tr>
+    <th>측정소명</th>
+    <th>측정소 주소</th>
+    <th>측정소와의 거리(km)</th>
+    <th>측정일시</th>
+    <th>PM10</th>
+    <th>PM2.5</th>
+    <th>PM10 등급</th>
+    <th>PM2.5 등급</th>
+  </tr>
   <!-- 반복문을 통해 미세먼지 정보를 출력 -->
-    <div th:each="forecast : ${sidoStations}" class="forecast-item"><div>
-    <span class="label">측정소:</span>
-    <span th:text="${forecast.getStationName()}"></span>
-  </div>
-      <div>
-        <span class="label">측정소 주소:</span>
-        <span th:text="${forecast.getAddr()}" th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()},
+  <tr th:each="forecast : ${sidoStations}" >
+    <td th:text="${forecast.getStationName()}"></td>
+    <td th:text="${forecast.getAddr()}"
+        th:attr="data-address=${forecast.getAddr()}, data-x=${forecast.getX()}, data-y=${forecast.getY()},
          data-pm10-grade=${forecast.getSido().getPm10Grade()}, data-pm10-value=${forecast.getSido().getPm10Value()},
          data-pm25-grade=${forecast.getSido().getPm25Grade()}, data-pm25-value=${forecast.getSido().getPm25Value()},
          data-distance-difference=${forecast.getDistanceDifference()}"
-          onclick="moveToLocation(this)" class="address-cell"></span>
-      </div>
-      <div>
-        <span class="label">거리(km):</span>
-        <span th:text="${forecast.getDistanceDifference()}"></span>
-      </div>
-      <div>
-        <span class="label">PM10:</span>
-        <span th:text="${forecast.getSido().getPm10Value()}"></span>
-      </div>
-      <div>
-        <span class="label">PM25:</span>
-        <span th:text="${forecast.getSido().getPm25Value()}"></span>
-      </div>
-      <div>
-        <span class="label">PM10 등급:</span>
-        <span th:text="${forecast.getSido().getPm10Grade()}"></span>
-      </div>
-      <div>
-        <span class="label">PM25 등급:</span>
-        <span th:text="${forecast.getSido().getPm25Grade()}"></span>
-      </div>
-    </div>
-  </div>
-      <div id ="map"></div>
-    <div id = "map1"></div>
-    <script>
-        // 페이지 로드 시 실행할 함수
 
-        let noInput = document.querySelector("#sample6_address_");
-        // .test(noInput.value)
-            if (noInput.value.trim() === '') {
-            window.onload =function () {
-                // 카카오지도를 표시할 위치와 옵션 설정
-                var container = document.getElementById('map1');
-                var options = {
-                    center: new kakao.maps.LatLng(37.5665, 126.9780),  // 지도의 중심 좌표 설정
-                    level: 3  // 지도의 확대 수준 설정
-                };
+        onclick="moveToLocation(this)"  class="address-cell"></td>
+    <td th:text="${forecast.getDistanceDifference()}"></td>
+    <td th:text="${forecast.getSido().getDataTime()}"></td>
+    <td th:text="${forecast.getSido().getPm10Value()}"></td>
+    <td th:text="${forecast.getSido().getPm25Value()}"></td>
+    <td th:text="${forecast.getSido().getPm10Grade()}"></td>
+    <td th:text="${forecast.getSido().getPm25Grade()}"></td>
 
-                // 카카오지도 생성
-                var map1 = new kakao.maps.Map(container, options);
-            };
-            noInput = 1;
-        }
-    </script>
+  </tr>
+</table>
 
-      <div class="footer">
-          <div class="button-group">
-              <button onclick="setVariableValue('pm10')">미세먼지</button>
-              <button onclick="setVariableValue('pm25')">초미세먼지</button>
-          </div>
-      </div>
+<div>
+  <button onclick="setVariableValue('pm10')">미세먼지</button>
+  <button onclick="setVariableValue('pm25')">초미세먼지</button>
+</div>
 
-  <script>
-      setVariableValue('pm10');
-  </script>
-  </div>
+<div id="map"></div>
+<script>
+  // 지도 초기화
+  // initMap();
+  setVariableValue('pm10');
 
+</script>
 </body>
 </html>
 

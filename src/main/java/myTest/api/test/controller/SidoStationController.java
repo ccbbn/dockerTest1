@@ -100,8 +100,15 @@ public class SidoStationController {
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
 
+
+
             String x = rootNode.get("response").get("result").get("point").get("x").asText();
             String y = rootNode.get("response").get("result").get("point").get("y").asText();
+
+            if(x==null && y==null) {
+                model.addAttribute("x",127);
+                model.addAttribute("y",37);
+            }
 
             model.addAttribute("x",Double.parseDouble(x));
             model.addAttribute("y",Double.parseDouble(y));
