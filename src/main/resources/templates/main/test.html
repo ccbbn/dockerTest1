@@ -9,7 +9,7 @@
   <style>
 
     .container {  display: grid;
-      grid-template-columns: 0.1fr 0.9fr 4.8fr 0.1fr;
+      grid-template-columns: 0.1fr 250px 4.8fr 0.1fr;
       grid-template-rows: 0.4fr 680px 0.1fr;
       gap: 15px 15px;
       grid-auto-flow: row;
@@ -27,6 +27,19 @@
 
     /*.areaList { grid-area: areaList; }*/
 
+
+    .searchWindow {
+        margin-left: 300px;
+    }
+
+    .titleAddress {
+        position: fixed;
+        top: 105px;
+        left: 745px;
+        font-weight: 600;
+        font-family: emoji;
+    }
+
     .areaList {
       grid-area: areaList;
       overflow-y: auto;  /* Add scrollable behavior */
@@ -39,16 +52,6 @@
       width: 100%;
       height: 100%;
     }
-
-    #map1 { grid-area: map; }
-
-
-    #map1 {
-        width: 100%;
-        height: 100%;
-    }
-
-
 
 
     .forecast-item {
@@ -107,6 +110,34 @@
 
     .button-group button:first-child {
       margin-right: 10px;
+    }
+
+
+    .cute-input {
+        border: 2px solid #34495e;
+        border-radius : 20px;
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+        outline: none;
+    }
+
+    .cute-button {
+        position: fixed;
+        top: 95px;
+        left: 645px;
+        background-color: #ffcc00;
+        border: none;
+        font-weight: bold;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .cute-button:hover {
+        background-color: #ffa500;
     }
 
 
@@ -677,17 +708,11 @@
           xAnchor: 0.3,
           yAnchor: 0.91
         });
-        //
-
         overlay.setMap(map);
-
-
         marker.setVisible(false);
 
       });
     }
-
-
 
 
     </script>
@@ -697,18 +722,21 @@
 <div class="container">
 
   <div class="header">
+
     <h1>나의 거주지 주변 미세먼지 예보</h1>
-    <h1 th:text="${area}"></h1>
 
-      <form action="/findSidoStationNearBy" method="get">
+
+
+      <form action="/findSidoStationNearBy" method="get" class="searchWindow">
           <label>
-              <input type="text" name="area" th:id="'sample6_address_'"  onclick="sample6_execDaumPostcode()" placeholder="주소를 검색해">
+              <input type="text" name="area" id="sample6_address_" class="cute-input" onclick="sample6_execDaumPostcode()" placeholder="주소를 검색해">
           </label>
-          <button type="submit"><span class="jsx-2356851769 sr-only">검색</span></button>
+          <button type="submit" class="cute-button">검색</button>
+          <span class="titleAddress" th:text="${area}"></span>
+
       </form>
+
   </div>
-
-
   <div class="areaList">
   <!-- 반복문을 통해 미세먼지 정보를 출력 -->
     <div th:each="forecast : ${sidoStations}" class="forecast-item"><div>
@@ -746,40 +774,29 @@
     </div>
   </div>
       <div id ="map"></div>
-    <div id = "map1"></div>
-    <script>
-        // 페이지 로드 시 실행할 함수
-
-        let noInput = document.querySelector("#sample6_address_");
-        // .test(noInput.value)
-            if (noInput.value.trim() === '') {
-            window.onload =function () {
-                // 카카오지도를 표시할 위치와 옵션 설정
-                var container = document.getElementById('map1');
-                var options = {
-                    center: new kakao.maps.LatLng(37.5665, 126.9780),  // 지도의 중심 좌표 설정
-                    level: 3  // 지도의 확대 수준 설정
-                };
-
-                // 카카오지도 생성
-                var map1 = new kakao.maps.Map(container, options);
-            };
-            noInput = 1;
-        }
-    </script>
-
       <div class="footer">
           <div class="button-group">
               <button onclick="setVariableValue('pm10')">미세먼지</button>
               <button onclick="setVariableValue('pm25')">초미세먼지</button>
           </div>
-      </div>
 
+      </div>
   <script>
+      let firstOpen = true;
+      if(firstOpen === true) {
+          // 카카오지도를 표시할 위치와 옵션 설정
+          var container = document.getElementById('map');
+          var options = {
+              center: new kakao.maps.LatLng(37.5665, 126.9780),  // 지도의 중심 좌표 설정
+              level: 3  // 지도의 확대 수준 설정
+          };
+          // 카카오지도 생성
+          var map = new kakao.maps.Map(container, options);
+          firstOpen = false;
+      }
       setVariableValue('pm10');
   </script>
   </div>
-
 </body>
 </html>
 

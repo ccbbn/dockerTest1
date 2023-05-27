@@ -56,7 +56,7 @@ public class SidoController {
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("700", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
         urlBuilder.append("&" + URLEncoder.encode("sidoName","UTF-8") + "=" + URLEncoder.encode("전국", "UTF-8")); /*시도 이름(전국, 서울, 부산, 대구, 인천, 광주, 대전, 울산, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주, 세종)*/
-        urlBuilder.append("&" + URLEncoder.encode("ver","UTF-8") + "=" + URLEncoder.encode("1.0", "UTF-8")); /*버전별 상세 결과 참고*/
+        urlBuilder.append("&" + URLEncoder.encode("ver","UTF-8") + "=" + URLEncoder.encode("1.3", "UTF-8")); /*버전별 상세 결과 참고*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -93,8 +93,8 @@ public class SidoController {
             String dateTime = itemNode.path("dataTime").asText();
             String pm10Value = itemNode.path("pm10Value").asText();
             String pm25Value = itemNode.path("pm25Value").asText();
-            String pm10Grade = itemNode.path("pm10Grade").asText();
-            String pm25Grade = itemNode.path("pm25Grade").asText();
+            String pm10Grade = itemNode.path("pm10Grade1h").asText();
+            String pm25Grade = itemNode.path("pm25Grade1h").asText();
 
             if (dateTime.equals("null") || dateTime.equals("-")) {
                 dateTime = "측정소 오류";
