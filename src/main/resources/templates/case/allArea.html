@@ -26,23 +26,23 @@
 
 
     <div th:each="each : ${overallList}">
-        <text th:text="${each.getSeoul()}" id="LCD11" class="TEXT" x="156" y="214">서울특별시</text>
-        <text th:text="${each.getBusan()}" id="LCD26" class="TEXT" x="503" y="695">부산광역시</text>
-        <text th:text="${each.getDaegu()}" id="LCD27" class="TEXT" x="418" y="567">대구광역시</text>
-        <text th:text="${each.getIncheon()}" id="LCD28" class="TEXT" x="67" y="177">인천광역시</text>
-        <text th:text="${each.getGwangju()}" id="LCD29" class="TEXT" x="127" y="707">광주광역시</text>
-        <text th:text="${each.getDaejeon()}" id="LCD30" class="TEXT" x="221" y="463">대전광역시</text>
-        <text th:text="${each.getUlsan()}" id="LCD31" class="TEXT" x="531" y="622">울산광역시</text>
-        <text th:text="${each.getSejong()}" id="LCD36" class="TEXT" x="199" y="418">세종특별자치시</text>
-        <text th:text="${each.getGyeonggiSouth()}" id="LCD41" class="TEXT" x="216" y="245">경기도</text>
-        <text th:text="${each.getYeongdong()}" id="LCD42" class="TEXT" x="370" y="179">강원도</text>
-        <text th:text="${each.getChungbuk()}" id="LCD43" class="TEXT" x="294" y="381">충청북도</text>
-        <text th:text="${each.getChungnam()}" id="LCD44" class="TEXT" x="105" y="449">충청남도</text>
-        <text th:text="${each.getJenbuk()}" id="LCD45" class="TEXT" x="179" y="592">전라북도</text>
-        <text th:text="${each.getJeonnam()}" id="LCD46" class="TEXT" x="138" y="764">전라남도</text>
-        <text th:text="${each.getGyeongbuk()}" id="LCD47" class="TEXT" x="447" y="460">경상북도</text>
-        <text th:text="${each.getGyeongnam()}" id="LCD48" class="TEXT" x="367" y="672">경상남도</text>
-        <text th:text="${each.getJeju()}" id="LCD50" class="TEXT" x="76" y="1070">제주특별자치도</text>
+        <td th:text="${each.getSeoul()}">서울특별시</td>
+        <td th:text="${each.getBusan()}">부산광역시</td>
+        <td th:text="${each.getDaegu()}">대구광역시</td>
+        <td th:text="${each.getIncheon()}">인천광역시</td>
+        <td th:text="${each.getGwangju()}">광주광역시</td>
+        <td th:text="${each.getDaejeon()}">대전광역시</td>
+        <td th:text="${each.getUlsan()}">울산광역시</td>
+        <td th:text="${each.getSejong()}">세종특별자치시</td>
+        <td th:text="${each.getGyeonggiSouth()}">경기도</td>
+        <td th:text="${each.getYeongdong()}">강원도</td>
+        <td th:text="${each.getChungbuk()}">충청북도</td>
+        <td th:text="${each.getChungnam()}">충청남도</td>
+        <td th:text="${each.getJenbuk()}">전라북도</td>
+        <td th:text="${each.getJeonnam()}">전라남도</td>
+        <td th:text="${each.getGyeongbuk()}">경상북도</td>
+        <td th:text="${each.getGyeongnam()}">경상남도</td>
+        <td th:text="${each.getJeju()}">제주특별자치도</td>
     </div>
 
     </tbody>

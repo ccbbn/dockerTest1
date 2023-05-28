@@ -36,6 +36,9 @@ public class OverallController {
 
     private final OverallService overallService;
 
+
+
+
     @Transactional
     @GetMapping("/overall")
     public String api1(Model model) throws IOException {
@@ -106,8 +109,6 @@ public class OverallController {
                 overallService.save(overall);
 
 
-
-
                 String[] informGradeList = informGrade.split(",");
 
                 overall.setSeoul(informGradeList[0].substring(informGradeList[0].length() - 2));
@@ -130,7 +131,6 @@ public class OverallController {
                 overall.setGyeonggiNorth(informGradeList[17].substring(informGradeList[17].length() - 2));
                 overall.setIncheon(informGradeList[18].substring(informGradeList[18].length() - 2));
 
-
                 List<Overall> overallList = overallService.findAll();
                 model.addAttribute("overallList", overallList);
                 System.out.println(overallList);
@@ -143,8 +143,9 @@ public class OverallController {
 
 
 
+        return "/main/allForecast";
 //        return "case/map";
-            return "case/allArea";
+//            return "case/allArea";
         }
 
 
