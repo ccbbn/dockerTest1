@@ -31,6 +31,13 @@ public class SidoStationController {
     private final SidoStationService sidoStationService;
     private final MyLocationService myLocationService;
 
+
+    @GetMapping("/inputAddress")
+    private String move(){
+        return "/main/areaForecast";
+    }
+
+
     @GetMapping("/sidoStation/nearBy")
     public String findArea(@RequestParam("area") String area, Model model) {
 
