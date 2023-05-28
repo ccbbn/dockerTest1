@@ -31,7 +31,7 @@ public class SidoStationController {
     private final SidoStationService sidoStationService;
     private final MyLocationService myLocationService;
 
-    @GetMapping("findSidoStationNearBy")
+    @GetMapping("/sidoStation/nearBy")
     public String findArea(@RequestParam("area") String area, Model model) {
 
         int firstSpaceIndex = area.indexOf(" ");
@@ -40,7 +40,6 @@ public class SidoStationController {
         System.out.println(areaState);
 
         List<SidoStation> sidoStations = sidoStationService.findByAddrStartingWith(areaState);
-
 
 
         //주소로 x, y좌표를 검색하고 인근 측정소까지의 거리를 구함.
@@ -100,32 +99,15 @@ public class SidoStationController {
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
 
-
-
             String x = rootNode.get("response").get("result").get("point").get("x").asText();
             String y = rootNode.get("response").get("result").get("point").get("y").asText();
 
-            if(x==null && y==null) {
-                model.addAttribute("x",127);
-                model.addAttribute("y",37);
-            }
-
             model.addAttribute("x",Double.parseDouble(x));
             model.addAttribute("y",Double.parseDouble(y));
-
-
             myLocationService.save(new MyLocation(x, y));
 
-            List<Double> km = new ArrayList<>();
             for (SidoStation station : sidoStations) {
-                double distanceInKm = distance(Double.parseDouble(station.getY()), Double.parseDouble(station.getX()), Double.parseDouble(y), Double.parseDouble(x), "kilo");
-                distanceInKm = Math.round(distanceInKm * 100.0) / 100.0;
-                km.add(distanceInKm);
-                System.out.println(distanceInKm);
-            }
 
-
-            for (SidoStation station : sidoStations) {
                 double distanceInKm = distance(Double.parseDouble(station.getY()), Double.parseDouble(station.getX()), Double.parseDouble(y), Double.parseDouble(x), "kilo");
                 distanceInKm = Math.round(distanceInKm * 100.0) / 100.0;
                 station.setDistanceDifference(distanceInKm);
@@ -137,25 +119,13 @@ public class SidoStationController {
 
 
 
-
-
-
-
-
-            model.addAttribute("km", km);
-            System.out.println(km);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-//        return "/main/areaForecast";
-        return "/main/test";
+        return "/main/areaForecast";
+
     }
-
-
-
 
 
     private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {

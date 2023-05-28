@@ -40,13 +40,6 @@ public class SidoController {
 
 
 
-
-//    @GetMapping("search")
-//    public String Ser
-//
-
-
-
     @PostConstruct
     @Transactional
     public void init() throws IOException {
@@ -114,8 +107,6 @@ public class SidoController {
 
 
 
-
-
             Sido sido = new Sido();
 
             sido.setSidoName(sidoName);
@@ -125,7 +116,6 @@ public class SidoController {
             sido.setPm25Value(pm25Value);
             sido.setPm10Grade(pm10Grade);
             sido.setPm25Grade(pm25Grade);
-
 
 
             sidoRepository.save(sido);
