@@ -50,7 +50,7 @@ public class OverallController {
 //        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-05-14", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
         urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
 //
-        urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM25", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
+        urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM10", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -84,7 +84,10 @@ public class OverallController {
         JsonNode dataNode = rootNode.path("response").path("body").path("items"); // "response.body.items"에 해당하는 노드를 가져옴
 
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
-        Overall overall = null;
+//        Overall overall;
+
+        overallService.deleteAll();
+
         for (JsonNode itemNode : dataNode) {
             String dataTime = itemNode.path("dataTime").asText();
             String informOverall = itemNode.path("informOverall").asText();
@@ -94,9 +97,10 @@ public class OverallController {
             String informCode = itemNode.path("informCode").asText();
 
 
+
             LocalDateTime condition1 = LocalDateTime.parse(dataTime.substring(0, 14), DateTimeFormatter.ofPattern("yyyy-MM-dd HH시"));
 
-            overall = new Overall();
+            Overall overall = new Overall();
 
             if ((condition1.getHour() > LocalDateTime.now().getHour() - 6) && (Objects.equals(informData, LocalDate.now().format(DateTimeFormatter.ISO_DATE)))) {
 
@@ -137,14 +141,15 @@ public class OverallController {
 
 
 
+
             } else System.out.println("못불러옴");
 
         }
 
 
 
-        return "/main/allForecast";
-//        return "case/map";
+//        return "/main/allForecast";
+        return "case/k";
 //            return "case/allArea";
         }
 

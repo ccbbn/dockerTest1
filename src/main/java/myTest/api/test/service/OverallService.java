@@ -8,6 +8,7 @@ import myTest.api.test.repository.OverallRepository;
 
 import org.springframework.stereotype.Service;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
 
 @Service
@@ -23,4 +24,7 @@ public class OverallService {
     public void save(Overall overall){
         overallRepository.save(overall);
     }
+
+    public void deleteAll() {overallRepository.deleteAll();}
+
 }
