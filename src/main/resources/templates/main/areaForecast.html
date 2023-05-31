@@ -810,13 +810,13 @@
       let firstOpen = true;
       if(firstOpen === true) {
           // 카카오지도를 표시할 위치와 옵션 설정
-          var container = document.getElementById('map');
-          var options = {
+          let container = document.getElementById('map');
+          let options = {
               center: new kakao.maps.LatLng(37.5665, 126.9780),  // 지도의 중심 좌표 설정
               level: 3  // 지도의 확대 수준 설정
           };
           // 카카오지도 생성
-          var map = new kakao.maps.Map(container, options);
+          let map = new kakao.maps.Map(container, options);
 
           firstOpen = false;
       }
