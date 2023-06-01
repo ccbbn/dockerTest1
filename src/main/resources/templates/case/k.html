@@ -9,7 +9,37 @@
 
 
 <style xmlns="http://www.w3.org/2000/svg">
-.OUTLINE {
+
+    .container {  display: grid;
+        grid-template-columns: 0.1fr 2.3fr 2fr 0.1fr;
+        grid-template-rows: 0.4fr 2.1fr 0.1fr;
+        gap: 15px 15px;
+        grid-auto-flow: row;
+        grid-template-areas:
+    "header header header header"
+    ". map description ."
+    "footer footer footer footer";
+    }
+
+    .header { grid-area: header; }
+
+    .footer { grid-area: footer; }
+
+    #map { grid-area: map; }
+
+    .description { grid-area: description; }
+
+
+
+
+
+
+
+
+
+
+
+    .OUTLINE {
     stroke-linejoin:round;
     stroke: white;
     stroke-width: 1;
@@ -83,14 +113,10 @@
 
 
 <body>
+<div class="container">
 
 
-
-
-
-
-
-
+    <div id="map" >
 
 <svg style='background:#eaeaea;overflow:visible' height="1107" width="800" xmlns="http://www.w3.org/2000/svg">
 <defs>
@@ -104,9 +130,10 @@
     </filter>
 </defs> 
 <g filter="url(#dropshadow)">
-<path id="CD11" class="OUTLINE" d =" M 178 231 l -4 2 -4 3 -1 0 0 1 -3 1 -4 -5 -4 0 -6 1 -4 3 -2 -1 -1 -1 -3 2 -3 -3 -1 -3 -2 -3 0 0 -1 -2 -3 2 -3 1 -2 -4 0 -8 -3 -1 0 0 0 0 0 0 -2 -1 -3 -2 2 -4 3 -3 0 -1 0 0 0 0 0 -1 1 0 4 2 7 1 2 -2 0 1 2 0 1 -4 2 -8 7 -1 4 2 0 -3 1 -1 2 -4 3 -4 2 0 3 2 7 2 2 8 1 4 1 1 0 0 0 2 0 2 0 1 0 0 -1 6 3 0 8 -1 0 5 -4 3 -1 5 z " /><path id="CD26" class="OUTLINE" d =" M 496 722 l 0 4 -1 0 -2 -5 -1 6 -1 -2 0 0 -1 0 -1 1 -1 2 0 1 -1 -1 -1 -6 -1 -6 -2 3 -2 -3 0 2 0 0 0 0 0 0 0 0 -1 0 1 0 -4 1 -2 -5 -1 5 -1 2 0 0 -2 0 -7 -2 0 -2 2 -2 -1 -3 -5 -4 -2 -2 4 -1 9 0 0 -5 1 -6 5 -1 6 -2 7 -1 4 -6 1 -4 2 0 3 1 1 -3 6 -3 4 -1 1 -5 3 -6 7 0 3 -2 0 -3 0 0 2 -3 1 3 0 0 1 0 2 0 4 -1 4 4 1 3 0 1 -1 1 5 1 -7 4 -1 6 -1 4 -1 0 0 0 0 -1 -1 2 -1 1 2 2 -1 4 -2 4 -3 6 -3 4 0 1 0 0 -5 0 -4 0 -2 -1 -1 4 -1 4 1 -1 0 4 -7 0 -2 -4 -1 1 -3 4 z " />
-<path id="CD27" class="OUTLINE" d =" M 441 530 l 3 1 3 7 0 4 2 9 1 7 -4 4 -2 -1 0 4 -1 2 -3 6 -2 7 0 8 -4 2 -4 2 -3 1 -3 -5 -6 0 -5 3 -1 6 -3 7 -2 3 -5 0 -7 3 -7 1 0 -8 -4 -4 -1 -3 5 -2 6 0 0 -5 -5 -4 -1 -5 3 -5 3 -2 8 -1 0 -5 -8 -4 -6 0 0 -5 2 -5 3 -4 3 -3 5 -1 2 7 3 3 1 0 2 -4 3 -7 0 -7 2 2 1 1 3 -2 6 -4 3 -3 5 -1 z " />
-<path id="CD28" class="OUTLINE" d =" M 91 229 l 1 -2 0 1 0 0 1 0 1 0 0 -1 1 0 -1 -1 0 0 0 0 2 0 -4 -5 0 -5 1 -3 0 0 1 0 -1 0 0 -1 0 0 1 -1 0 -1 4 -1 4 -1 -5 -1 -3 -1 -1 -1 -2 1 1 -3 5 -3 3 -4 4 1 3 3 5 4 4 3 5 2 -2 4 -1 3 -1 5 -2 2 2 5 2 3 -1 7 -1 2 -2 3 -1 -3 -1 6 -7 2 -1 6 -6 1 -1 0 -3 -5 -2 -4 -1 -5 5 -2 -4 -2 0 -3 -2 2 z M 82 219 l 3 1 0 0 1 2 2 3 -2 2 -4 1 -8 5 -9 7 -4 -2 -3 -3 -1 0 -2 1 -2 -4 4 -5 4 -2 7 -1 7 -3 1 -4 z M 64 156 l 3 2 4 4 7 4 0 4 2 3 -1 2 -2 4 2 3 -1 4 0 3 2 0 0 2 -1 1 1 1 -1 1 1 2 1 2 1 1 -1 0 -5 4 -8 1 -8 0 -5 -4 0 -4 4 -3 0 -5 -2 -4 1 0 0 -1 -5 -3 -1 -8 0 -7 4 -4 0 0 1 0 z " />
+<path id="seoulPath" class="OUTLINE" d =" M 178 231 l -4 2 -4 3 -1 0 0 1 -3 1 -4 -5 -4 0 -6 1 -4 3 -2 -1 -1 -1 -3 2 -3 -3 -1 -3 -2 -3 0 0 -1 -2 -3 2 -3 1 -2 -4 0 -8 -3 -1 0 0 0 0 0 0 -2 -1 -3 -2 2 -4 3 -3 0 -1 0 0 0 0 0 -1 1 0 4 2 7 1 2 -2 0 1 2 0 1 -4 2 -8 7 -1 4 2 0 -3 1 -1 2 -4 3 -4 2 0 3 2 7 2 2 8 1 4 1 1 0 0 0 2 0 2 0 1 0 0 -1 6 3 0 8 -1 0 5 -4 3 -1 5 z " />
+<path id="busanPath" class="OUTLINE" d =" M 496 722 l 0 4 -1 0 -2 -5 -1 6 -1 -2 0 0 -1 0 -1 1 -1 2 0 1 -1 -1 -1 -6 -1 -6 -2 3 -2 -3 0 2 0 0 0 0 0 0 0 0 -1 0 1 0 -4 1 -2 -5 -1 5 -1 2 0 0 -2 0 -7 -2 0 -2 2 -2 -1 -3 -5 -4 -2 -2 4 -1 9 0 0 -5 1 -6 5 -1 6 -2 7 -1 4 -6 1 -4 2 0 3 1 1 -3 6 -3 4 -1 1 -5 3 -6 7 0 3 -2 0 -3 0 0 2 -3 1 3 0 0 1 0 2 0 4 -1 4 4 1 3 0 1 -1 1 5 1 -7 4 -1 6 -1 4 -1 0 0 0 0 -1 -1 2 -1 1 2 2 -1 4 -2 4 -3 6 -3 4 0 1 0 0 -5 0 -4 0 -2 -1 -1 4 -1 4 1 -1 0 4 -7 0 -2 -4 -1 1 -3 4 z " />
+<path id="daeguPath" class="OUTLINE" d =" M 441 530 l 3 1 3 7 0 4 2 9 1 7 -4 4 -2 -1 0 4 -1 2 -3 6 -2 7 0 8 -4 2 -4 2 -3 1 -3 -5 -6 0 -5 3 -1 6 -3 7 -2 3 -5 0 -7 3 -7 1 0 -8 -4 -4 -1 -3 5 -2 6 0 0 -5 -5 -4 -1 -5 3 -5 3 -2 8 -1 0 -5 -8 -4 -6 0 0 -5 2 -5 3 -4 3 -3 5 -1 2 7 3 3 1 0 2 -4 3 -7 0 -7 2 2 1 1 3 -2 6 -4 3 -3 5 -1 z " />
+<path id="incheonPath" class="OUTLINE" d =" M 91 229 l 1 -2 0 1 0 0 1 0 1 0 0 -1 1 0 -1 -1 0 0 0 0 2 0 -4 -5 0 -5 1 -3 0 0 1 0 -1 0 0 -1 0 0 1 -1 0 -1 4 -1 4 -1 -5 -1 -3 -1 -1 -1 -2 1 1 -3 5 -3 3 -4 4 1 3 3 5 4 4 3 5 2 -2 4 -1 3 -1 5 -2 2 2 5 2 3 -1 7 -1 2 -2 3 -1 -3 -1 6 -7 2 -1 6 -6 1 -1 0 -3 -5 -2 -4 -1 -5 5 -2 -4 -2 0 -3 -2 2 z M 82 219 l 3 1 0 0 1 2 2 3 -2 2 -4 1 -8 5 -9 7 -4 -2 -3 -3 -1 0 -2 1 -2 -4 4 -5 4 -2 7 -1 7 -3 1 -4 z M 64 156 l 3 2 4 4 7 4 0 4 2 3 -1 2 -2 4 2 3 -1 4 0 3 2 0 0 2 -1 1 1 1 -1 1 1 2 1 2 1 1 -1 0 -5 4 -8 1 -8 0 -5 -4 0 -4 4 -3 0 -5 -2 -4 1 0 0 -1 -5 -3 -1 -8 0 -7 4 -4 0 0 1 0 z " />
 <path id="CD29" class="OUTLINE" d =" M 113 687 l 2 3 6 3 7 -3 4 -2 2 0 1 0 0 0 0 0 1 0 0 0 1 -1 4 0 4 3 2 3 -1 1 1 1 3 4 6 3 1 4 -1 7 -4 4 -3 4 -7 1 -7 0 -6 2 -1 1 -1 0 -1 1 -4 1 -8 -1 0 -4 -4 -5 -4 -1 -7 0 -4 -7 -1 -1 3 -3 2 -6 2 -4 2 0 1 1 4 -4 1 -4 0 0 0 0 z " />
 <path id="CD30" class="OUTLINE" d =" M 223 432 l 1 6 4 1 0 0 3 0 4 -4 1 0 0 2 -1 2 3 2 2 6 5 1 0 5 -2 6 -2 3 -2 7 -1 8 1 7 -5 3 -2 4 -7 -1 -3 -4 -2 -1 1 -2 -1 -2 1 -1 0 0 -3 -2 -2 6 -1 6 -3 4 -1 1 -1 -4 -3 -4 -1 1 -1 0 -2 -3 -1 -7 -5 -4 1 -2 1 -3 2 -8 1 -7 0 -6 9 -3 2 -3 2 -3 2 -5 z " />
 <path id="CD31" class="OUTLINE" d =" M 550 641 l 2 6 -1 7 -1 8 -3 3 0 0 -1 0 0 1 0 0 -2 1 -5 -1 1 -1 0 -1 -1 -3 -4 -4 -4 1 -2 0 -1 0 0 0 -1 -3 -1 -7 -4 -1 -6 -2 -4 -5 -2 -3 -4 -3 -5 -3 -1 -3 -3 1 -1 0 0 0 -2 0 -3 -2 -4 -4 5 -5 0 -8 3 -4 1 0 1 1 4 -3 3 0 -2 -3 0 -2 1 -1 0 -1 2 -4 4 -2 4 -1 9 -1 5 0 4 3 3 3 4 7 6 -1 3 -2 4 -2 7 2 1 0 7 3 2 8 0 7 -1 8 -2 4 2 -1 -2 5 -1 4 -1 -1 0 1 -2 1 -2 -6 -3 -6 -3 -1 2 2 -2 1 2 1 1 3 -3 1 2 0 0 0 1 1 0 4 z " />
@@ -120,8 +147,7 @@
 <path id="CD47" class="OUTLINE" d =" M 560 528 l 7 2 5 -4 3 -4 3 -4 1 -1 0 0 3 -4 3 2 2 6 -1 8 -2 3 -1 0 0 0 -1 4 0 4 0 0 -1 0 0 -1 0 1 0 0 -2 2 -2 3 0 2 1 0 0 0 1 4 0 4 -1 -1 -1 1 0 0 1 4 -1 3 0 0 0 0 0 0 0 1 -1 3 0 3 0 0 0 1 -1 -1 -1 4 -1 8 -2 7 -1 6 -2 4 -2 4 -7 -3 -1 0 -7 -2 -4 2 -3 2 -6 1 -4 -7 -3 -3 -4 -3 -5 0 -9 1 -4 1 -4 2 -2 4 0 1 -1 1 0 2 2 3 -3 0 -4 3 -1 -1 -1 0 -3 4 -7 0 -5 -4 -3 0 -3 1 -4 3 -4 5 -5 1 -6 3 -8 0 -7 -2 -8 -1 -7 2 -6 -3 -3 -3 -3 -3 -1 -7 0 -5 1 -6 5 -3 6 0 3 5 3 -1 4 -2 4 -2 0 -8 2 -7 3 -6 1 -2 0 -4 2 1 4 -4 -1 -7 -2 -9 0 -4 -3 -7 -3 -1 -9 0 -5 1 -3 3 -7 4 -2 2 -1 -1 -2 -2 0 7 -3 7 -2 4 -1 0 -3 -3 -2 -7 -5 1 -3 3 -3 4 -2 5 0 5 6 0 8 4 0 5 -8 1 -3 2 -3 5 1 5 5 4 0 5 -6 0 -5 2 1 3 4 4 0 8 -5 -3 -3 -3 -7 -1 -8 1 -3 2 -2 0 -3 -2 -5 -3 2 -3 0 0 1 0 2 -4 -1 -7 -2 -4 -3 -3 -5 -4 -2 -4 -1 -4 -1 0 -1 0 -5 -2 -8 0 -7 -2 -5 -3 -1 0 -3 1 -1 -4 -4 -3 -4 -5 4 -7 -3 -7 -2 -4 0 0 0 -1 -2 -4 4 -2 4 -3 5 -2 3 -6 1 -3 0 -2 0 -1 3 -4 1 -6 0 -8 7 0 4 1 -1 -2 -2 -6 -2 -5 -6 -1 -3 3 -2 0 -1 -1 -1 0 -2 -2 -4 -3 -2 -3 -2 3 -6 0 -1 -6 3 -5 3 -4 0 -3 -1 0 1 -2 -3 -3 1 -3 2 -3 -2 -2 0 -2 1 -4 0 -1 0 0 0 -1 0 0 0 0 0 0 0 -1 0 -2 3 -3 0 -5 -4 -3 -2 -5 -7 -3 -1 -5 6 -2 1 -1 0 0 0 -4 4 -4 0 1 2 4 4 5 2 1 -1 -1 1 -2 1 -4 -1 -5 -4 -3 -4 -1 0 -1 0 0 1 -1 3 -1 6 -2 3 -6 2 1 3 2 4 -2 1 0 3 3 5 0 -1 -2 -3 -4 1 -8 1 -5 3 -1 3 3 1 -2 4 -4 3 -2 1 1 5 2 6 0 2 -6 3 -4 0 0 4 2 4 4 4 3 7 3 7 -1 5 -1 2 -6 -2 -8 3 -7 2 -5 4 -4 4 -2 4 -4 4 -3 3 -5 5 -3 0 -1 3 1 2 -2 4 -1 5 3 4 1 6 1 1 -7 3 -4 2 0 4 2 6 5 7 -1 4 -6 4 -1 3 2 4 0 5 0 1 1 1 -1 3 2 3 0 3 -5 7 1 3 2 5 4 6 3 5 0 -1 0 0 -1 0 -3 0 -3 3 -4 3 -4 5 -2 5 -4 1 -1 1 1 1 -1 1 1 0 0 0 0 0 0 1 0 0 -1 1 2 1 4 2 5 6 7 -1 3 0 1 0 1 -1 2 1 3 0 4 0 1 0 1 -1 1 1 1 0 0 0 1 1 5 0 6 1 5 -1 -1 0 4 4 7 2 3 -1 0 1 1 1 4 3 7 0 9 0 6 -2 5 -1 -2 -1 1 -3 5 -2 6 0 7 4 8 1 5 0 2 0 0 1 2 -1 2 0 1 0 0 0 0 0 0 -1 3 0 7 -2 8 -3 6 -2 3 -1 6 -1 7 0 7 1 8 -1 4 0 -1 1 4 2 3 1 5 1 5 6 3 0 0 0 3 -4 4 -4 3 -1 0 -2 4 6 2 z M 797 205 l 2 1 1 0 -1 3 0 6 1 2 -3 2 -3 3 -6 0 -4 -2 -3 -5 1 -5 6 -2 4 -2 0 0 2 0 z " />
 <path id="CD48" class="OUTLINE" d =" M 307 751 l 4 2 0 5 -1 4 0 0 -1 0 -1 4 1 4 1 0 -1 1 3 3 3 4 3 0 -1 -1 0 0 4 -2 7 -1 4 1 0 0 1 1 0 5 0 7 -1 4 -1 4 1 2 0 0 0 0 0 0 1 0 -1 1 0 0 0 0 -1 1 -2 -1 -1 1 -2 -3 -4 1 -6 -3 -2 -8 -6 2 -2 6 -6 -1 -2 -6 1 -4 -1 1 -1 -4 -2 -3 -2 -4 0 -7 2 -3 0 -1 0 0 0 -2 0 0 0 -1 0 -1 3 -1 2 -5 z M 441 731 l 3 1 1 2 -2 3 0 1 0 0 0 1 -1 0 0 4 3 3 1 5 0 4 0 0 -1 2 -2 3 -1 3 2 0 -1 1 2 -1 3 -2 3 -1 -1 1 -2 5 -1 4 -2 -1 -1 1 -1 1 3 2 0 7 -2 -3 -1 0 0 0 0 0 -1 1 -3 -1 -2 3 -3 4 -1 3 4 4 3 0 -1 1 -1 1 0 -1 -1 0 -1 0 -1 0 -4 2 -6 1 -1 -3 0 0 -1 0 -1 0 2 -5 -1 -3 -2 1 -2 0 -1 -3 5 -3 0 -6 0 -4 0 1 -1 -2 -2 1 0 1 0 0 -3 2 -4 2 -1 3 0 0 -1 0 -2 -4 -3 -3 -1 -4 0 -4 1 -1 0 0 3 -3 4 -4 1 0 0 0 0 0 3 3 4 1 0 -1 4 1 4 0 -1 -2 1 -1 -1 0 0 0 0 0 -3 -4 2 -5 5 -1 3 -5 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 -1 1 0 1 1 0 -4 z M 429 693 l -4 1 -3 2 -2 4 1 3 0 0 0 1 2 3 0 3 0 0 0 1 -1 -1 -1 0 -1 1 4 2 3 6 2 2 -2 1 3 2 -2 1 0 0 0 0 -3 1 -4 1 1 -2 1 -1 -4 -1 3 -3 -4 -1 -3 -4 -3 1 -1 2 0 0 -1 0 0 0 -1 0 -1 -1 -2 -1 -1 2 0 0 -1 0 -3 -1 0 5 -3 2 -3 2 -7 4 0 4 2 -3 5 -2 4 -2 0 -1 0 -1 1 -1 1 1 1 0 0 0 1 -1 2 1 0 0 -1 4 1 4 0 0 0 0 1 -1 0 1 0 0 0 1 2 1 -4 3 -2 2 -1 0 0 0 -1 0 0 0 0 0 0 0 0 0 -4 -1 -1 2 4 2 -2 3 -1 5 -1 7 1 6 1 -2 0 0 1 0 1 -1 0 0 0 0 -1 -1 1 0 0 0 0 -2 -1 -1 4 2 1 5 -1 -2 -1 4 -2 4 -4 2 -6 0 0 -4 5 -1 -5 -3 -1 -3 -1 2 0 -1 -1 2 -2 -1 -1 -1 -2 1 -2 -1 -1 1 -1 -1 -1 0 1 0 -1 -3 4 -1 4 -1 0 -1 -3 -5 -1 -4 -1 1 0 -1 -1 0 0 0 -1 2 -2 3 0 3 0 0 0 0 0 0 0 0 0 0 -4 2 -2 -1 0 0 0 -1 -1 -1 1 -1 0 -1 0 0 0 0 0 0 0 -1 0 0 0 0 0 0 -4 0 -6 0 -2 7 -6 1 -4 2 0 1 -3 -4 -3 -2 3 -1 -2 0 -2 0 0 -1 -1 0 1 0 -1 1 0 0 -4 -1 -5 -4 -1 -3 0 1 2 -2 1 -2 -1 -2 0 -4 1 -2 0 0 0 0 -2 -2 0 -5 1 -4 2 -3 -3 2 -2 5 -1 4 0 0 0 0 0 0 0 0 -2 0 0 0 1 -3 -2 0 1 0 -3 1 2 2 2 4 0 3 -1 0 0 1 -1 1 1 0 0 0 0 -1 -1 0 -1 -1 -2 2 -3 -2 0 0 -1 0 0 0 0 1 0 0 -3 1 -1 -2 0 0 0 -2 -4 -3 1 3 -1 2 1 0 0 0 -1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 1 -2 1 -4 5 -5 0 -2 -2 0 0 0 0 -1 1 -5 2 -4 1 0 0 -1 -1 -2 -5 3 -6 0 -3 -1 -2 -3 -5 -4 -3 -3 -4 -4 -4 0 -4 -4 -6 -5 -3 -4 -6 0 -8 -1 -4 -2 -3 -3 -8 4 -4 2 -3 -1 -4 0 0 0 0 0 -1 2 -3 3 -5 3 -3 1 -5 -4 -3 0 -5 -2 -8 -6 -6 2 -8 1 -3 2 -4 1 -8 2 -7 3 -3 0 -5 2 -8 5 -3 3 -4 3 -6 5 -2 6 -2 3 -2 4 -3 3 -5 3 -2 4 5 4 3 1 4 3 -1 1 0 5 3 7 2 8 0 5 2 1 0 1 0 1 4 2 4 5 4 3 3 2 4 1 7 -2 4 -1 0 0 0 -2 3 5 3 3 2 2 0 3 -2 8 -1 7 1 3 3 5 3 7 -1 7 -3 5 0 2 -3 3 -7 0 5 1 7 3 3 3 3 6 3 7 -2 8 1 7 2 8 0 6 -3 5 -1 4 -5 4 -3 3 -1 3 0 5 4 7 0 0 8 -5 5 4 4 3 2 2 0 0 0 1 0 3 -1 1 3 5 3 4 3 2 3 4 5 6 2 4 1 1 7 -2 3 0 0 0 3 -3 2 -7 0 -3 6 -1 5 -4 1 -6 3 -1 3 -3 -1 -2 0 -1 4 -4 6 -7 1 -6 2 -5 1 -1 6 0 5 -9 0 -4 1 2 2 5 4 1 3 -2 2 -3 2 -4 1 2 -2 0 -1 -4 -1 -2 6 -3 -2 -1 -3 -3 1 -2 -1 -2 0 -1 1 0 -3 -2 -6 -2 3 -1 1 0 -1 -1 -1 0 -1 -1 1 -3 -3 -3 2 1 0 -1 0 1 1 -1 0 -2 -5 -2 -6 4 -6 z " />
 <path id="CD50" class="OUTLINE" d =" M 115 1034 l 5 2 3 2 5 3 6 2 3 5 -1 4 0 0 1 0 0 0 1 1 2 1 -2 1 3 0 -1 7 -2 1 -3 7 -4 4 -3 5 -3 5 -5 4 -5 0 -3 1 0 0 0 0 0 0 -1 1 -2 1 0 1 -3 1 -8 2 -4 0 0 0 -2 0 -3 2 -6 3 -7 0 -8 1 -7 1 -7 -1 -8 0 -7 0 -6 1 -3 5 -6 -1 -3 -4 -4 -3 -5 -2 -2 -4 -2 -8 2 -7 3 -4 1 0 1 0 3 -3 4 -3 3 -5 3 -4 4 -2 6 -4 4 -2 5 -1 6 -1 7 -3 4 -2 4 -1 5 -1 -1 1 4 -1 7 -1 6 -2 3 -3 1 1 0 0 1 0 0 1 0 0 1 0 2 -1 2 0 1 0 0 0 1 0 6 -1 z " />
-</g>
-    <g filter="url(#dropshadow)">
+</g><g filter="url(#dropshadow)">
 
 
 
@@ -129,7 +155,7 @@
 
     <text id="LCD11" class="TEXT" x="156" y="214">서울특별시</text>
 
-    <image id="seoulPm10" href="/img/level1.svg" x="156" y="214" height="83px" width="81px" />
+<!--    <image th:if="${overallList.get(0).getSeoul() == '매우좋음'}" href="/img/level1.svg" x="156" y="214" alt="매우좋음" height="83px" width="81px">-->
 <!--    <image th:if="${overallList.get(0).getSeoul() == '좋음'}" href="/img/level2.svg" x="156" y="214" alt="좋음" height="83px" width="81px">-->
 <!--        <img th:if="${overallList.get(0).getSeoul() == '좋음'}" src="/img/level2.svg" x="156" y="214" alt="좋음" height="83px" width="81px" />-->
 <!--    <image th:if="${overallList.get(0).getSeoul() == '나쁨'}" href="/img/level3.svg" x="156" y="214" alt="나쁨" height="83px" width="81px">-->
@@ -169,7 +195,7 @@
 
 
 
-<!--    <image href="/img/level1.svg" x="156" y="214" alt="안나와" height="80px" width="80px">-->
+    <image href="/img/level1.svg" x="156" y="214" height="80px" width="80px"/>
 
 
 
@@ -182,14 +208,6 @@
     <text id="LCD48" class="TEXT" x="367" y="672">경상남도</text>
 
     <text id="LCD50" class="TEXT" x="76" y="1070">제주특별자치도</text>
-
-
-
-
-
-
-
-
 
 
 
@@ -241,60 +259,111 @@
 </g>
 </svg>
 
-<thead>
-<tr>
-    <th>Data Time</th>
-    <th>Inform Overall</th>
-    <th>Inform Cause</th>
-    <th>Inform Grade</th>
-    <th>Inform Data</th>
-</tr>
-</thead>
-<tbody>
-<tr th:each="each : ${overallList}">
-    <td th:text="${each.getDataTime()}"></td>
-    <td th:text="${each.getInformOverall()}"></td>
-    <td th:text="${each.getInformCause()}"></td>
-    <td th:text="${each.getSeoul()}"></td>
-    <td th:text="${each.getInformData()}"></td>
-</tr>
+   </div>
+
+    <div class="header"></div>
+    <div class="footer"></div>
+
+    <div class="description">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Data Time</th>
+                <th>Inform Overall</th>
+                <th>Inform Cause</th>
+                <th>Inform Grade</th>
+                <th>Inform Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="each : ${overallList}">
+                <td th:text="${each.getDataTime()}"></td>
+                <td th:text="${each.getInformOverall()}"></td>
+                <td th:text="${each.getInformCause()}"></td>
+                <td th:text="${each.getSeoul()}"></td>
+                <td th:text="${each.getInformData()}"></td>
+            </tr>
 
 
-<div th:each="each : ${overallList}">
-    <td id="seoulStatus" th:text="${each.getSeoul()}">서울특별시</td>
-    <td th:text="${each.getBusan()}">부산광역시</td>
-    <td th:text="${each.getDaegu()}">대구광역시</td>
-    <td th:text="${each.getIncheon()}">인천광역시</td>
-    <td th:text="${each.getGwangju()}">광주광역시</td>
-    <td th:text="${each.getDaejeon()}">대전광역시</td>
-    <td th:text="${each.getUlsan()}">울산광역시</td>
-    <td th:text="${each.getSejong()}">세종특별자치시</td>
-    <td th:text="${each.getGyeonggiSouth()}">경기도</td>
-    <td th:text="${each.getYeongdong()}">강원도</td>
-    <td th:text="${each.getChungbuk()}">충청북도</td>
-    <td th:text="${each.getChungnam()}">충청남도</td>
-    <td th:text="${each.getJenbuk()}">전라북도</td>
-    <td th:text="${each.getJeonnam()}">전라남도</td>
-    <td th:text="${each.getGyeongbuk()}">경상북도</td>
-    <td th:text="${each.getGyeongnam()}">경상남도</td>
-    <td id="jejuStatus" th:text="${each.getJeju()}">제주특별자치도</td>
+
+
+
+                <td class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}">서울특별시</td>
+                <td class="busanStatus" th:text="${pm10List.get(0).getBusan()}">부산광역시</td>
+                <td class="daeguStats" th:text="${pm10List.get(0).getDaegu()}">대구광역시</td>
+                <td class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}">인천광역시</td>
+                <td class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}">광주광역시</td>
+                <td class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}">대전광역시</td>
+                <td class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}">울산광역시</td>
+                <td class="sejongStatus" th:text="${pm10List.get(0).getSejong()}">세종특별자치시</td>
+                <td class="gyeonggiSouthStatus" th:text="${pm10List.get(0).getGyeonggiSouth()}">경기남부</td>
+                <td class="gyeonggiNorthStatus" th:text="${pm10List.get(0).getGyeonggiNorth()}">경기북부</td>
+                <td class="yeongdongStatus" th:text="${pm10List.get(0).getYeongdong()}">영동</td>
+                <td class="yeongseoStatus" th:text="${pm10List.get(0).getYeongseo()}">영서</td>
+                <td class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}">충청북도</td>
+                <td class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}">충청남도</td>
+                <td class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}">전라북도</td>
+                <td class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}">전라남도</td>
+                <td class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}">경상북도</td>
+                <td class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}">경상남도</td>
+                <td class="jejuStatus" th:text="${pm10List.get(0).getJeju()}">제주특별자치도</td>
+
+
+            </tbody>
+
+        </table>
+
+
+
+
+
+    </div>
+
+
+    <script>
+
+       let test = document.querySelector('.seoulStatus');
+       let test2 = document.querySelector('.busanStatus');
+
+
+
+       let pathElement = document.querySelector('#seoulPath');
+       let pathElement2 = document.querySelector('#busanPath');
+
+       if (test.innerText === "매우좋음") {
+           pathElement.style.fill = "#00a9fe"; // 원하는 색상으로 변경
+       } else if (test.innerText === "좋음") {
+           pathElement.style.fill = "#51ca66"; // 다른 색상으로 변경
+       } else if (test.innerText === "나쁨") {
+           pathElement.style.fill = "#fde801"; // 다른 색상으로 변경
+       } else if (test.innerText === "매우나쁨") {
+           pathElement.style.fill = "#fd0042"; // 다른 색상으로 변경
+       }
+
+       if (test2.innerText === "매우좋음") {
+           pathElement2.style.fill = "#00a9fe"; // 원하는 색상으로 변경
+       } else if (test.innerText === "좋음") {
+           pathElement2.style.fill = "#51ca66"; // 다른 색상으로 변경
+       } else if (test.innerText === "나쁨") {
+           pathElement2.style.fill = "#fde801"; // 다른 색상으로 변경
+       } else {
+           pathElement2.style.fill = "#fd0042"; // 다른 색상으로 변경
+       }
+
+
+
+    </script>
+
+
 </div>
-
-</tbody>
-
-</table>
-
 
 
 </body>
 
-<script>
-    let test = document.querySelector('#jejuStatus');
 
-    if (test === "좋음") {
-        test.innerHTML += '<h3>이것이 나오냐마냐 테스트</h3>';
-    }
 
-</script>
+
+
 
 </html>

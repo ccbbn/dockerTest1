@@ -11,4 +11,8 @@ public interface OverallRepository extends JpaRepository<Overall, Long> {
 
     List<Overall> findAll();
 
+
+    List<Overall> findByInformCode(String informCode);
+
+
 }

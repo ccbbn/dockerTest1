@@ -21,6 +21,12 @@ public class OverallService {
         return overallRepository.findAll();
     }
 
+    public List<Overall> findInformCode(String informCode) {
+        return overallRepository.findByInformCode(informCode);
+    }
+
+
+
     public void save(Overall overall){
         overallRepository.save(overall);
     }

@@ -31,5 +31,39 @@
   }
 </script>
 
+
+<svg width="400" height="400">
+    <g id="original-svg">
+        <!-- 기존 svg 요소들 -->
+    </g>
+
+    <script>
+        // 조건에 따라 level1.svg를 표시할지 결정하는 변수
+        var showLevel1 = true;
+
+        // 조건에 따라 level1.svg를 보여주는 함수
+        function showLevel1SVG() {
+            if (showLevel1) {
+                var img = document.createElementNS("http://www.w3.org/2000/svg", "image");
+                img.setAttributeNS(null, "href", "/img/level1.svg");
+                img.setAttributeNS(null, "x", "156");
+                img.setAttributeNS(null, "y", "214");
+                img.setAttributeNS(null, "height", "80px");
+                img.setAttributeNS(null, "width", "80px");
+
+                var svg = document.getElementById("original-svg");
+                svg.appendChild(img);
+            }
+        }
+
+        // showLevel1SVG 함수 호출
+        showLevel1SVG();
+    </script>
+</svg>
+
+
+
+
+
 </body>
 </html>

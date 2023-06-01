@@ -88,6 +88,9 @@ public class OverallController {
 
         overallService.deleteAll();
 
+
+
+
         for (JsonNode itemNode : dataNode) {
             String dataTime = itemNode.path("dataTime").asText();
             String informOverall = itemNode.path("informOverall").asText();
@@ -98,9 +101,11 @@ public class OverallController {
 
 
 
+
             LocalDateTime condition1 = LocalDateTime.parse(dataTime.substring(0, 14), DateTimeFormatter.ofPattern("yyyy-MM-dd HH시"));
 
             Overall overall = new Overall();
+            Overall overall1 = new Overall();
 
             if ((condition1.getHour() > LocalDateTime.now().getHour() - 6) && (Objects.equals(informData, LocalDate.now().format(DateTimeFormatter.ISO_DATE)))) {
 
@@ -137,7 +142,16 @@ public class OverallController {
 
                 List<Overall> overallList = overallService.findAll();
                 model.addAttribute("overallList", overallList);
-                System.out.println(overallList);
+
+
+
+
+                List<Overall> pm10 = overallService.findInformCode("PM10");
+                List<Overall> pm25 = overallService.findInformCode("PM25");
+
+                model.addAttribute("pm10List", pm10);
+                model.addAttribute("pm25List", pm25);
+
 
 
 
