@@ -61,23 +61,19 @@
 
 
 
-
-    .pm10 {
-        border-collapse: collapse;
-        width: 100%;
+    .pm10 th {
+        text-align: center;
+        background-color: #F5F5F5;
+        width: 150px;
+        padding: 8px;
+        font-weight: bold;
         font-family: Arial, sans-serif;
     }
-
-    .pm10 th {
-        background-color: #F5F5F5;
-        padding: 8px;
-        text-align: left;
-        font-weight: bold;
+    .pm10 tr {
+        text-align: center;
     }
 
-    .pm10 td {
-        padding: 8px;
-    }
+
 
     .pm10 tr:nth-child(even) {
         background-color: #F9F9F9;
@@ -87,19 +83,74 @@
         background-color: #E5E5E5;
     }
 
-    .seoulStatus, .busanStatus, .daeguStatus,
-    .incheonStatus, .gwangjuStatus, .daejeonStatus,
-    .ulsanStatus, .sejongStatus, .gyeonggiSouthStatus,
-    .gyeonggiNorthStatus, .yeongdongStatus, .yeongseoStatus,
-    .chungbukStatus, .chungnamStatus, .jenbukStatus,
-    .jeonnamStatus, .gyeongbukStatus, .gyeongnamStatus,
-    .jejuStatus {
-        background-color: #FFEBCD;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: bold;
+    .goodStatus {
+        background-color: #00a9fe;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-weight: normal;
+        vertical-align: middle;
+
+        align-items: center;
+
+    }
+    .goodStatus img {
+        margin-left: 2px; /* 이미지와 텍스트 사이의 간격을 조정할 수 있습니다 */
     }
 
+    .normalStatus {
+        background-color: #51ca66;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+
+    .badStatus {
+        background-color: #fde801;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+
+    .terribleStatus {
+        background-color: #fd0042;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-weight: normal;
+    }
+
+
+
+
+
+    .overall {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .overall thead th {
+        background-color: #ffcccc; /* 머그런 핑크색 */
+        font-weight: bold;
+        color: #fff; /* 흰색 글자 */
+    }
+
+    .overall th, .overall td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .overall tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* 연한 회색 */
+    }
+
+    .overall tbody tr:hover {
+        background-color: #ffeb99; /* 연한 노란색 */
+    }
+
+    .overall td {
+        font-size: 14px;
+        color: #333; /* 어두운 회색 글자 */
+    }
 
 
 
@@ -145,19 +196,11 @@
 </g><g filter="url(#dropshadow)">
 
 
-
-
-
     <text id="LCD11" class="TEXT" x="156" y="214">서울특별시</text>
-
-    <image href="/img/level1.svg" x="156" y="214" height="80px" width="80px"/>
-
 
     <text id="LCD26" class="TEXT" x="503" y="695">부산광역시</text>
 
-
     <text id="LCD27" class="TEXT" x="418" y="567">대구광역시</text>
-
 
     <text id="LCD28" class="TEXT" x="67" y="177">인천광역시</text>
 
@@ -187,53 +230,6 @@
 
     <text id="LCD50" class="TEXT" x="76" y="1070">제주특별자치도</text>
 
-
-
-<!--        GABARGE-->
-<!--        <text th:text="${'pm10' + overallList.get(0).getSeoul()}"  x="156" y="230">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getSeoul()}"  x="156" y="260">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getBusan()}"  x="503" y="740">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getBusan()}"  x="503" y="770">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getDaegu()}"  x="418" y="597">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getDaegu()}"  x="418" y="627">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getIncheon()}"  x="67" y="207">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getIncheon()}"  x="67" y="237">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getGwangju()}"  x="127" y="737">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getGwangju()}"  x="127" y="767">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getDaejeon()}"  x="221" y="493">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getDaejeon()}"  x="221" y="523">pm25</text>-->
-<!--        -->
-<!--        <text th:text="${'pm10' + overallList.get(0).getUlsan()}"  x="531" y="652">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getUlsan()}"  x="531" y="682">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getSejong()}"  x="199" y="448">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getSejong()}"  x="199" y="478">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getGyeonggiNorth()}"  x="216" y="275">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getGyeonggiNorth()}"  x="216" y="305">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getGyeonggiSouth()}"  x="216" y="335">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getGyeonggiSouth()}"  x="216" y="365">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getYeongdong()}"  x="370" y="209">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getYeongdong()}"  x="370" y="239">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getYeongseo()}"  x="320" y="209">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getYeongseo()}"  x="320" y="239">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getChungbuk()}"  x="294" y="411">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getChungbuk()}"  x="294" y="441">pm25</text>-->
-
-<!--        <text th:text="${'pm10' + overallList.get(0).getChungnam()}"  x="105" y="479">pm10</text>-->
-<!--        <text th:text="${'pm25' + overallList.get(1).getChungnam()}"  x="105" y="509">pm25</text>-->
-
-
-
 </g>
 </svg>
 
@@ -241,21 +237,132 @@
 
     <div class="header"></div>
     <div class="footer"></div>
-
     <div class="description">
-        <table>
+            <div>
+                <table class = "pm10">
+                    <thead>
+                    <tr>
+                        <th>지역</th>
+                        <th>미세먼지 등급</th>
+                        <th>초미세먼지 등급</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="areaName">서울특별시</td>
+                        <td class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}"></td>
+                        <td class="seoulStatus25" th:text="${pm25List.get(0).getSeoul()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">부산광역시</td>
+                        <td class="busanStatus" th:text="${pm10List.get(0).getBusan()}"></td>
+                        <td class="busanStatus25" th:text="${pm25List.get(0).getBusan()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">대구광역시</td>
+                        <td class="daeguStatus" th:text="${pm10List.get(0).getDaegu()}"></td>
+                        <td class="daeguStatus25" th:text="${pm25List.get(0).getDaegu()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">인천광역시</td>
+                        <td class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}"></td>
+                        <td class="incheonStatus25" th:text="${pm25List.get(0).getIncheon()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">광주광역시</td>
+                        <td class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}"></td>
+                        <td class="gwangjuStatus25" th:text="${pm25List.get(0).getGwangju()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">대전광역시</td>
+                        <td class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}"></td>
+                        <td class="daejeonStatus25" th:text="${pm25List.get(0).getDaejeon()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">울산광역시</td>
+                        <td class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}"></td>
+                        <td class="ulsanStatus25" th:text="${pm25List.get(0).getUlsan()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">세종특별자치시</td>
+                        <td class="sejongStatus" th:text="${pm10List.get(0).getSejong()}"></td>
+                        <td class="sejongStatus25" th:text="${pm25List.get(0).getSejong()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">경기남부</td>
+                        <td class="gyeonggiSouthStatus" th:text="${pm10List.get(0).getGyeonggiSouth()}"></td>
+                        <td class="gyeonggiSouthStatus25" th:text="${pm25List.get(0).getGyeonggiSouth()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">경기북부</td>
+                        <td class="gyeonggiNorthStatus" th:text="${pm10List.get(0).getGyeonggiNorth()}"></td>
+                        <td class="gyeonggiNorthStatus25" th:text="${pm25List.get(0).getGyeonggiNorth()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">영동</td>
+                        <td class="yeongdongStatus" th:text="${pm10List.get(0).getYeongdong()}"></td>
+                        <td class="yeongdongStatus25" th:text="${pm25List.get(0).getYeongdong()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">영서</td>
+                        <td class="yeongseoStatus" th:text="${pm10List.get(0).getYeongseo()}"></td>
+                        <td class="yeongseoStatus25" th:text="${pm25List.get(0).getYeongseo()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">충청북도</td>
+                        <td class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}"></td>
+                        <td class="chungbukStatus25" th:text="${pm25List.get(0).getChungbuk()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">충청남도</td>
+                        <td class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}"></td>
+                        <td class="chungnamStatus25" th:text="${pm25List.get(0).getChungnam()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">전라북도</td>
+                        <td class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}"></td>
+                        <td class="jenbukStatus25" th:text="${pm25List.get(0).getJenbuk()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">전라남도</td>
+                        <td class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}"></td>
+                        <td class="jeonnamStatus25" th:text="${pm25List.get(0).getJeonnam()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">경상북도</td>
+                        <td class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}"></td>
+                        <td class="gyeongbukStatus25" th:text="${pm25List.get(0).getGyeongbuk()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">경상남도</td>
+                        <td class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}"></td>
+                        <td class="gyeongnamStatus25" th:text="${pm25List.get(0).getGyeongnam()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="areaName">제주특별자치도</td>
+                        <td class="jejuStatus" th:text="${pm10List.get(0).getJeju()}"></td>
+                        <td class="jejuStatus25" th:text="${pm25List.get(0).getJeju()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        <table class ="overall">
             <thead>
             <tr>
-                <th>Data Time</th>
-                <th>Inform Overall</th>
-                <th>Inform Cause</th>
-                <th>Inform Grade</th>
-                <th>Inform Data</th>
+                <th>통보시간</th>
+                <th>통보코드</th>
+                <th>예보개황</th>
+                <th>발생원인</th>
+                <th>예보등급</th>
+                <th>예측일</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="each : ${overallList}">
                 <td th:text="${each.getDataTime()}"></td>
+                <td th:text="${each.getInformCode()}"></td>
                 <td th:text="${each.getInformOverall()}"></td>
                 <td th:text="${each.getInformCause()}"></td>
                 <td th:text="${each.getSeoul()}"></td>
@@ -263,227 +370,6 @@
             </tr>
             </tbody>
         </table>
-
-            <div>
-                <table class = "pm10">
-                    <thead>
-                    <tr>
-                        <th>지역</th>
-                        <th>미세먼지 농도</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>서울특별시</td>
-                        <td class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}"></td>
-                    </tr>
-                    <tr>
-                        <td>부산광역시</td>
-                        <td class="busanStatus" th:text="${pm10List.get(0).getBusan()}"></td>
-                    </tr>
-                    <tr>
-                        <td>대구광역시</td>
-                        <td class="daeguStatus" th:text="${pm10List.get(0).getDaegu()}"></td>
-                    </tr>
-                    <tr>
-                        <td>인천광역시</td>
-                        <td class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}"></td>
-                    </tr>
-                    <tr>
-                        <td>광주광역시</td>
-                        <td class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}"></td>
-                    </tr>
-                    <tr>
-                        <td>대전광역시</td>
-                        <td class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}"></td>
-                    </tr>
-                    <tr>
-                        <td>울산광역시</td>
-                        <td class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}"></td>
-                    </tr>
-                    <tr>
-                        <td>세종특별자치시</td>
-                        <td class="sejongStatus" th:text="${pm10List.get(0).getSejong()}"></td>
-                    </tr>
-                    <tr>
-                        <td>경기남부</td>
-                        <td class="gyeonggiSouthStatus" th:text="${pm10List.get(0).getGyeonggiSouth()}"></td>
-                    </tr>
-                    <tr>
-                        <td>경기북부</td>
-                        <td class="gyeonggiNorthStatus" th:text="${pm10List.get(0).getGyeonggiNorth()}"></td>
-                    </tr>
-                    <tr>
-                        <td>영동</td>
-                        <td class="yeongdongStatus" th:text="${pm10List.get(0).getYeongdong()}"></td>
-                    </tr>
-                    <tr>
-                        <td>영서</td>
-                        <td class="yeongseoStatus" th:text="${pm10List.get(0).getYeongseo()}"></td>
-                    </tr>
-                    <tr>
-                        <td>충청북도</td>
-                        <td class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}"></td>
-                    </tr>
-                    <tr>
-                        <td>충청남도</td>
-                        <td class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}"></td>
-                    </tr>
-                    <tr>
-                        <td>전라북도</td>
-                        <td class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}"></td>
-                    </tr>
-                    <tr>
-                        <td>전라남도</td>
-                        <td class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}"></td>
-                    </tr>
-                    <tr>
-                        <td>경상북도</td>
-                        <td class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}"></td>
-                    </tr>
-                    <tr>
-                        <td>경상남도</td>
-                        <td class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}"></td>
-                    </tr>
-                    <tr>
-                        <td>제주특별자치도</td>
-                        <td class="jejuStatus" th:text="${pm10List.get(0).getJeju()}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-<!--            <div class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}">서울특별시</div>-->
-<!--            <div class="busanStatus" th:text="${pm10List.get(0).getBusan()}">부산광역시</div>-->
-<!--            <div class="daeguStatus" th:text="${pm10List.get(0).getDaegu()}">대구광역시</div>-->
-<!--            <div class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}">인천광역시</div>-->
-<!--            <div class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}">광주광역시</div>-->
-<!--            <div class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}">대전광역시</div>-->
-<!--            <div class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}">울산광역시</div>-->
-<!--            <div class="sejongStatus" th:text="${pm10List.get(0).getSejong()}">세종특별자치시</div>-->
-<!--            <div class="gyeonggiSouthStatus" th:text="${pm10List.get(0).getGyeonggiSouth()}">경기남부</div>-->
-<!--            <div class="gyeonggiNorthStatus" th:text="${pm10List.get(0).getGyeonggiNorth()}">경기북부</div>-->
-<!--            <div class="yeongdongStatus" th:text="${pm10List.get(0).getYeongdong()}">영동</div>-->
-<!--            <div class="yeongseoStatus" th:text="${pm10List.get(0).getYeongseo()}">영서</div>-->
-<!--            <div class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}">충청북도</div>-->
-<!--            <div class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}">충청남도</div>-->
-<!--            <div class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}">전라북도</div>-->
-<!--            <div class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}">전라남도</div>-->
-<!--            <div class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}">경상북도</div>-->
-<!--            <div class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}">경상남도</div>-->
-<!--            <div class="jejuStatus" th:text="${pm10List.get(0).getJeju()}">제주특별자치도</div>-->
-            </div>
-
-
-
-
-        <div>
-            <table id = "pm25">
-                <thead>
-                <tr>
-                    <th>지역</th>
-                    <th>미세먼지 농도</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>서울특별시</td>
-                    <td class="seoulStatus25" th:text="${pm25List.get(0).getSeoul()}"></td>
-                </tr>
-                <tr>
-                    <td>부산광역시</td>
-                    <td class="busanStatus25" th:text="${pm25List.get(0).getBusan()}"></td>
-                </tr>
-                <tr>
-                    <td>대구광역시</td>
-                    <td class="daeguStatus25" th:text="${pm25List.get(0).getDaegu()}"></td>
-                </tr>
-                <tr>
-                    <td>인천광역시</td>
-                    <td class="incheonStatus25" th:text="${pm25List.get(0).getIncheon()}"></td>
-                </tr>
-                <tr>
-                    <td>광주광역시</td>
-                    <td class="gwangjuStatus25" th:text="${pm25List.get(0).getGwangju()}"></td>
-                </tr>
-                <tr>
-                    <td>대전광역시</td>
-                    <td class="daejeonStatus25" th:text="${pm25List.get(0).getDaejeon()}"></td>
-                </tr>
-                <tr>
-                    <td>울산광역시</td>
-                    <td class="ulsanStatus25" th:text="${pm25List.get(0).getUlsan()}"></td>
-                </tr>
-                <tr>
-                    <td>세종특별자치시</td>
-                    <td class="sejongStatus25" th:text="${pm25List.get(0).getSejong()}"></td>
-                </tr>
-                <tr>
-                    <td>경기남부</td>
-                    <td class="gyeonggiSouthStatus25" th:text="${pm25List.get(0).getGyeonggiSouth()}"></td>
-                </tr>
-                <tr>
-                    <td>경기북부</td>
-                    <td class="gyeonggiNorthStatus25" th:text="${pm25List.get(0).getGyeonggiNorth()}"></td>
-                </tr>
-                <tr>
-                    <td>영동</td>
-                    <td class="yeongdongStatus25" th:text="${pm25List.get(0).getYeongdong()}"></td>
-                </tr>
-                <tr>
-                    <td>영서</td>
-                    <td class="yeongseoStatus25" th:text="${pm25List.get(0).getYeongseo()}"></td>
-                </tr>
-                <tr>
-                    <td>충청북도</td>
-                    <td class="chungbukStatus25" th:text="${pm25List.get(0).getChungbuk()}"></td>
-                </tr>
-                <tr>
-                    <td>충청남도</td>
-                    <td class="chungnamStatus25" th:text="${pm25List.get(0).getChungnam()}"></td>
-                </tr>
-                <tr>
-                    <td>전라북도</td>
-                    <td class="jenbukStatus25" th:text="${pm25List.get(0).getJenbuk()}"></td>
-                </tr>
-                <tr>
-                    <td>전라남도</td>
-                    <td class="jeonnamStatus25" th:text="${pm25List.get(0).getJeonnam()}"></td>
-                </tr>
-                <tr>
-                    <td>경상북도</td>
-                    <td class="gyeongbukStatus25" th:text="${pm25List.get(0).getGyeongbuk()}"></td>
-                </tr>
-                <tr>
-                    <td>경상남도</td>
-                    <td class="gyeongnamStatus25" th:text="${pm25List.get(0).getGyeongnam()}"></td>
-                </tr>
-                <tr>
-                    <td>제주특별자치도</td>
-                    <td class="jejuStatus25" th:text="${pm25List.get(0).getJeju()}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-            <!--            <div class="seoulStatus25" th:text="${pm25List.get(0).getSeoul()}">서울특별시</div>-->
-<!--            <div class="busanStatus25" th:text="${pm25List.get(0).getBusan()}">부산광역시</div>-->
-<!--            <div class="daeguStatus25" th:text="${pm25List.get(0).getDaegu()}">대구광역시</div>-->
-<!--            <div class="incheonStatus25" th:text="${pm25List.get(0).getIncheon()}">인천광역시</div>-->
-<!--            <div class="gwangjuStatus25" th:text="${pm25List.get(0).getGwangju()}">광주광역시</div>-->
-<!--            <div class="daejeonStatus25" th:text="${pm25List.get(0).getDaejeon()}">대전광역시</div>-->
-<!--            <div class="ulsanStatus25" th:text="${pm25List.get(0).getUlsan()}">울산광역시</div>-->
-<!--            <div class="sejongStatus25" th:text="${pm25List.get(0).getSejong()}">세종특별자치시</div>-->
-<!--            <div class="gyeonggiSouthStatus25" th:text="${pm25List.get(0).getGyeonggiSouth()}">경기남부</div>-->
-<!--            <div class="gyeonggiNorthStatus25" th:text="${pm25List.get(0).getGyeonggiNorth()}">경기북부</div>-->
-<!--            <div class="yeongdongStatus25" th:text="${pm25List.get(0).getYeongdong()}">영동</div>-->
-<!--            <div class="yeongseoStatus25" th:text="${pm25List.get(0).getYeongseo()}">영서</div>-->
-<!--            <div class="chungbukStatus25" th:text="${pm25List.get(0).getChungbuk()}">충청북도</div>-->
-<!--            <div class="chungnamStatus25" th:text="${pm25List.get(0).getChungnam()}">충청남도</div>-->
-<!--            <div class="jenbukStatus25" th:text="${pm25List.get(0).getJenbuk()}">전라북도</div>-->
-<!--            <div class="jeonnamStatus25" th:text="${pm25List.get(0).getJeonnam()}">전라남도</div>-->
-<!--            <div class="gyeongbukStatus25" th:text="${pm25List.get(0).getGyeongbuk()}">경상북도</div>-->
-<!--            <div class="gyeongnamStatus25" th:text="${pm25List.get(0).getGyeongnam()}">경상남도</div>-->
-<!--            <div class="jejuStatus25" th:text="${pm25List.get(0).getJeju()}">제주특별자치도</div>-->
          </div>
 
     <script>
@@ -538,6 +424,10 @@
            }
        };
 
+
+
+
+
        // 글자에 따라 표의 바탕색도 바뀌게 하기!
 
 
@@ -559,6 +449,89 @@
        setColor(pathElement15, gyeongbuk.innerText);
        setColor(pathElement16, gyeongnam.innerText);
        setColor(pathElement17, jeju.innerText);
+
+
+
+       function addStatusClass(element, status) {
+           if (status === "좋음") {
+               element.classList.add("goodStatus");
+               // element.innerHTML += '<img src="/img/level1.svg" width="24px"  height="24px" alt="좋음">';
+           } else if (status === "보통") {
+               element.classList.add("normalStatus");
+               element.innerHTML += '<img src="/img/level2.svg" alt="보통">';
+           } else if (status === "나쁨") {
+               element.classList.add("badStatus");
+               element.innerHTML += '<img src="/img/level3.svg" alt="나쁨">';
+           } else {
+               element.classList.add("terribleStatus");
+               element.innerHTML += '<img src="/img/level4.svg" alt="매우나쁨">';
+           }
+       }
+
+       addStatusClass(seoul, seoul.innerText);
+       addStatusClass(busan, busan.innerText);
+       addStatusClass(deagu, deagu.innerText);
+       addStatusClass(incheon, incheon.innerText);
+       addStatusClass(gwangju, gwangju.innerText);
+       addStatusClass(daejeon, daejeon.innerText);
+       addStatusClass(ulsan, ulsan.innerText);
+       addStatusClass(sejong, sejong.innerText);
+
+       // addStatusClass(, .innerText);
+       // addStatusClass(, .innerText);
+
+       addStatusClass(chungbuk, chungbuk.innerText);
+       addStatusClass(chungnam, chungnam.innerText);
+       addStatusClass(jenbuk, jenbuk.innerText);
+       addStatusClass(jeonnam, jeonnam.innerText);
+       addStatusClass(gyeongbuk, gyeongbuk.innerText);
+       addStatusClass(gyeongnam, gyeongnam.innerText);
+       addStatusClass(jeju, jeju.innerText);
+
+
+       let seoul25 = document.querySelector('.seoulStatus25');
+       let busan25= document.querySelector('.busanStatus25');
+       let deagu25 = document.querySelector('.daeguStatus25');
+       let incheon25 = document.querySelector('.incheonStatus25');
+       let gwangju25 = document.querySelector('.gwangjuStatus25');
+       let daejeon25 = document.querySelector('.daejeonStatus25');
+       let ulsan25 = document.querySelector('.ulsanStatus25');
+       let sejong25 = document.querySelector('.sejongStatus25');
+       let a25;
+       let b25;
+       let chungbuk25 = document.querySelector('.chungbukStatus25');
+       let chungnam25 = document.querySelector('.chungnamStatus25');
+       let jenbuk25 = document.querySelector('.jenbukStatus25');
+       let jeonnam25 = document.querySelector('.jeonnamStatus25');
+       let gyeongbuk25 = document.querySelector('.gyeongbukStatus25');
+       let gyeongnam25 = document.querySelector('.gyeongnamStatus25');
+       let jeju25 = document.querySelector('.jejuStatus25');
+
+       addStatusClass(seoul25, seoul25.innerText);
+       addStatusClass(busan25, busan25.innerText);
+       addStatusClass(deagu25, deagu25.innerText);
+       addStatusClass(incheon25, incheon25.innerText);
+       addStatusClass(gwangju25, gwangju25.innerText);
+       addStatusClass(daejeon25, daejeon25.innerText);
+       addStatusClass(ulsan25, ulsan25.innerText);
+       addStatusClass(sejong25, sejong25.innerText);
+
+       // addStatusClass(, .innerText);
+       // addStatusClass(, .innerText);
+
+       addStatusClass(chungbuk25, chungbuk25.innerText);
+       addStatusClass(chungnam25, chungnam25.innerText);
+       addStatusClass(jenbuk25, jenbuk25.innerText);
+       addStatusClass(jeonnam25, jeonnam25.innerText);
+       addStatusClass(gyeongbuk25, gyeongbuk25.innerText);
+       addStatusClass(gyeongnam25, gyeongnam25.innerText);
+       addStatusClass(jeju25, jeju25.innerText);
+
+
+
+
+
+
     </script>
 </div>
 
