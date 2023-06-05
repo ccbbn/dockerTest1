@@ -21,5 +21,9 @@ public class SidoService {
         return sidoRepository.findAll();
     }
 
+    public Sido findLastByOrderByGPm10Value() { return sidoRepository.findLastByOrderByGPm10Value();}
+
+
+
 
 }

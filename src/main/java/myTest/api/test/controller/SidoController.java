@@ -14,6 +14,7 @@ import myTest.api.test.service.SidoStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,22 +45,22 @@ public class SidoController {
     @Transactional
     public void init() throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=MRi2mirgR5H4KnX%2FSaac2Hh6O76YRJtsHTZ60S%2F5zu%2FNoV5kDjup632dozD9jmKy%2F1inJix1TfB%2F1ns%2FDkY76Q%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*xml 또는 json*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("700", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("sidoName","UTF-8") + "=" + URLEncoder.encode("전국", "UTF-8")); /*시도 이름(전국, 서울, 부산, 대구, 인천, 광주, 대전, 울산, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주, 세종)*/
-        urlBuilder.append("&" + URLEncoder.encode("ver","UTF-8") + "=" + URLEncoder.encode("1.3", "UTF-8")); /*버전별 상세 결과 참고*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=MRi2mirgR5H4KnX%2FSaac2Hh6O76YRJtsHTZ60S%2F5zu%2FNoV5kDjup632dozD9jmKy%2F1inJix1TfB%2F1ns%2FDkY76Q%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*xml 또는 json*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("700", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("sidoName", "UTF-8") + "=" + URLEncoder.encode("전국", "UTF-8")); /*시도 이름(전국, 서울, 부산, 대구, 인천, 광주, 대전, 울산, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주, 세종)*/
+        urlBuilder.append("&" + URLEncoder.encode("ver", "UTF-8") + "=" + URLEncoder.encode("1.3", "UTF-8")); /*버전별 상세 결과 참고*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
         System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -76,6 +77,22 @@ public class SidoController {
         JsonNode dataNode = rootNode.path("response").path("body").path("items"); // "response.body.items"에 해당하는 노드를 가져옴
 
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
+
+
+        int gSumPm10 = 0;
+        int gCntPm10 = 0;
+
+        int gSumPm25 = 0;
+        int gCntPm25 = 0;
+
+
+        int gwSumPm10 = 0;
+        int gwCntPm10 = 0;
+
+        int gwSumPm25 = 0;
+        int gwCntPm25 = 0;
+
+
         for (JsonNode itemNode : dataNode) {
 
 
@@ -94,17 +111,16 @@ public class SidoController {
             }
 
             if ((pm10Value.equals("null") || pm10Value.equals("-")) ||
-                (pm10Grade.equals("null") || pm10Grade.equals("-"))) {
+                    (pm10Grade.equals("null") || pm10Grade.equals("-"))) {
                 pm10Value = "측정소 오류";
                 pm10Grade = "측정소 오류";
             }
 
             if ((pm25Value.equals("null") || pm25Value.equals("-")) ||
-                (pm25Grade.equals("null") || pm25Grade.equals("-"))){
+                    (pm25Grade.equals("null") || pm25Grade.equals("-"))) {
                 pm25Value = "측정소 오류";
                 pm25Grade = "측정소 오류";
             }
-
 
 
             Sido sido = new Sido();
@@ -118,10 +134,48 @@ public class SidoController {
             sido.setPm25Grade(pm25Grade);
 
 
+            if (sido.getSidoName().equals("경기")) {
+                if (!sido.getPm10Value().equals("측정소 오류")) {
+                    int pm10ValueInt = Integer.parseInt(sido.getPm10Value());
+                    gSumPm10 += pm10ValueInt;
+                    gCntPm10++;
+                }
+            }
+            sido.setGPm10Value(String.valueOf(((double) gSumPm10) / gCntPm10));
+
+            if (sido.getSidoName().equals("경기")) {
+                if (!sido.getPm25Value().equals("측정소 오류")) {
+                    int pm25ValueInt = Integer.parseInt(sido.getPm25Value());
+                    gSumPm25 += pm25ValueInt;
+                    gCntPm25++;
+                }
+            }
+            sido.setGPm25Value(String.valueOf(((double) gSumPm25) / gCntPm25));
+
+
+            if (sido.getSidoName().equals("강원")) {
+                if (!sido.getPm10Value().equals("측정소 오류")) {
+                    int Pm10ValueInt = Integer.parseInt(sido.getPm10Value());
+                    gwSumPm10 += Pm10ValueInt;
+                    gwCntPm10++;
+                }
+            }
+            sido.setGwPm10Value(String.valueOf(((double) gwSumPm10) / gwCntPm10));
+
+
+            if (sido.getSidoName().equals("강원")) {
+                if (!sido.getPm25Value().equals("측정소 오류")) {
+                    int Pm25ValueInt = Integer.parseInt(sido.getPm25Value());
+                    gwSumPm25 += Pm25ValueInt;
+                    gwCntPm25++;
+                }
+            }
+            sido.setGwPm25Value(String.valueOf(((double) gwSumPm25) / gwCntPm25));
+
             sidoRepository.save(sido);
+
         }
     }
-
 
     @PostConstruct
     @Transactional

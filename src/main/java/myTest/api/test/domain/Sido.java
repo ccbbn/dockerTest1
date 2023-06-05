@@ -22,6 +22,15 @@ public class Sido {
     private String pm25Grade;
     private String stationName;
 
+
+    private String gPm25Value;
+    private String gPm10Value;
+
+    private String gwPm25Value;
+    private String gwPm10Value;
+
+
+
     @OneToOne(mappedBy = "sido")
     private SidoStation sidoStation;
 

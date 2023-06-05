@@ -13,4 +13,8 @@ public interface SidoRepository extends JpaRepository<Sido, Long> {
     List<Sido> findAll();
 
 
+    @Query("SELECT s FROM Sido s WHERE s.Id = 642")
+    Sido findLastByOrderByGPm10Value();
+
+
 }
