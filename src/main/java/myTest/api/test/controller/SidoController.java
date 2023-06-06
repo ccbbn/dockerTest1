@@ -141,7 +141,8 @@ public class SidoController {
                     gCntPm10++;
                 }
             }
-            sido.setGPm10Value(String.valueOf(((double) gSumPm10) / gCntPm10));
+//            sido.setGPm10Value(String.valueOf(((double) gSumPm10) / gCntPm10));
+            sido.setGPm10Value(((double)gSumPm10 / gCntPm10));
 
             if (sido.getSidoName().equals("경기")) {
                 if (!sido.getPm25Value().equals("측정소 오류")) {
@@ -150,8 +151,8 @@ public class SidoController {
                     gCntPm25++;
                 }
             }
-            sido.setGPm25Value(String.valueOf(((double) gSumPm25) / gCntPm25));
-
+//            sido.setGPm25Value(String.valueOf(((double) gSumPm25) / gCntPm25));
+            sido.setGPm25Value(((double) gSumPm25 / gCntPm25));
 
             if (sido.getSidoName().equals("강원")) {
                 if (!sido.getPm10Value().equals("측정소 오류")) {
@@ -160,7 +161,8 @@ public class SidoController {
                     gwCntPm10++;
                 }
             }
-            sido.setGwPm10Value(String.valueOf(((double) gwSumPm10) / gwCntPm10));
+//            sido.setGwPm10Value(String.valueOf(((double) gwSumPm10) / gwCntPm10));
+            sido.setGwPm10Value(((double) gwSumPm10 / gwCntPm10));
 
 
             if (sido.getSidoName().equals("강원")) {
@@ -170,7 +172,8 @@ public class SidoController {
                     gwCntPm25++;
                 }
             }
-            sido.setGwPm25Value(String.valueOf(((double) gwSumPm25) / gwCntPm25));
+//            sido.setGwPm25Value(String.valueOf(((double) gwSumPm25) / gwCntPm25));
+            sido.setGwPm25Value(((double) gwSumPm25 / gwCntPm25));
 
             sidoRepository.save(sido);
 

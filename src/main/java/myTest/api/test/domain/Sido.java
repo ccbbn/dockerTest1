@@ -23,11 +23,11 @@ public class Sido {
     private String stationName;
 
 
-    private String gPm25Value;
-    private String gPm10Value;
+    private Double gPm25Value;
+    private Double gPm10Value;
 
-    private String gwPm25Value;
-    private String gwPm10Value;
+    private Double gwPm25Value;
+    private Double gwPm10Value;
 
 
 

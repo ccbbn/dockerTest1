@@ -44,6 +44,10 @@ public class Overall{
     private String yeongseo;
     private String gyeonggiSouth;
     private String gyeonggiNorth;
+
+    private String gyeonggi;
+    private String gangwon;
+
     private String incheon;
 
 

@@ -50,7 +50,7 @@ public class OverallController {
         urlBuilder.append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*xml 또는 json*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수(조회 날짜로 검색 시 사용 안함)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호(조회 날짜로 검색 시 사용 안함)*/
-        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-06-05", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
+        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-06-06", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
 //       urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
 //
         urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM10", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
@@ -146,16 +146,48 @@ public class OverallController {
                 model.addAttribute("overallList", overallList);
 
 
+                Sido gPm10 = sidoService.findLastByOrderByGPm10Value();
+                Sido gPm25 = sidoService.findLastByOrderByGPm25Value();
+
+
+                if (gPm10.getGPm10Value() < 31 && overall.getInformCode().equals("pm10")) {
+                    overall.setGyeonggi("좋음");
+                } else if (gPm10.getGPm10Value() < 81) {
+                    overall.setGyeonggi("보통");
+                } else if (gPm10.getGPm10Value() < 151) {
+                    overall.setGyeonggi("나쁨");
+                } else {
+                    overall.setGyeonggi("매우 나쁨");
+                }
+
+
+                if (gPm25.getGPm25Value() < 31 && overall.getInformCode().equals("pm25")) {
+                    overall.setGyeonggi("좋음");
+                } else if (gPm25.getGPm25Value() < 81) {
+                    overall.setGyeonggi("보통");
+                } else if (gPm25.getGPm25Value() < 151) {
+                    overall.setGyeonggi("나쁨");
+                } else {
+                    overall.setGyeonggi("매우 나쁨");
+                }
+
+
+
+
+
+
+
+
+//                model.addAttribute("gPm10", gPm10);
+
                 List<Overall> pm10 = overallService.findInformCode("PM10");
                 List<Overall> pm25 = overallService.findInformCode("PM25");
 
                 model.addAttribute("pm10List", pm10);
                 model.addAttribute("pm25List", pm25);
 
-                Sido gPm10 = sidoService.findLastByOrderByGPm10Value();
-                model.addAttribute("gPm10", gPm10);
 
-                System.out.println(gPm10);
+
 
 
 
