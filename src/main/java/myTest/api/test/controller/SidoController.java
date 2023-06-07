@@ -98,8 +98,6 @@ public class SidoController {
 
             String sidoName = itemNode.path("sidoName").asText();
             String stationName = itemNode.path("stationName").asText();
-
-
             String dateTime = itemNode.path("dataTime").asText();
             String pm10Value = itemNode.path("pm10Value").asText();
             String pm25Value = itemNode.path("pm25Value").asText();
