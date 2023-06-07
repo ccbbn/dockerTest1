@@ -50,8 +50,8 @@ public class OverallController {
         urlBuilder.append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*xml 또는 json*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수(조회 날짜로 검색 시 사용 안함)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호(조회 날짜로 검색 시 사용 안함)*/
-        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-06-06", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
-//       urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
+//        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-06-06", "UTF-8")); /*통보시간 검색(조회 날짜 입력이 없을 경우 한달동안 예보통보 발령 날짜의 리스트 정보를 확인)*/
+       urlBuilder.append("&" + URLEncoder.encode("searchDate", "UTF-8") + "=" + URLEncoder.encode(LocalDate.now().format(DateTimeFormatter.ISO_DATE), "UTF-8"));
 //
         urlBuilder.append("&" + URLEncoder.encode("InformCode", "UTF-8") + "=" + URLEncoder.encode("PM10", "UTF-8")); /*통보코드검색(PM10, PM25, O3)*/
         URL url = new URL(urlBuilder.toString());
@@ -136,10 +136,10 @@ public class OverallController {
                 overall.setChungbuk(informGradeList[11].substring(informGradeList[11].length() - 2));
                 overall.setSejong(informGradeList[12].substring(informGradeList[12].length() - 2));
                 overall.setDaejeon(informGradeList[13].substring(informGradeList[13].length() - 2));
-                overall.setYeongdong(informGradeList[14].substring(informGradeList[14].length() - 2));
-                overall.setYeongseo(informGradeList[15].substring(informGradeList[15].length() - 2));
-                overall.setGyeonggiSouth(informGradeList[16].substring(informGradeList[16].length() - 2));
-                overall.setGyeonggiNorth(informGradeList[17].substring(informGradeList[17].length() - 2));
+//                overall.setYeongdong(informGradeList[14].substring(informGradeList[14].length() - 2));
+//                overall.setYeongseo(informGradeList[15].substring(informGradeList[15].length() - 2));
+//                overall.setGyeonggiSouth(informGradeList[16].substring(informGradeList[16].length() - 2));
+//                overall.setGyeonggiNorth(informGradeList[17].substring(informGradeList[17].length() - 2));
                 overall.setIncheon(informGradeList[18].substring(informGradeList[18].length() - 2));
 
                 List<Overall> overallList = overallService.findAll();
@@ -173,12 +173,33 @@ public class OverallController {
 
 
 
+                Sido gwPm10 = sidoService.findLastByOrderByGwPm10Value();
+                Sido gwPm25 = sidoService.findLastByOrderByGwPm25Value();
+
+
+                if (gwPm10.getGwPm10Value() < 31 && overall.getInformCode().equals("pm10")) {
+                    overall.setGangwon("좋음");
+                } else if (gwPm10.getGwPm10Value() < 81) {
+                    overall.setGangwon("보통");
+                } else if (gwPm10.getGwPm10Value() < 151) {
+                    overall.setGangwon("나쁨");
+                } else {
+                    overall.setGangwon("매우 나쁨");
+                }
+
+
+                if (gwPm25.getGwPm25Value() < 31 && overall.getInformCode().equals("pm25")) {
+                    overall.setGangwon("좋음");
+                } else if (gwPm25.getGwPm25Value() < 81) {
+                    overall.setGangwon("보통");
+                } else if (gwPm25.getGwPm25Value() < 151) {
+                    overall.setGangwon("나쁨");
+                } else {
+                    overall.setGangwon("매우 나쁨");
+                }
 
 
 
-
-
-//                model.addAttribute("gPm10", gPm10);
 
                 List<Overall> pm10 = overallService.findInformCode("PM10");
                 List<Overall> pm25 = overallService.findInformCode("PM25");
@@ -198,7 +219,7 @@ public class OverallController {
 
 
 //        return "/main/allForecast";
-        return "case/k";
+        return "case/k2";
 //            return "case/allArea";
         }
 

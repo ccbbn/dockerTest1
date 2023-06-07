@@ -40,10 +40,10 @@ public class Overall{
     private String chungnam;
     private String sejong;
     private String daejeon;
-    private String yeongdong;
-    private String yeongseo;
-    private String gyeonggiSouth;
-    private String gyeonggiNorth;
+//    private String yeongdong;
+//    private String yeongseo;
+//    private String gyeonggiSouth;
+//    private String gyeonggiNorth;
 
     private String gyeonggi;
     private String gangwon;

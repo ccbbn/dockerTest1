@@ -367,54 +367,152 @@
 
     <script>
 
-        let seoul;
-        let busan;
-        let deagu;
-        let incheon;
-        let gwangju;
-        let daejeon;
-        let ulsan;
-        let sejong;
-        let gyeonggi;
-        let gangwon;
-        let chungbuk;
-        let chungnam;
-        let jenbuk;
-        let jeonnam;
-        let gyeongbuk;
-        let gyeongnam;
-        let jeju;
+
+        let seoul = document.querySelector('.seoulStatus');
+        let busan = document.querySelector('.busanStatus');
+        let deagu = document.querySelector('.daeguStatus');
+        let incheon = document.querySelector('.incheonStatus');
+        let gwangju = document.querySelector('.gwangjuStatus');
+        let daejeon = document.querySelector('.daejeonStatus');
+        let ulsan = document.querySelector('.ulsanStatus');
+        let sejong = document.querySelector('.sejongStatus');
+        let gyeonggi = document.querySelector('.gyeonggiStatus');
+        let gangwon = document.querySelector('.gangwonStatus')
+        let chungbuk = document.querySelector('.chungbukStatus');
+        let chungnam = document.querySelector('.chungnamStatus');
+        let jenbuk = document.querySelector('.jenbukStatus');
+        let jeonnam = document.querySelector('.jeonnamStatus');
+        let gyeongbuk = document.querySelector('.gyeongbukStatus');
+        let gyeongnam = document.querySelector('.gyeongnamStatus');
+        let jeju = document.querySelector('.jejuStatus');
 
 
-        // changeGrade: { true : pm10 } , { false : pm25 }
-        let changeGrade = true;
-        function setGradeValue(value) {
-            if (value === 'pm10') {
-                changeGrade = true;
-            } else if (value === 'pm25') {
-                changeGrade = false;
-            }
 
-            if (changeGrade === true) {
 
-            seoul = document.querySelector('.seoulStatus');
-            busan = document.querySelector('.busanStatus');
-            deagu = document.querySelector('.daeguStatus');
-            incheon = document.querySelector('.incheonStatus');
-            gwangju = document.querySelector('.gwangjuStatus');
-            daejeon = document.querySelector('.daejeonStatus');
-            ulsan = document.querySelector('.ulsanStatus');
-            sejong = document.querySelector('.sejongStatus');
-            gyeonggi = document.querySelector('.gyeonggiStatus');
-            gangwon = document.querySelector('.gangwonStatus')
-            chungbuk = document.querySelector('.chungbukStatus');
-            chungnam = document.querySelector('.chungnamStatus');
-            jenbuk = document.querySelector('.jenbukStatus');
-            jeonnam = document.querySelector('.jeonnamStatus');
-            gyeongbuk = document.querySelector('.gyeongbukStatus');
-            gyeongnam = document.querySelector('.gyeongnamStatus');
-            jeju = document.querySelector('.jejuStatus');
+                let pathElement = document.querySelector('#seoulPath');
+                let pathElement2 = document.querySelector('#busanPath');
+                let pathElement3 = document.querySelector('#daeguPath');
+                let pathElement4 = document.querySelector('#incheonPath');
+                let pathElement5 = document.querySelector('#gwangjuPath');
+                let pathElement6 = document.querySelector('#daejeonPath')
+                let pathElement7 = document.querySelector('#ulsanPath');
+                let pathElement8 = document.querySelector('#sejongPath');
+                let pathElement9 = document.querySelector('#gyeonggiPath')
+                let pathElement10 = document.querySelector('#gangwonPath')
+                let pathElement11 = document.querySelector('#chungbukPath');
+                let pathElement12 = document.querySelector('#chungnamPath');
+                let pathElement13 = document.querySelector('#jenbukPath');
+                let pathElement14 = document.querySelector('#jeonnamPath');
+                let pathElement15= document.querySelector('#gyeongbukPath');
+                let pathElement16= document.querySelector('#gyeongnamPath');
+                let pathElement17 = document.querySelector('#jejuPath');
 
+
+                // 지도 색 변경
+                const setColor = (element, status) => {
+                    if (status === "좋음") {
+                        element.style.fill = "#00a9fe";
+                    } else if (status === "보통") {
+                        element.style.fill = "#51ca66";
+                    } else if (status === "나쁨") {
+                        element.style.fill = "#fde801";
+                    } else {
+                        element.style.fill = "#fd0042";
+                    }
+                };
+
+
+                setColor(pathElement, seoul.innerText);
+                setColor(pathElement2, busan.innerText);
+                setColor(pathElement3, deagu.innerText);
+                setColor(pathElement4, incheon.innerText);
+                setColor(pathElement5, gwangju.innerText);
+                setColor(pathElement6, daejeon.innerText);
+                setColor(pathElement7, ulsan.innerText);
+                setColor(pathElement8, sejong.innerText);
+                setColor(pathElement9, gyeonggi.innerText);
+                setColor(pathElement10, gangwon.innerText);
+                setColor(pathElement11, chungbuk.innerText);
+                setColor(pathElement12, chungnam.innerText);
+                setColor(pathElement13, jenbuk.innerText);
+                setColor(pathElement14, jeonnam.innerText);
+                setColor(pathElement15, gyeongbuk.innerText);
+                setColor(pathElement16, gyeongnam.innerText);
+                setColor(pathElement17, jeju.innerText);
+
+
+
+                let seoul = document.querySelector('.seoulStatus25');
+                let busan = document.querySelector('.busanStatus25');
+                let deagu = document.querySelector('.daeguStatus25');
+                let incheon = document.querySelector('.incheonStatus25');
+                let gwangju = document.querySelector('.gwangjuStatus25');
+                let daejeon = document.querySelector('.daejeonStatus25');
+                let ulsan = document.querySelector('.ulsanStatus25');
+                let sejong = document.querySelector('.sejongStatus25');
+                let gyeonggi = document.querySelector('.gyeonggiStatus25');
+                let gangwon = document.querySelector('.gangwonStatus25')
+                let chungbuk = document.querySelector('.chungbukStatus25');
+                let chungnam = document.querySelector('.chungnamStatus25');
+                let jenbuk = document.querySelector('.jenbukStatus25');
+                let jeonnam = document.querySelector('.jeonnamStatus25');
+                let gyeongbuk = document.querySelector('.gyeongbukStatus25');
+                let gyeongnam = document.querySelector('.gyeongnamStatus25');
+                let jeju = document.querySelector('.jejuStatus25');
+
+
+                let pathElement = document.querySelector('#seoulPath');
+                let pathElement2 = document.querySelector('#busanPath');
+                let pathElement3 = document.querySelector('#daeguPath');
+                let pathElement4 = document.querySelector('#incheonPath');
+                let pathElement5 = document.querySelector('#gwangjuPath');
+                let pathElement6 = document.querySelector('#daejeonPath')
+                let pathElement7 = document.querySelector('#ulsanPath');
+                let pathElement8 = document.querySelector('#sejongPath');
+                let pathElement9 = document.querySelector('#gyeonggiPath')
+                let pathElement10 = document.querySelector('#gangwonPath')
+                let pathElement11 = document.querySelector('#chungbukPath');
+                let pathElement12 = document.querySelector('#chungnamPath');
+                let pathElement13 = document.querySelector('#jenbukPath');
+                let pathElement14 = document.querySelector('#jeonnamPath');
+                let pathElement15= document.querySelector('#gyeongbukPath');
+                let pathElement16= document.querySelector('#gyeongnamPath');
+                let pathElement17 = document.querySelector('#jejuPath');
+
+
+                // 지도 색 변경
+                const setColor = (element, status) => {
+                    if (status === "좋음") {
+                        element.style.fill = "#00a9fe";
+                    } else if (status === "보통") {
+                        element.style.fill = "#51ca66";
+                    } else if (status === "나쁨") {
+                        element.style.fill = "#fde801";
+                    } else {
+                        element.style.fill = "#fd0042";
+                    }
+                };
+
+
+
+
+                setColor(pathElement, seoul.innerText);
+                setColor(pathElement2, busan.innerText);
+                setColor(pathElement3, deagu.innerText);
+                setColor(pathElement4, incheon.innerText);
+                setColor(pathElement5, gwangju.innerText);
+                setColor(pathElement6, daejeon.innerText);
+                setColor(pathElement7, ulsan.innerText);
+                setColor(pathElement8, sejong.innerText);
+                setColor(pathElement9, gyeonggi.innerText);
+                setColor(pathElement10, gangwon.innerText);
+                setColor(pathElement11, chungbuk.innerText);
+                setColor(pathElement12, chungnam.innerText);
+                setColor(pathElement13, jenbuk.innerText);
+                setColor(pathElement14, jeonnam.innerText);
+                setColor(pathElement15, gyeongbuk.innerText);
+                setColor(pathElement16, gyeongnam.innerText);
+                setColor(pathElement17, jeju.innerText);
 
                 const setMapColor = (elementId, status) => {
                     const pathElement = document.querySelector(elementId);
@@ -430,84 +528,63 @@
                     }
                 };
 
-                // Usage:
-                setMapColor('#seoulPath', seoul.innerText);
-                setMapColor('#busanPath', busan.innerText);
-                setMapColor('#daeguPath', deagu.innerText);
-                setMapColor('#incheonPath', incheon.innerText);
-                setMapColor('#gwangjuPath', gwangju.innerText);
-                setMapColor('#daejeonPath', daejeon.innerText);
-                setMapColor('#ulsanPath', ulsan.innerText);
-                setMapColor('#sejongPath', sejong.innerText);
-                setMapColor('#gyeonggiPath', gyeonggi.innerText);
-                setMapColor('#gangwonPath', gangwon.innerText);
-                setMapColor('#chungbukPath', chungbuk.innerText);
-                setMapColor('#chungnamPath', chungnam.innerText);
-                setMapColor('#jenbukPath', jenbuk.innerText);
-                setMapColor('#jeonnamPath', jeonnam.innerText);
-                setMapColor('#gyeongbukPath', gyeongbuk.innerText);
-                setMapColor('#gyeongnamPath', gyeongnam.innerText);
-                setMapColor('#jejuPath', jeju.innerText);
 
 
-            }
-            if (changeGrade === false) {
-
-                seoul = document.querySelector('.seoulStatus25');
-                busan = document.querySelector('.busanStatus25');
-                deagu = document.querySelector('.daeguStatus25');
-                incheon = document.querySelector('.incheonStatus25');
-                gwangju = document.querySelector('.gwangjuStatus25');
-                daejeon = document.querySelector('.daejeonStatus25');
-                ulsan = document.querySelector('.ulsanStatus25');
-                sejong = document.querySelector('.sejongStatus25');
-                gyeonggi = document.querySelector('.gyeonggiStatus25');
-                gangwon = document.querySelector('.gangwonStatus25')
-                chungbuk = document.querySelector('.chungbukStatus25');
-                chungnam = document.querySelector('.chungnamStatus25');
-                jenbuk = document.querySelector('.jenbukStatus25');
-                jeonnam = document.querySelector('.jeonnamStatus25');
-                gyeongbuk = document.querySelector('.gyeongbukStatus25');
-                gyeongnam = document.querySelector('.gyeongnamStatus25');
-                jeju = document.querySelector('.jejuStatus25');
-
-                const setMapColor = (elementId, status) => {
-                    const pathElement = document.querySelector(elementId);
-
-                    if (status === "좋음") {
-                        pathElement.style.fill = "#00a9fe";
-                    } else if (status === "보통") {
-                        pathElement.style.fill = "#51ca66";
-                    } else if (status === "나쁨") {
-                        pathElement.style.fill = "#fde801";
-                    } else {
-                        pathElement.style.fill = "#fd0042";
-                    }
-                };
-
-                // Usage:
-                setMapColor('#seoulPath', seoul.innerText);
-                setMapColor('#busanPath', busan.innerText);
-                setMapColor('#daeguPath', deagu.innerText);
-                setMapColor('#incheonPath', incheon.innerText);
-                setMapColor('#gwangjuPath', gwangju.innerText);
-                setMapColor('#daejeonPath', daejeon.innerText);
-                setMapColor('#ulsanPath', ulsan.innerText);
-                setMapColor('#sejongPath', sejong.innerText);
-                setMapColor('#gyeonggiPath', gyeonggi.innerText);
-                setMapColor('#gangwonPath', gangwon.innerText);
-                setMapColor('#chungbukPath', chungbuk.innerText);
-                setMapColor('#chungnamPath', chungnam.innerText);
-                setMapColor('#jenbukPath', jenbuk.innerText);
-                setMapColor('#jeonnamPath', jeonnam.innerText);
-                setMapColor('#gyeongbukPath', gyeongbuk.innerText);
-                setMapColor('#gyeongnamPath', gyeongnam.innerText);
-                setMapColor('#jejuPath', jeju.innerText);
+       let pathElement = document.querySelector('#seoulPath');
+       let pathElement2 = document.querySelector('#busanPath');
+       let pathElement3 = document.querySelector('#daeguPath');
+       let pathElement4 = document.querySelector('#incheonPath');
+       let pathElement5 = document.querySelector('#gwangjuPath');
+       let pathElement6 = document.querySelector('#daejeonPath')
+       let pathElement7 = document.querySelector('#ulsanPath');
+       let pathElement8 = document.querySelector('#sejongPath');
+       let pathElement9 = document.querySelector('#gyeonggiPath')
+       let pathElement10 = document.querySelector('#gangwonPath')
+       let pathElement11 = document.querySelector('#chungbukPath');
+       let pathElement12 = document.querySelector('#chungnamPath');
+       let pathElement13 = document.querySelector('#jenbukPath');
+       let pathElement14 = document.querySelector('#jeonnamPath');
+       let pathElement15= document.querySelector('#gyeongbukPath');
+       let pathElement16= document.querySelector('#gyeongnamPath');
+       let pathElement17 = document.querySelector('#jejuPath');
 
 
-            }
+       // 지도 색 변경
+       const setColor = (element, status) => {
+           if (status === "좋음") {
+               element.style.fill = "#00a9fe";
+           } else if (status === "보통") {
+               element.style.fill = "#51ca66";
+           } else if (status === "나쁨") {
+               element.style.fill = "#fde801";
+           } else {
+               element.style.fill = "#fd0042";
+           }
+       };
 
-        }
+
+
+
+       setColor(pathElement, seoul.innerText);
+       setColor(pathElement2, busan.innerText);
+       setColor(pathElement3, deagu.innerText);
+       setColor(pathElement4, incheon.innerText);
+       setColor(pathElement5, gwangju.innerText);
+       setColor(pathElement6, daejeon.innerText);
+       setColor(pathElement7, ulsan.innerText);
+       setColor(pathElement8, sejong.innerText);
+       setColor(pathElement9, gyeonggi.innerText);
+       setColor(pathElement10, gangwon.innerText);
+       setColor(pathElement11, chungbuk.innerText);
+       setColor(pathElement12, chungnam.innerText);
+       setColor(pathElement13, jenbuk.innerText);
+       setColor(pathElement14, jeonnam.innerText);
+       setColor(pathElement15, gyeongbuk.innerText);
+       setColor(pathElement16, gyeongnam.innerText);
+       setColor(pathElement17, jeju.innerText);
+
+
+
        // 표색 변경
        function addStatusClass(element, status) {
            if (status === "좋음") {
@@ -522,41 +599,24 @@
            }
        }
 
-        seoul10 = document.querySelector('.seoulStatus');
-        busan10 = document.querySelector('.busanStatus');
-        deagu10 = document.querySelector('.daeguStatus');
-        incheon10 = document.querySelector('.incheonStatus');
-        gwangju10 = document.querySelector('.gwangjuStatus');
-        daejeon10 = document.querySelector('.daejeonStatus');
-        ulsan10 = document.querySelector('.ulsanStatus');
-        sejong10 = document.querySelector('.sejongStatus');
-        gyeonggi10 = document.querySelector('.gyeonggiStatus');
-        gangwon10 = document.querySelector('.gangwonStatus')
-        chungbuk10 = document.querySelector('.chungbukStatus');
-        chungnam10 = document.querySelector('.chungnamStatus');
-        jenbuk10 = document.querySelector('.jenbukStatus');
-        jeonnam10 = document.querySelector('.jeonnamStatus');
-        gyeongbuk10 = document.querySelector('.gyeongbukStatus');
-        gyeongnam10 = document.querySelector('.gyeongnamStatus');
-        jeju10 = document.querySelector('.jejuStatus');
+       addStatusClass(seoul, seoul.innerText);
+       addStatusClass(busan, busan.innerText);
+       addStatusClass(deagu, deagu.innerText);
+       addStatusClass(incheon, incheon.innerText);
+       addStatusClass(gwangju, gwangju.innerText);
+       addStatusClass(daejeon, daejeon.innerText);
+       addStatusClass(ulsan, ulsan.innerText);
+       addStatusClass(sejong, sejong.innerText);
+       addStatusClass(gyeonggi, gyeonggi.innerText);
+       addStatusClass(gangwon, gangwon.innerText);
+       addStatusClass(chungbuk, chungbuk.innerText);
+       addStatusClass(chungnam, chungnam.innerText);
+       addStatusClass(jenbuk, jenbuk.innerText);
+       addStatusClass(jeonnam, jeonnam.innerText);
+       addStatusClass(gyeongbuk, gyeongbuk.innerText);
+       addStatusClass(gyeongnam, gyeongnam.innerText);
+       addStatusClass(jeju, jeju.innerText);
 
-       addStatusClass(seoul10, seoul.innerText);
-       addStatusClass(busan10, busan.innerText);
-       addStatusClass(deagu10, deagu.innerText);
-       addStatusClass(incheon10, incheon.innerText);
-       addStatusClass(gwangju10, gwangju.innerText);
-       addStatusClass(daejeon10, daejeon.innerText);
-       addStatusClass(ulsan10, ulsan.innerText);
-       addStatusClass(sejong10, sejong.innerText);
-       addStatusClass(gyeonggi10, gyeonggi.innerText);
-       addStatusClass(gangwon10, gangwon.innerText);
-       addStatusClass(chungbuk10, chungbuk.innerText);
-       addStatusClass(chungnam10, chungnam.innerText);
-       addStatusClass(jenbuk10, jenbuk.innerText);
-       addStatusClass(jeonnam10, jeonnam.innerText);
-       addStatusClass(gyeongbuk10, gyeongbuk.innerText);
-       addStatusClass(gyeongnam10, gyeongnam.innerText);
-       addStatusClass(jeju10, jeju.innerText);
 
        let seoul25 = document.querySelector('.seoulStatus25');
        let busan25= document.querySelector('.busanStatus25');
@@ -593,6 +653,8 @@
        addStatusClass(gyeongbuk25, gyeongbuk25.innerText);
        addStatusClass(gyeongnam25, gyeongnam25.innerText);
        addStatusClass(jeju25, jeju25.innerText);
+
+
 
     </script>
 

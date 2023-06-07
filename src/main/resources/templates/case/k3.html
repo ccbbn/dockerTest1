@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+
+
+
+<style xmlns="http://www.w3.org/2000/svg">
+
+  .container {  display: grid;
+    grid-template-columns: 0.1fr 800px 1200px 0.1fr;
+    grid-template-rows: 0.4fr 2.1fr 0.1fr;
+    gap: 15px 15px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "header header header  header"
+    ". map description ."
+    "footer footer footer  footer";
+  }
+
+  .header { grid-area: header; }
+
+  .footer { grid-area: footer; }
+
+  #map { grid-area: map; }
+
+  .description { grid-area: description; }
+
+
+  /*.inform {grid-area: inform;}*/
+
+
+
+  .OUTLINE {
+    stroke-linejoin:round;
+    stroke: white;
+    stroke-width: 1;
+  }
+
+
+  #CD41 {
+    fill: lightgrey;
+  }
+  #CD42 {
+    fill: lightgrey;
+
+  }
+  .TEXT {
+    fill: black;
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+    alignment-baseline: middle;
+  }
+
+
+
+  .background {
+    fill: white; /* Default background color */
+  }
+
+
+  .pm10 th {
+
+    text-align: center;
+    background-color: #F5F5F5;
+    width: 150px;
+    padding: 8px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+  }
+  .pm10 tr {
+
+    text-align: center;
+  }
+
+
+
+  .pm10 tr:nth-child(even) {
+    background-color: #F9F9F9;
+  }
+
+  .pm10 tr:hover {
+    background-color: #E5E5E5;
+  }
+
+  .goodStatus {
+    background-color: #00a9fe;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: normal;
+    vertical-align: middle;
+
+    align-items: center;
+
+  }
+  .normalStatus {
+    background-color: #51ca66;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+
+  .badStatus {
+    background-color: #fde801;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+
+  .terribleStatus {
+    background-color: #fd0042;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: normal;
+  }
+
+
+
+
+
+  .overall {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .overall thead th {
+    background-color: #ffcccc; /* 머그런 핑크색 */
+    font-weight: bold;
+    color: #fff; /* 흰색 글자 */
+  }
+
+  .overall th, .overall td {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    width: 50px;
+  }
+
+  .overall tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* 연한 회색 */
+  }
+
+  .overall tbody tr:hover {
+    background-color: #ffeb99; /* 연한 노란색 */
+  }
+
+  .overall td {
+    font-size: 14px;
+    color: #333; /* 어두운 회색 글자 */
+  }
+
+
+  .titleName {
+    grid-column-start: 2;
+    text-align: center;
+
+  }
+
+
+  .titleName h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+    margin: 40px;
+  }
+
+  .titleName span {
+    color: #7c710c;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+
+
+</style>
+
+
+
+<body>
+<div class="container">
+
+
+  <div id="map" >
+
+    <svg style=' overflow:visible' height="1107" width="800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="dropshadow">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+          <feOffset dx="2" dy="2" result="offsetblur" />
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#dropshadow)">
+        <path id="seoulPath" class="OUTLINE" d =" M 178 231 l -4 2 -4 3 -1 0 0 1 -3 1 -4 -5 -4 0 -6 1 -4 3 -2 -1 -1 -1 -3 2 -3 -3 -1 -3 -2 -3 0 0 -1 -2 -3 2 -3 1 -2 -4 0 -8 -3 -1 0 0 0 0 0 0 -2 -1 -3 -2 2 -4 3 -3 0 -1 0 0 0 0 0 -1 1 0 4 2 7 1 2 -2 0 1 2 0 1 -4 2 -8 7 -1 4 2 0 -3 1 -1 2 -4 3 -4 2 0 3 2 7 2 2 8 1 4 1 1 0 0 0 2 0 2 0 1 0 0 -1 6 3 0 8 -1 0 5 -4 3 -1 5 z " />
+        <path id="busanPath" class="OUTLINE" d =" M 496 722 l 0 4 -1 0 -2 -5 -1 6 -1 -2 0 0 -1 0 -1 1 -1 2 0 1 -1 -1 -1 -6 -1 -6 -2 3 -2 -3 0 2 0 0 0 0 0 0 0 0 -1 0 1 0 -4 1 -2 -5 -1 5 -1 2 0 0 -2 0 -7 -2 0 -2 2 -2 -1 -3 -5 -4 -2 -2 4 -1 9 0 0 -5 1 -6 5 -1 6 -2 7 -1 4 -6 1 -4 2 0 3 1 1 -3 6 -3 4 -1 1 -5 3 -6 7 0 3 -2 0 -3 0 0 2 -3 1 3 0 0 1 0 2 0 4 -1 4 4 1 3 0 1 -1 1 5 1 -7 4 -1 6 -1 4 -1 0 0 0 0 -1 -1 2 -1 1 2 2 -1 4 -2 4 -3 6 -3 4 0 1 0 0 -5 0 -4 0 -2 -1 -1 4 -1 4 1 -1 0 4 -7 0 -2 -4 -1 1 -3 4 z " />
+        <path id="daeguPath" class="OUTLINE" d =" M 441 530 l 3 1 3 7 0 4 2 9 1 7 -4 4 -2 -1 0 4 -1 2 -3 6 -2 7 0 8 -4 2 -4 2 -3 1 -3 -5 -6 0 -5 3 -1 6 -3 7 -2 3 -5 0 -7 3 -7 1 0 -8 -4 -4 -1 -3 5 -2 6 0 0 -5 -5 -4 -1 -5 3 -5 3 -2 8 -1 0 -5 -8 -4 -6 0 0 -5 2 -5 3 -4 3 -3 5 -1 2 7 3 3 1 0 2 -4 3 -7 0 -7 2 2 1 1 3 -2 6 -4 3 -3 5 -1 z " />
+        <path id="incheonPath" class="OUTLINE" d =" M 91 229 l 1 -2 0 1 0 0 1 0 1 0 0 -1 1 0 -1 -1 0 0 0 0 2 0 -4 -5 0 -5 1 -3 0 0 1 0 -1 0 0 -1 0 0 1 -1 0 -1 4 -1 4 -1 -5 -1 -3 -1 -1 -1 -2 1 1 -3 5 -3 3 -4 4 1 3 3 5 4 4 3 5 2 -2 4 -1 3 -1 5 -2 2 2 5 2 3 -1 7 -1 2 -2 3 -1 -3 -1 6 -7 2 -1 6 -6 1 -1 0 -3 -5 -2 -4 -1 -5 5 -2 -4 -2 0 -3 -2 2 z M 82 219 l 3 1 0 0 1 2 2 3 -2 2 -4 1 -8 5 -9 7 -4 -2 -3 -3 -1 0 -2 1 -2 -4 4 -5 4 -2 7 -1 7 -3 1 -4 z M 64 156 l 3 2 4 4 7 4 0 4 2 3 -1 2 -2 4 2 3 -1 4 0 3 2 0 0 2 -1 1 1 1 -1 1 1 2 1 2 1 1 -1 0 -5 4 -8 1 -8 0 -5 -4 0 -4 4 -3 0 -5 -2 -4 1 0 0 -1 -5 -3 -1 -8 0 -7 4 -4 0 0 1 0 z " />
+        <path id="gwangjuPath" class="OUTLINE" d =" M 113 687 l 2 3 6 3 7 -3 4 -2 2 0 1 0 0 0 0 0 1 0 0 0 1 -1 4 0 4 3 2 3 -1 1 1 1 3 4 6 3 1 4 -1 7 -4 4 -3 4 -7 1 -7 0 -6 2 -1 1 -1 0 -1 1 -4 1 -8 -1 0 -4 -4 -5 -4 -1 -7 0 -4 -7 -1 -1 3 -3 2 -6 2 -4 2 0 1 1 4 -4 1 -4 0 0 0 0 z " />
+        <path id="daejeonPath" class="OUTLINE" d =" M 223 432 l 1 6 4 1 0 0 3 0 4 -4 1 0 0 2 -1 2 3 2 2 6 5 1 0 5 -2 6 -2 3 -2 7 -1 8 1 7 -5 3 -2 4 -7 -1 -3 -4 -2 -1 1 -2 -1 -2 1 -1 0 0 -3 -2 -2 6 -1 6 -3 4 -1 1 -1 -4 -3 -4 -1 1 -1 0 -2 -3 -1 -7 -5 -4 1 -2 1 -3 2 -8 1 -7 0 -6 9 -3 2 -3 2 -3 2 -5 z " />
+        <path id="ulsanPath" class="OUTLINE" d =" M 550 641 l 2 6 -1 7 -1 8 -3 3 0 0 -1 0 0 1 0 0 -2 1 -5 -1 1 -1 0 -1 -1 -3 -4 -4 -4 1 -2 0 -1 0 0 0 -1 -3 -1 -7 -4 -1 -6 -2 -4 -5 -2 -3 -4 -3 -5 -3 -1 -3 -3 1 -1 0 0 0 -2 0 -3 -2 -4 -4 5 -5 0 -8 3 -4 1 0 1 1 4 -3 3 0 -2 -3 0 -2 1 -1 0 -1 2 -4 4 -2 4 -1 9 -1 5 0 4 3 3 3 4 7 6 -1 3 -2 4 -2 7 2 1 0 7 3 2 8 0 7 -1 8 -2 4 2 -1 -2 5 -1 4 -1 -1 0 1 -2 1 -2 -6 -3 -6 -3 -1 2 2 -2 1 2 1 1 3 -3 1 2 0 0 0 1 1 0 4 z " />
+        <path id="sejongPath" class="OUTLINE" d =" M 184 410 l -2 -2 0 -5 1 -9 -1 -4 -1 1 0 0 -1 0 -1 -4 3 -4 3 0 5 2 5 3 6 3 2 0 0 0 0 0 0 0 2 1 2 2 -2 4 -1 4 2 4 0 3 0 3 2 1 3 3 6 2 3 4 3 2 0 8 -6 2 -2 5 -2 3 -2 3 -9 3 -6 -1 -6 -4 -1 -3 -3 -9 0 -7 2 -7 1 -4 0 0 0 0 -1 1 z " />
+        <path id="gyeonggiPath" class="OUTLINE" d =" M 81 192 l 1 -2 -1 -1 -1 -7 -1 -3 1 -3 1 -4 -2 -3 0 -5 4 2 4 2 4 1 3 -1 4 -2 4 0 3 5 -1 -4 -1 -12 -1 -1 0 -1 0 0 0 0 0 0 0 0 3 -2 -1 -5 0 0 1 -3 0 -5 -1 1 -1 -4 3 -6 7 -2 7 -2 3 -2 5 -2 1 -4 1 -1 1 -1 3 -3 1 -6 1 -7 4 -4 3 -2 3 2 1 0 3 -5 1 -3 0 0 1 -2 2 -3 3 -7 8 2 3 -5 1 0 1 0 3 0 0 0 1 0 0 0 0 0 1 0 0 0 1 0 3 1 3 -1 1 0 1 3 4 9 1 5 6 1 4 -2 3 -3 4 0 -1 1 -1 5 0 6 4 2 3 3 2 -1 5 -3 5 0 6 2 1 5 1 8 2 6 6 2 6 1 2 5 6 3 4 3 1 3 -1 1 1 2 0 1 -1 4 -4 3 -5 4 -4 6 0 5 -1 2 1 2 1 6 -3 3 -1 4 7 1 -1 7 0 8 8 0 5 1 4 3 5 3 3 4 4 0 4 0 1 -1 3 2 7 3 4 3 1 2 -5 2 -4 2 1 1 -1 0 -3 4 2 5 2 3 0 6 -1 3 -1 5 -4 7 0 8 -1 7 0 6 -1 4 -1 6 -4 6 -2 5 -4 3 -8 0 0 7 -3 4 -1 1 -1 -1 -1 1 0 -1 0 3 -5 3 0 2 0 0 -2 1 -4 -2 -2 0 -3 1 -2 -1 -3 0 -2 5 -3 4 -5 3 -4 3 1 1 1 1 -5 4 -4 2 -4 2 -4 1 1 3 0 1 0 0 0 0 -2 3 -4 -4 -6 -3 -3 -3 -5 -3 -5 -2 -8 2 -1 3 -1 0 -2 0 -4 1 -7 1 -8 2 -6 2 -3 4 0 -4 -8 1 -8 -1 0 -7 3 -8 -9 -1 2 -7 -6 -3 -1 -5 -10 -11 0 -5 0 -4 -2 1 -1 -1 -1 1 -1 0 0 0 0 0 0 0 1 -4 2 -3 -3 0 -1 -4 -3 -5 -2 0 -2 1 -2 -1 2 3 -7 1 0 -7 0 -7 3 -2 -1 -1 1 0 6 -4 2 0 -3 1 -4 4 -2 3 2 1 4 3 3 3 -1 1 2 1 3 3 0 1 0 4 2 -1 3 -1 -2 -2 0 0 0 -1 1 -1 -1 -2 0 0 0 0 -1 -2 5 -3 6 1 5 0 0 0 1 2 -1 1 1 1 0 1 1 -4 1 0 -1 6 3 -6 1 -4 2 -1 -1 -1 3 0 4 3 1 1 1 -2 1 0 0 0 2 1 -1 -2 -7 -3 -7 -2 -4 -1 0 0 -1 0 -2 -2 -8 -5 -1 -4 9 -7 7 -2 -5 -2 0 -1 1 -1 0 -1 1 -2 1 -7 -2 -3 -2 -5 2 -2 1 -5 1 -3 3 2 2 1 0 0 0 0 0 0 3 1 0 8 2 4 3 -1 3 -2 1 2 0 0 2 3 1 3 3 3 3 -2 1 1 2 1 4 -3 6 -1 4 0 4 5 3 -1 0 -1 1 0 4 -3 4 -2 3 -8 1 -5 4 -3 0 -5 -8 1 -3 0 1 -6 0 0 0 -1 0 -2 0 -2 0 0 -1 -1 -1 -4 -2 -8 -7 -2 -3 -2 -2 0 -3 4 -2 4 -1 1 0 3 -4 -2 -7 1 -2 8 -1 4 -2 0 0 -1 -2 2 -7 -1 -4 -2 -1 0 0 1 0 0 0 0 0 1 -3 3 -5 -2 -4 -3 -5 -4 -3 -3 -4 -1 -3 4 -5 3 -7 -1 -2 -5 z M 120 292 l -5 1 -3 4 -5 4 -2 2 9 10 5 0 -1 -7 -1 -2 0 -1 3 -2 5 -4 -3 -2 1 -1 1 -1 -1 -2 1 -4 z " />
+        <path id="CD42" class="OUTLINE" d =" M 409 61 l 2 3 0 0 0 3 3 4 3 5 -2 4 2 -1 2 4 1 6 2 4 2 4 4 5 1 0 -1 0 2 3 4 6 5 5 1 3 4 5 0 0 1 0 0 3 4 6 4 4 3 5 2 4 3 3 3 5 0 -1 0 0 0 0 0 1 3 4 4 4 5 5 3 4 3 2 4 5 3 4 4 6 0 5 2 5 -1 0 1 0 4 4 4 3 0 0 0 0 0 0 0 0 0 1 0 -1 1 4 0 4 0 -1 1 4 2 7 4 4 4 4 2 4 1 1 -1 -1 0 0 0 2 2 4 4 3 4 3 2 7 1 4 0 -1 1 2 3 3 2 3 1 0 1 1 2 1 0 0 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 1 1 2 5 0 6 1 8 2 5 -1 0 0 0 0 0 0 0 -1 -1 -1 1 -1 -1 -1 1 -5 4 -5 2 -3 4 -3 4 0 3 0 3 0 1 1 0 -5 0 -6 -3 -5 -4 -3 -2 -7 -1 -3 5 -3 0 -4 -2 0 1 -1 -1 -5 0 -4 0 0 0 -3 -2 -4 1 -4 6 -7 1 -6 -5 -4 -2 -2 0 -3 4 -1 7 -6 -1 -4 -1 -5 -3 -5 -3 -2 -2 -2 1 -1 0 0 -1 -1 0 0 0 -2 1 -3 -1 -6 -2 -4 -4 -2 -2 -2 2 -5 1 -5 0 -4 -7 -2 -3 -1 1 0 0 -2 -1 -1 1 -2 -1 -1 1 -1 -1 0 1 -1 0 1 0 -4 2 -6 -1 -1 -3 5 -4 4 -5 -10 -2 -3 -2 0 0 -2 0 -3 -2 -5 -1 -3 5 -3 -1 -2 -1 -1 0 -1 -1 -2 4 -2 2 -4 2 -1 0 -1 0 -3 1 -2 -5 -2 -4 0 -1 0 0 -4 -3 -7 1 -5 4 0 1 1 5 0 4 -2 3 -4 2 -1 -1 -3 0 -2 1 -1 -1 -1 1 -4 1 -7 0 -4 -5 -2 -7 1 -6 1 -4 0 -6 1 -7 0 -8 4 -7 1 -5 1 -3 0 -6 -2 -3 -2 -5 3 -4 1 0 -1 -1 4 -2 5 -2 -1 -2 -4 -3 -7 -3 -3 -2 -1 1 -4 0 -4 0 -3 -4 -5 -3 -4 -3 -5 -1 -8 0 0 -8 1 -7 -7 -1 1 -4 3 -3 -1 -5 -1 -3 1 -2 0 -5 4 -6 5 -4 4 -3 1 -4 0 -1 -1 -2 1 -1 -1 -3 -4 -3 -6 -3 -2 -5 -6 -1 -6 -2 -2 -6 -1 -8 -1 -5 -6 -2 -5 0 -5 3 -2 1 -3 -3 -4 -2 0 -6 1 -5 1 -1 -4 0 -3 3 -4 2 -6 -1 -1 -5 -4 -9 -1 -3 -1 0 -3 1 -3 -1 0 -3 0 -3 -1 0 -1 -3 3 -1 -1 -1 2 -2 2 -2 0 0 0 0 1 4 6 -2 2 -2 -1 0 0 0 0 0 2 -1 4 -2 7 1 4 4 1 0 0 -1 0 0 -1 -1 0 0 1 0 0 0 0 0 0 -1 0 1 1 0 0 1 8 1 3 -6 6 0 8 3 3 1 4 2 4 -2 4 -2 6 -3 5 1 0 0 0 0 0 0 0 0 0 0 1 1 7 1 0 2 0 0 2 -2 1 2 6 0 3 0 3 -2 5 4 5 3 7 0 5 -5 0 0 4 1 8 3 2 3 1 1 1 -1 2 1 2 -3 5 0 6 -2 3 -5 6 -1 7 -1 2 -6 5 -3 6 -1 1 -5 2 -6 5 0 0 -5 0 1 0 -2 -3 0 3 -1 4 -8 1 -8 -1 -6 4 -2 6 3 1 4 2 8 3 5 2 4 2 6 2 6 3 4 3 5 3 7 1 3 z " />
+        <path id="chungbukPath" class="OUTLINE" d =" M 321 275 l 4 3 0 0 0 1 2 4 2 5 3 -1 1 0 1 0 4 -2 2 -2 2 -4 1 1 1 0 2 1 3 1 3 -5 5 1 3 2 2 0 0 0 3 2 10 2 -4 5 -5 4 1 3 6 1 4 -2 -1 0 1 0 0 -1 1 1 1 -1 2 1 1 -1 1 1 1 0 1 -1 2 3 4 7 5 0 5 -1 2 -2 2 2 4 4 6 2 3 1 2 -1 0 0 1 0 0 1 1 0 2 -1 2 2 5 3 -4 1 -2 2 -3 -1 0 1 -5 3 -3 5 -4 3 -4 4 -4 2 -4 4 -2 5 -3 7 2 8 -2 6 -5 1 -7 1 -7 -3 -4 -3 -4 -4 -4 -2 0 0 -3 4 -2 6 -6 0 -5 -2 -1 -1 -3 2 -4 4 -1 2 -3 -3 -3 1 -1 5 -1 8 3 4 1 2 -5 0 -3 -3 -1 0 -4 2 -3 -2 -2 -1 -3 6 -6 2 -3 1 -1 1 0 0 0 1 4 1 4 3 1 5 -1 4 -1 2 1 1 -2 -1 -4 -5 -2 -4 0 -1 -4 4 0 4 0 0 -1 1 -6 2 1 5 7 3 2 5 4 3 0 5 -3 3 0 2 0 1 0 0 0 0 0 0 0 1 0 0 0 1 -1 4 0 2 2 2 -2 3 -1 3 3 3 -1 2 1 0 0 3 -3 4 -3 5 1 6 6 0 2 -3 2 3 4 3 2 2 1 0 1 1 2 0 3 -3 6 1 2 5 2 6 1 2 -4 -1 -7 0 0 8 -1 6 -3 4 0 1 0 2 -1 3 -3 6 -5 2 -4 3 -4 2 -9 -1 -8 2 -6 -2 -5 -2 -2 -3 -3 3 -2 -1 -5 -3 -1 -7 -4 -9 0 -6 0 -7 -2 -6 -6 -2 -8 0 -1 -7 1 -8 2 -7 2 -3 2 -6 0 -5 -5 -1 -2 -6 -3 -2 1 -2 0 -2 -1 0 -4 4 -3 0 0 0 -4 -1 -1 -6 0 -8 -3 -2 -3 -4 -6 -2 -3 -3 -2 -1 0 -3 0 -3 -2 -4 1 -4 2 -4 -2 -2 -1 -2 3 -4 5 -5 5 -4 7 1 -1 -5 -1 -5 -5 -4 -5 -2 -2 -5 -3 -5 -3 -3 2 -3 0 0 0 0 0 -1 -1 -3 4 -1 4 -2 4 -2 5 -4 -1 -1 -1 -1 4 -3 5 -3 3 -4 2 -5 3 0 2 1 3 -1 2 0 4 2 2 -1 0 0 0 -2 5 -3 0 -3 0 1 1 -1 1 1 1 -1 3 -4 0 -7 8 0 4 -3 2 -5 4 -6 2 7 4 5 7 0 4 -1 1 -1 1 1 2 -1 3 0 1 1 4 -2 2 -3 0 -4 -1 -5 0 -1 5 -4 z " />
+        <path id="chungnamPath" class="OUTLINE" d =" M 53 418 l 1 8 2 5 2 2 0 4 -1 2 3 2 1 2 0 0 -1 5 -6 -1 -5 -2 0 -3 1 0 -3 -2 -1 -6 -2 2 1 -5 1 -3 -1 0 0 0 -1 0 0 -3 0 -8 -2 -3 0 0 0 0 0 -2 3 -3 6 1 0 3 -1 0 0 1 0 0 z M 30 354 l 1 1 2 -3 4 -3 2 -6 0 -8 2 -4 1 1 0 0 0 0 0 0 -1 2 1 1 0 0 1 0 -2 3 0 4 2 4 1 3 -2 2 1 0 -1 2 -2 4 3 3 -1 0 1 0 -1 1 -3 3 6 -1 2 -5 4 3 0 0 0 -1 -1 -3 1 -1 3 -5 6 -3 0 -5 0 -4 0 0 -1 0 -1 1 -2 0 -2 -1 0 0 -2 -2 -4 -3 5 -1 2 -1 -1 0 -1 -2 -6 -2 3 -3 0 -1 3 1 2 -1 6 0 2 1 3 1 2 -4 8 -7 3 3 5 2 3 1 0 1 0 0 6 3 3 2 10 1 6 2 7 -1 2 5 2 7 2 4 1 3 11 3 4 -2 3 -4 6 -2 8 -2 7 -1 4 -1 2 0 1 0 1 -3 8 -2 5 2 5 3 3 3 6 3 4 4 3 3 3 5 2 5 5 2 5 4 1 5 1 5 -7 -1 -5 4 -5 5 -3 4 -1 1 0 0 0 0 0 0 0 0 -2 0 -6 -3 -5 -3 -5 -2 -3 0 -3 4 1 4 1 0 0 0 1 -1 1 4 -1 9 0 5 4 3 2 3 1 -1 0 0 0 0 -1 4 -2 7 0 7 3 9 1 3 6 4 6 1 0 6 -1 7 -2 8 -1 3 -1 2 5 4 1 7 2 3 1 0 1 -1 3 4 1 4 1 -1 3 -4 1 -6 2 -6 3 2 0 0 -1 1 1 2 -1 2 2 1 3 4 7 1 2 -4 5 -3 8 0 6 2 2 6 0 7 0 6 4 9 1 7 -1 4 1 0 0 2 -2 1 1 3 -1 2 -1 0 -3 -4 -8 -2 -2 8 -5 2 -7 -1 -3 -5 -1 -3 0 0 -4 2 -5 -3 -3 -6 -1 -7 -1 -5 -3 -2 -6 2 -5 1 -1 0 -1 0 -3 3 -7 1 -8 2 -2 2 -6 0 -3 -1 -3 -3 -3 -8 -4 -2 -3 -2 -1 1 -2 0 -4 -2 -4 1 -2 2 -7 3 -2 7 0 5 -6 3 -7 4 -8 4 -2 2 -1 0 0 1 -7 -2 -4 1 1 -3 -3 -6 -3 -4 -1 -3 3 -2 -4 -2 -2 -2 0 0 -1 -2 -6 -3 -4 -2 -3 -1 -4 1 0 0 1 2 -2 -1 0 -3 1 -1 0 0 3 -1 3 -9 0 -7 1 -3 0 0 0 -1 1 -1 -1 -3 -5 -6 2 -5 6 -3 5 0 -4 -1 -4 -2 -4 -3 -5 -3 1 -5 1 -2 0 0 2 -1 2 -2 -3 1 -1 0 0 -1 0 0 0 0 1 -1 -2 -3 -1 -6 -1 -9 -2 -6 -1 -6 -7 -4 0 -1 -7 -2 -5 1 -3 3 -4 2 -1 -6 -2 -9 -3 -3 0 -1 0 0 0 0 0 0 0 -2 1 -3 1 -4 -1 0 0 -1 -1 2 -4 3 -5 4 -3 2 -5 0 1 -6 7 0 -1 -6 -4 -4 -2 0 -1 0 -1 0 -1 4 -2 4 -2 1 1 -3 1 -3 0 0 0 0 -1 -2 -1 -4 2 -1 0 -1 0 0 -1 0 1 -1 0 0 1 0 1 -4 2 -7 2 4 2 4 2 3 -1 -5 -1 -4 -1 -1 2 -3 0 -7 3 -4 0 1 0 -1 0 1 2 -1 4 -1 -2 3 -2 2 z " />
+        <path id="jenbukPath" class="OUTLINE" d =" M 134 519 l 0 -5 2 -7 7 -3 2 -2 4 -1 4 2 2 0 1 -1 3 2 4 2 3 8 3 3 3 1 6 0 2 -2 8 -2 7 -1 3 -3 1 0 1 0 5 -1 6 -2 3 2 1 5 1 7 3 6 5 3 4 -2 0 0 1 3 3 5 7 1 5 -2 2 -8 8 2 3 4 1 0 1 -2 -1 -3 2 -1 0 -2 -1 0 1 -4 5 3 2 1 3 -3 2 3 5 2 6 2 8 -2 9 1 2 4 0 1 0 0 2 4 3 7 -4 7 -3 2 -3 5 -4 3 -3 2 -6 2 -5 2 -3 6 -3 4 -5 3 -2 8 0 5 -3 3 -2 7 -1 8 -2 4 -1 3 -2 8 6 6 2 8 0 5 4 3 -1 5 -3 3 -3 5 -2 3 0 1 0 0 0 0 1 4 -2 3 -4 4 -3 -3 -4 -2 -5 -4 -4 -2 -6 -1 -4 1 -2 4 -4 5 -4 1 -3 -2 -1 0 -3 2 -8 0 -4 -1 -5 -3 -2 2 -2 1 -4 -3 -3 1 -4 3 -5 2 -8 -3 -1 -4 0 -8 -4 -3 0 -2 3 -3 -1 -4 -1 -3 -1 -4 -3 1 -2 -1 -1 4 -1 2 -2 2 -1 0 -1 5 -7 -1 -4 -3 -2 -5 -5 -3 -1 -1 -2 1 -1 -4 -6 2 -5 1 -4 4 0 7 -3 3 0 1 0 2 -3 3 -3 3 -5 3 -4 1 1 2 -4 0 -6 0 -1 1 1 0 -2 2 -7 -1 -2 -5 -1 -4 -2 0 -1 1 -1 -4 -1 -8 -2 -3 -6 -2 4 -9 1 -3 4 -5 4 -3 1 0 0 0 0 0 0 0 2 -1 0 1 1 -1 0 1 1 0 0 1 1 -2 0 1 1 0 -1 0 0 -1 4 -1 3 2 1 1 0 -1 0 -1 2 -4 2 -3 0 0 0 0 0 0 2 0 2 0 4 4 2 5 -1 -5 -2 -5 -8 -2 -9 0 -6 0 -3 1 0 0 -3 -3 -4 -3 -1 -1 1 -2 -1 0 1 -1 -1 -2 1 0 3 -2 6 -5 1 -1 1 0 1 -2 3 -2 -1 -3 -4 -4 -3 -6 -4 -11 -2 0 -3 -1 0 -2 5 -2 6 -11 3 -8 -1 -2 -1 -7 5 1 0 -1 3 0 9 0 7 -2 7 -2 4 2 3 -2 0 -4 8 -4 7 -4 z M 70 573 l 1 6 2 3 3 6 6 7 2 0 3 -3 3 -5 2 -8 1 -4 4 0 7 -1 -1 -8 -1 -4 -3 -5 -7 -1 -2 -6 -1 -6 -5 0 -6 1 -4 12 -2 4 -1 5 z " />
+        <path id="jeonnamPath" class="OUTLINE" d =" M 118 837 l 1 -4 -1 -7 -2 -4 1 0 0 -1 -1 -3 1 -3 0 -1 0 0 -1 3 -2 8 0 9 -2 8 -3 2 0 0 2 3 -3 4 -3 2 -7 4 -4 0 0 0 0 1 -4 4 -2 6 -2 5 -2 4 -7 2 -3 3 -3 0 0 -1 0 0 0 0 0 0 0 -2 1 -2 0 -1 1 -1 -1 -1 0 -1 0 0 -3 -3 -4 1 0 1 -1 -1 1 -1 0 -1 0 0 -1 -2 1 0 -1 -1 0 0 1 -1 -1 0 3 -3 1 -7 -6 -2 0 -2 2 1 -1 -4 0 -4 0 0 0 0 0 0 -1 -4 -1 -4 0 1 0 -1 -2 1 0 -3 -2 -2 1 -1 -2 -1 -2 -1 -2 3 -3 0 -3 -4 -9 -3 -2 -3 -1 -1 -1 1 -1 -4 -2 -6 -3 -5 0 -1 1 -1 -1 -1 1 -2 2 -5 3 -8 5 1 3 5 2 3 2 2 3 -3 2 -3 0 -1 -2 -4 3 -4 6 -1 3 -1 -6 -1 -7 0 1 -7 5 -4 0 -5 -2 -4 -1 1 2 -5 -1 -6 0 -6 -2 -4 -1 -3 -1 5 0 8 -4 3 -2 0 -3 -3 -2 -5 -1 -2 3 -2 6 -1 0 -3 -2 0 4 -3 4 -3 1 -2 -5 -3 -4 -2 -1 -1 1 0 0 0 1 -2 -4 -1 -2 5 -2 1 0 -1 -1 -1 -1 -1 -2 3 -2 6 -2 0 -1 -2 -1 2 -2 -7 -3 -1 0 1 0 0 0 1 -1 -1 -1 -2 0 0 -1 0 0 0 -2 -1 -3 -1 1 -1 0 0 0 -1 -1 -2 0 -2 5 -1 6 1 4 1 0 0 0 0 2 0 0 -1 -2 -3 1 -3 0 -1 1 1 3 -2 4 1 2 1 3 -3 3 -1 -1 5 -1 4 0 3 2 0 1 -1 0 3 3 4 1 -1 1 -2 0 -1 2 2 1 6 0 4 2 -1 1 1 1 -1 0 0 0 -2 2 -3 2 -6 0 -4 -5 -3 -3 -4 -1 0 -1 -2 -3 -4 -1 -5 2 -4 -4 2 -3 1 1 -2 0 -2 -1 0 1 1 0 1 -2 0 -3 -4 1 -5 1 2 2 -1 0 -1 0 -1 1 0 -2 0 2 -4 -1 0 0 -2 4 -1 4 -2 -1 -3 1 -1 0 -1 0 -1 0 0 0 0 0 0 0 0 1 -2 3 -6 4 1 2 3 0 -3 -4 -4 -1 -4 2 -6 3 -1 6 2 2 3 1 8 1 4 1 -1 2 0 1 4 2 5 7 1 2 -2 -1 0 1 -1 6 0 4 0 -1 -2 4 -1 5 -3 3 -3 3 -3 0 -2 0 -1 3 -3 0 -7 4 -4 5 -1 6 -2 1 4 2 -1 1 1 5 3 2 5 4 3 7 1 1 -5 1 0 2 -2 1 -2 1 -4 2 1 3 -1 1 4 1 3 1 4 -3 3 0 2 4 3 0 8 1 4 8 3 5 -2 4 -3 3 -1 4 3 2 -1 2 -2 5 3 4 1 8 0 3 -2 1 0 3 2 4 -1 4 -5 2 -4 4 -1 6 1 4 2 5 4 4 2 3 3 3 8 2 3 1 4 0 8 4 6 5 3 4 6 0 4 4 4 3 4 4 3 3 5 1 2 0 3 -3 6 -5 3 -1 -2 -3 5 -3 3 0 2 -3 -2 -2 3 -1 1 -4 0 -5 -3 -1 -5 -3 8 5 3 0 1 -2 5 1 3 1 0 0 0 0 0 0 -1 0 0 3 3 9 0 3 -2 0 -1 -1 -1 5 0 3 2 0 0 3 -2 2 7 -2 6 -2 9 1 2 -1 1 -5 2 -3 1 0 0 -3 -3 -4 -2 -1 1 -2 3 0 4 -3 -1 0 5 2 9 0 3 -3 -2 -5 -1 -1 3 -2 -2 -2 -4 0 -2 0 0 0 -3 3 -3 -2 -1 -1 -1 -1 1 1 -4 3 -2 1 -6 -3 -3 -1 0 1 0 0 -1 0 1 0 0 1 -1 0 1 0 -2 -4 -4 -4 -1 0 0 2 -5 -2 -2 0 0 0 -1 0 0 0 -1 -1 -3 0 -4 1 0 -1 0 -4 3 -1 6 -6 1 -1 -3 -1 1 0 -1 -1 1 -4 4 -7 -1 -4 -1 4 2 4 3 0 0 1 0 1 0 1 0 1 1 1 -1 -3 3 -3 3 1 1 -1 0 0 1 1 3 -2 2 0 6 2 3 1 0 0 0 3 3 4 4 1 1 0 0 3 2 2 1 0 1 2 1 -3 0 1 2 1 0 0 0 1 1 1 -1 1 4 -1 7 -6 0 -7 1 -2 3 1 2 4 1 0 0 0 0 -1 1 1 1 -1 1 -2 4 -4 2 0 -1 -2 1 1 3 0 0 -2 1 -3 -1 -1 1 -1 1 0 0 -3 2 -1 5 -3 -1 0 0 0 0 0 -1 0 0 1 1 -1 -2 -3 -3 -2 -3 1 0 -1 -3 -6 -3 -3 -3 -1 1 -1 1 0 -1 -1 1 -3 -1 -3 0 0 1 1 0 -2 0 -2 -1 -1 1 -2 -1 0 1 -1 -1 0 0 0 0 -2 -3 0 -4 0 0 1 -1 1 -1 0 0 2 -2 1 -4 2 2 2 -4 1 -2 -1 -1 1 -1 3 -3 6 -3 2 -6 2 -4 3 -1 2 5 0 4 0 0 1 1 4 0 2 -5 2 -7 -3 -6 -3 1 -3 2 -4 0 -3 -4 -4 3 -2 4 -3 5 -6 1 -4 -2 0 0 0 0 0 -1 -3 4 -3 4 -2 0 1 1 -4 2 -3 4 -1 0 -1 0 -2 2 -8 0 -4 -1 4 2 4 3 -1 1 1 0 0 0 -2 4 3 3 -1 2 0 -1 -1 0 -3 4 -1 7 0 6 -5 2 -2 4 -2 -1 -6 0 -1 4 -4 -2 -3 -2 -1 1 -2 0 -1 -1 -1 1 -2 -4 0 -4 -1 0 z M 61 823 l 3 -2 2 -2 -4 -2 -2 -3 -2 1 0 -2 -1 0 0 0 -1 -3 -2 -3 0 0 -1 0 -1 2 -3 0 -1 -4 1 2 1 0 1 -3 -1 -3 2 0 -1 -2 -2 -1 -4 4 -3 0 1 4 2 5 3 6 5 3 4 2 z M 49 798 l 1 0 2 0 3 4 3 -2 2 -1 0 4 -3 4 0 0 4 3 4 2 0 0 0 0 0 0 4 1 3 1 0 0 0 1 0 0 0 0 1 0 0 -2 -4 -4 -3 -4 4 3 7 2 5 3 5 1 2 1 1 -1 -8 -2 -4 -4 1 -2 1 -2 -1 0 1 0 -3 1 -6 -2 2 -1 -3 -1 -2 -3 -4 -2 2 -3 -1 -1 0 0 0 0 0 0 0 0 -1 0 -2 1 -2 -2 -1 1 -2 0 0 0 0 0 0 0 0 -1 0 0 0 0 -2 0 -4 2 -1 2 0 1 0 0 0 0 z M 122 727 l 4 -1 1 -1 1 0 1 -1 6 -2 7 0 7 -1 3 -4 4 -4 1 -7 -1 -4 -6 -3 -3 -4 -1 -1 1 -1 -2 -3 -4 -3 -4 0 -1 1 0 0 -1 0 0 0 0 0 -1 0 -2 0 -4 2 -7 3 -6 -3 -2 -3 -4 1 0 0 0 0 -1 4 -4 4 -2 -1 -1 0 -2 4 -2 6 -3 3 1 1 4 7 7 0 4 1 4 5 0 4 z M 95 876 l -1 0 -1 -7 0 -5 6 -2 6 2 3 6 1 4 0 0 0 0 2 4 2 6 -4 -1 1 0 -3 0 -7 -1 z M 191 843 l 1 0 0 1 0 0 1 3 -2 6 -2 3 -10 1 -7 -4 0 -6 3 -3 0 0 0 0 0 1 4 2 5 -3 0 0 0 0 1 0 0 0 1 0 2 0 1 0 1 0 z M 27 823 l 5 2 4 3 -1 1 0 0 0 0 0 0 4 2 3 2 0 0 2 2 3 6 1 4 -1 -1 -2 3 0 6 -4 5 -2 2 -1 -2 -2 2 -1 -1 0 0 0 1 0 1 -3 1 -5 2 1 1 -3 1 -3 1 -5 1 -7 1 -5 0 1 -1 -1 0 1 -1 1 -2 -5 -2 -2 -8 3 -4 1 1 1 0 0 0 -1 -3 5 -4 4 -1 0 -1 4 -3 4 -3 0 -1 -1 0 2 -3 z M 281 794 l 2 1 5 3 0 2 -1 0 -1 -1 -1 1 0 -1 0 3 2 5 1 0 1 0 0 4 0 7 1 5 -6 0 -3 -1 -1 0 0 -1 0 0 0 0 -3 -3 0 -7 4 -3 1 -5 -1 -6 -1 -1 0 0 0 0 0 0 0 0 0 -1 z " />
+        <path id="gyeongbukPath" class="OUTLINE" d =" M 560 528 l 7 2 5 -4 3 -4 3 -4 1 -1 0 0 3 -4 3 2 2 6 -1 8 -2 3 -1 0 0 0 -1 4 0 4 0 0 -1 0 0 -1 0 1 0 0 -2 2 -2 3 0 2 1 0 0 0 1 4 0 4 -1 -1 -1 1 0 0 1 4 -1 3 0 0 0 0 0 0 0 1 -1 3 0 3 0 0 0 1 -1 -1 -1 4 -1 8 -2 7 -1 6 -2 4 -2 4 -7 -3 -1 0 -7 -2 -4 2 -3 2 -6 1 -4 -7 -3 -3 -4 -3 -5 0 -9 1 -4 1 -4 2 -2 4 0 1 -1 1 0 2 2 3 -3 0 -4 3 -1 -1 -1 0 -3 4 -7 0 -5 -4 -3 0 -3 1 -4 3 -4 5 -5 1 -6 3 -8 0 -7 -2 -8 -1 -7 2 -6 -3 -3 -3 -3 -3 -1 -7 0 -5 1 -6 5 -3 6 0 3 5 3 -1 4 -2 4 -2 0 -8 2 -7 3 -6 1 -2 0 -4 2 1 4 -4 -1 -7 -2 -9 0 -4 -3 -7 -3 -1 -9 0 -5 1 -3 3 -7 4 -2 2 -1 -1 -2 -2 0 7 -3 7 -2 4 -1 0 -3 -3 -2 -7 -5 1 -3 3 -3 4 -2 5 0 5 6 0 8 4 0 5 -8 1 -3 2 -3 5 1 5 5 4 0 5 -6 0 -5 2 1 3 4 4 0 8 -5 -3 -3 -3 -7 -1 -8 1 -3 2 -2 0 -3 -2 -5 -3 2 -3 0 0 1 0 2 -4 -1 -7 -2 -4 -3 -3 -5 -4 -2 -4 -1 -4 -1 0 -1 0 -5 -2 -8 0 -7 -2 -5 -3 -1 0 -3 1 -1 -4 -4 -3 -4 -5 4 -7 -3 -7 -2 -4 0 0 0 -1 -2 -4 4 -2 4 -3 5 -2 3 -6 1 -3 0 -2 0 -1 3 -4 1 -6 0 -8 7 0 4 1 -1 -2 -2 -6 -2 -5 -6 -1 -3 3 -2 0 -1 -1 -1 0 -2 -2 -4 -3 -2 -3 -2 3 -6 0 -1 -6 3 -5 3 -4 0 -3 -1 0 1 -2 -3 -3 1 -3 2 -3 -2 -2 0 -2 1 -4 0 -1 0 0 0 -1 0 0 0 0 0 0 0 -1 0 -2 3 -3 0 -5 -4 -3 -2 -5 -7 -3 -1 -5 6 -2 1 -1 0 0 0 -4 4 -4 0 1 2 4 4 5 2 1 -1 -1 1 -2 1 -4 -1 -5 -4 -3 -4 -1 0 -1 0 0 1 -1 3 -1 6 -2 3 -6 2 1 3 2 4 -2 1 0 3 3 5 0 -1 -2 -3 -4 1 -8 1 -5 3 -1 3 3 1 -2 4 -4 3 -2 1 1 5 2 6 0 2 -6 3 -4 0 0 4 2 4 4 4 3 7 3 7 -1 5 -1 2 -6 -2 -8 3 -7 2 -5 4 -4 4 -2 4 -4 4 -3 3 -5 5 -3 0 -1 3 1 2 -2 4 -1 5 3 4 1 6 1 1 -7 3 -4 2 0 4 2 6 5 7 -1 4 -6 4 -1 3 2 4 0 5 0 1 1 1 -1 3 2 3 0 3 -5 7 1 3 2 5 4 6 3 5 0 -1 0 0 -1 0 -3 0 -3 3 -4 3 -4 5 -2 5 -4 1 -1 1 1 1 -1 1 1 0 0 0 0 0 0 1 0 0 -1 1 2 1 4 2 5 6 7 -1 3 0 1 0 1 -1 2 1 3 0 4 0 1 0 1 -1 1 1 1 0 0 0 1 1 5 0 6 1 5 -1 -1 0 4 4 7 2 3 -1 0 1 1 1 4 3 7 0 9 0 6 -2 5 -1 -2 -1 1 -3 5 -2 6 0 7 4 8 1 5 0 2 0 0 1 2 -1 2 0 1 0 0 0 0 0 0 -1 3 0 7 -2 8 -3 6 -2 3 -1 6 -1 7 0 7 1 8 -1 4 0 -1 1 4 2 3 1 5 1 5 6 3 0 0 0 3 -4 4 -4 3 -1 0 -2 4 6 2 z M 797 205 l 2 1 1 0 -1 3 0 6 1 2 -3 2 -3 3 -6 0 -4 -2 -3 -5 1 -5 6 -2 4 -2 0 0 2 0 z " />
+        <path id="gyeongnamPath" class="OUTLINE" d =" M 307 751 l 4 2 0 5 -1 4 0 0 -1 0 -1 4 1 4 1 0 -1 1 3 3 3 4 3 0 -1 -1 0 0 4 -2 7 -1 4 1 0 0 1 1 0 5 0 7 -1 4 -1 4 1 2 0 0 0 0 0 0 1 0 -1 1 0 0 0 0 -1 1 -2 -1 -1 1 -2 -3 -4 1 -6 -3 -2 -8 -6 2 -2 6 -6 -1 -2 -6 1 -4 -1 1 -1 -4 -2 -3 -2 -4 0 -7 2 -3 0 -1 0 0 0 -2 0 0 0 -1 0 -1 3 -1 2 -5 z M 441 731 l 3 1 1 2 -2 3 0 1 0 0 0 1 -1 0 0 4 3 3 1 5 0 4 0 0 -1 2 -2 3 -1 3 2 0 -1 1 2 -1 3 -2 3 -1 -1 1 -2 5 -1 4 -2 -1 -1 1 -1 1 3 2 0 7 -2 -3 -1 0 0 0 0 0 -1 1 -3 -1 -2 3 -3 4 -1 3 4 4 3 0 -1 1 -1 1 0 -1 -1 0 -1 0 -1 0 -4 2 -6 1 -1 -3 0 0 -1 0 -1 0 2 -5 -1 -3 -2 1 -2 0 -1 -3 5 -3 0 -6 0 -4 0 1 -1 -2 -2 1 0 1 0 0 -3 2 -4 2 -1 3 0 0 -1 0 -2 -4 -3 -3 -1 -4 0 -4 1 -1 0 0 3 -3 4 -4 1 0 0 0 0 0 3 3 4 1 0 -1 4 1 4 0 -1 -2 1 -1 -1 0 0 0 0 0 -3 -4 2 -5 5 -1 3 -5 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 -1 1 0 1 1 0 -4 z M 429 693 l -4 1 -3 2 -2 4 1 3 0 0 0 1 2 3 0 3 0 0 0 1 -1 -1 -1 0 -1 1 4 2 3 6 2 2 -2 1 3 2 -2 1 0 0 0 0 -3 1 -4 1 1 -2 1 -1 -4 -1 3 -3 -4 -1 -3 -4 -3 1 -1 2 0 0 -1 0 0 0 -1 0 -1 -1 -2 -1 -1 2 0 0 -1 0 -3 -1 0 5 -3 2 -3 2 -7 4 0 4 2 -3 5 -2 4 -2 0 -1 0 -1 1 -1 1 1 1 0 0 0 1 -1 2 1 0 0 -1 4 1 4 0 0 0 0 1 -1 0 1 0 0 0 1 2 1 -4 3 -2 2 -1 0 0 0 -1 0 0 0 0 0 0 0 0 0 -4 -1 -1 2 4 2 -2 3 -1 5 -1 7 1 6 1 -2 0 0 1 0 1 -1 0 0 0 0 -1 -1 1 0 0 0 0 -2 -1 -1 4 2 1 5 -1 -2 -1 4 -2 4 -4 2 -6 0 0 -4 5 -1 -5 -3 -1 -3 -1 2 0 -1 -1 2 -2 -1 -1 -1 -2 1 -2 -1 -1 1 -1 -1 -1 0 1 0 -1 -3 4 -1 4 -1 0 -1 -3 -5 -1 -4 -1 1 0 -1 -1 0 0 0 -1 2 -2 3 0 3 0 0 0 0 0 0 0 0 0 0 -4 2 -2 -1 0 0 0 -1 -1 -1 1 -1 0 -1 0 0 0 0 0 0 0 -1 0 0 0 0 0 0 -4 0 -6 0 -2 7 -6 1 -4 2 0 1 -3 -4 -3 -2 3 -1 -2 0 -2 0 0 -1 -1 0 1 0 -1 1 0 0 -4 -1 -5 -4 -1 -3 0 1 2 -2 1 -2 -1 -2 0 -4 1 -2 0 0 0 0 -2 -2 0 -5 1 -4 2 -3 -3 2 -2 5 -1 4 0 0 0 0 0 0 0 0 -2 0 0 0 1 -3 -2 0 1 0 -3 1 2 2 2 4 0 3 -1 0 0 1 -1 1 1 0 0 0 0 -1 -1 0 -1 -1 -2 2 -3 -2 0 0 -1 0 0 0 0 1 0 0 -3 1 -1 -2 0 0 0 -2 -4 -3 1 3 -1 2 1 0 0 0 -1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 1 -2 1 -4 5 -5 0 -2 -2 0 0 0 0 -1 1 -5 2 -4 1 0 0 -1 -1 -2 -5 3 -6 0 -3 -1 -2 -3 -5 -4 -3 -3 -4 -4 -4 0 -4 -4 -6 -5 -3 -4 -6 0 -8 -1 -4 -2 -3 -3 -8 4 -4 2 -3 -1 -4 0 0 0 0 0 -1 2 -3 3 -5 3 -3 1 -5 -4 -3 0 -5 -2 -8 -6 -6 2 -8 1 -3 2 -4 1 -8 2 -7 3 -3 0 -5 2 -8 5 -3 3 -4 3 -6 5 -2 6 -2 3 -2 4 -3 3 -5 3 -2 4 5 4 3 1 4 3 -1 1 0 5 3 7 2 8 0 5 2 1 0 1 0 1 4 2 4 5 4 3 3 2 4 1 7 -2 4 -1 0 0 0 -2 3 5 3 3 2 2 0 3 -2 8 -1 7 1 3 3 5 3 7 -1 7 -3 5 0 2 -3 3 -7 0 5 1 7 3 3 3 3 6 3 7 -2 8 1 7 2 8 0 6 -3 5 -1 4 -5 4 -3 3 -1 3 0 5 4 7 0 0 8 -5 5 4 4 3 2 2 0 0 0 1 0 3 -1 1 3 5 3 4 3 2 3 4 5 6 2 4 1 1 7 -2 3 0 0 0 3 -3 2 -7 0 -3 6 -1 5 -4 1 -6 3 -1 3 -3 -1 -2 0 -1 4 -4 6 -7 1 -6 2 -5 1 -1 6 0 5 -9 0 -4 1 2 2 5 4 1 3 -2 2 -3 2 -4 1 2 -2 0 -1 -4 -1 -2 6 -3 -2 -1 -3 -3 1 -2 -1 -2 0 -1 1 0 -3 -2 -6 -2 3 -1 1 0 -1 -1 -1 0 -1 -1 1 -3 -3 -3 2 1 0 -1 0 1 1 -1 0 -2 -5 -2 -6 4 -6 z " />
+        <path id="jejuPath" class="OUTLINE" d =" M 115 1034 l 5 2 3 2 5 3 6 2 3 5 -1 4 0 0 1 0 0 0 1 1 2 1 -2 1 3 0 -1 7 -2 1 -3 7 -4 4 -3 5 -3 5 -5 4 -5 0 -3 1 0 0 0 0 0 0 -1 1 -2 1 0 1 -3 1 -8 2 -4 0 0 0 -2 0 -3 2 -6 3 -7 0 -8 1 -7 1 -7 -1 -8 0 -7 0 -6 1 -3 5 -6 -1 -3 -4 -4 -3 -5 -2 -2 -4 -2 -8 2 -7 3 -4 1 0 1 0 3 -3 4 -3 3 -5 3 -4 4 -2 6 -4 4 -2 5 -1 6 -1 7 -3 4 -2 4 -1 5 -1 -1 1 4 -1 7 -1 6 -2 3 -3 1 1 0 0 1 0 0 1 0 0 1 0 2 -1 2 0 1 0 0 0 1 0 6 -1 z " />
+      </g><g filter="url(#dropshadow)">
+
+
+      <text id="LCD11" class="TEXT" x="156" y="214">서울특별시</text>
+
+      <text id="LCD26" class="TEXT" x="503" y="695">부산광역시</text>
+
+      <text id="LCD27" class="TEXT" x="418" y="567">대구광역시</text>
+
+      <text id="LCD28" class="TEXT" x="67" y="177">인천광역시</text>
+
+      <text id="LCD29" class="TEXT" x="127" y="707">광주광역시</text>
+
+      <text id="LCD30" class="TEXT" x="221" y="463">대전광역시</text>
+
+      <text id="LCD31" class="TEXT" x="531" y="622">울산광역시</text>
+
+      <text id="LCD36" class="TEXT" x="199" y="418">세종특별자치시</text>
+
+      <text id="LCD41" class="TEXT" x="216" y="245">경기도</text>
+
+      <text id="LCD42" class="TEXT" x="370" y="179">강원도</text>
+
+      <text id="LCD43" class="TEXT" x="294" y="381">충청북도</text>
+
+      <text id="LCD44" class="TEXT" x="105" y="449">충청남도</text>
+
+      <text id="LCD45" class="TEXT" x="179" y="592">전라북도</text>
+
+      <text id="LCD46" class="TEXT" x="138" y="764">전라남도</text>
+
+      <text id="LCD47" class="TEXT" x="447" y="460">경상북도</text>
+
+      <text id="LCD48" class="TEXT" x="367" y="672">경상남도</text>
+
+      <text id="LCD50" class="TEXT" x="76" y="1070">제주특별자치도</text>
+
+    </g>
+    </svg>
+
+  </div>
+
+  <div class="header">
+    <div class="titleName">
+      <h2>현재 <span>전국 미세먼지</span>수치는?</h2> </div>
+  </div>
+  <div class="footer"></div>
+  <!--    <div class="description">-->
+  <!--            <div>-->
+  <!--                <table class = "pm10">-->
+  <!--                    <thead>-->
+  <!--                    <tr>-->
+  <!--                        <th>지역</th>-->
+  <!--                        <th>미세먼지 등급</th>-->
+  <!--                        <th>초미세먼지 등급</th>-->
+  <!--                    </tr>-->
+  <!--                    </thead>-->
+  <!--                    <tbody>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">서울특별시</td>-->
+  <!--                        <td class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}"></td>-->
+  <!--                        <td class="seoulStatus25" th:text="${pm25List.get(0).getSeoul()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">부산광역시</td>-->
+  <!--                        <td class="busanStatus" th:text="${pm10List.get(0).getBusan()}"></td>-->
+  <!--                        <td class="busanStatus25" th:text="${pm25List.get(0).getBusan()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">대구광역시</td>-->
+  <!--                        <td class="daeguStatus" th:text="${pm10List.get(0).getDaegu()}"></td>-->
+  <!--                        <td class="daeguStatus25" th:text="${pm25List.get(0).getDaegu()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">인천광역시</td>-->
+  <!--                        <td class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}"></td>-->
+  <!--                        <td class="incheonStatus25" th:text="${pm25List.get(0).getIncheon()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">광주광역시</td>-->
+  <!--                        <td class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}"></td>-->
+  <!--                        <td class="gwangjuStatus25" th:text="${pm25List.get(0).getGwangju()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">대전광역시</td>-->
+  <!--                        <td class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}"></td>-->
+  <!--                        <td class="daejeonStatus25" th:text="${pm25List.get(0).getDaejeon()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">울산광역시</td>-->
+  <!--                        <td class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}"></td>-->
+  <!--                        <td class="ulsanStatus25" th:text="${pm25List.get(0).getUlsan()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">세종특별자치시</td>-->
+  <!--                        <td class="sejongStatus" th:text="${pm10List.get(0).getSejong()}"></td>-->
+  <!--                        <td class="sejongStatus25" th:text="${pm25List.get(0).getSejong()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">경기남부</td>-->
+  <!--                        <td class="gyeonggiSouthStatus" th:text="${pm10List.get(0).getGyeonggiSouth()}"></td>-->
+  <!--                        <td class="gyeonggiSouthStatus25" th:text="${pm25List.get(0).getGyeonggiSouth()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">경기북부</td>-->
+  <!--                        <td class="gyeonggiNorthStatus" th:text="${pm10List.get(0).getGyeonggiNorth()}"></td>-->
+  <!--                        <td class="gyeonggiNorthStatus25" th:text="${pm25List.get(0).getGyeonggiNorth()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">영동</td>-->
+  <!--                        <td class="yeongdongStatus" th:text="${pm10List.get(0).getYeongdong()}"></td>-->
+  <!--                        <td class="yeongdongStatus25" th:text="${pm25List.get(0).getYeongdong()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">영서</td>-->
+  <!--                        <td class="yeongseoStatus" th:text="${pm10List.get(0).getYeongseo()}"></td>-->
+  <!--                        <td class="yeongseoStatus25" th:text="${pm25List.get(0).getYeongseo()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">충청북도</td>-->
+  <!--                        <td class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}"></td>-->
+  <!--                        <td class="chungbukStatus25" th:text="${pm25List.get(0).getChungbuk()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">충청남도</td>-->
+  <!--                        <td class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}"></td>-->
+  <!--                        <td class="chungnamStatus25" th:text="${pm25List.get(0).getChungnam()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">전라북도</td>-->
+  <!--                        <td class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}"></td>-->
+  <!--                        <td class="jenbukStatus25" th:text="${pm25List.get(0).getJenbuk()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">전라남도</td>-->
+  <!--                        <td class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}"></td>-->
+  <!--                        <td class="jeonnamStatus25" th:text="${pm25List.get(0).getJeonnam()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">경상북도</td>-->
+  <!--                        <td class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}"></td>-->
+  <!--                        <td class="gyeongbukStatus25" th:text="${pm25List.get(0).getGyeongbuk()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">경상남도</td>-->
+  <!--                        <td class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}"></td>-->
+  <!--                        <td class="gyeongnamStatus25" th:text="${pm25List.get(0).getGyeongnam()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    <tr>-->
+  <!--                        <td class="areaName">제주특별자치도</td>-->
+  <!--                        <td class="jejuStatus" th:text="${pm10List.get(0).getJeju()}"></td>-->
+  <!--                        <td class="jejuStatus25" th:text="${pm25List.get(0).getJeju()}"></td>-->
+  <!--                    </tr>-->
+  <!--                    </tbody>-->
+  <!--                </table>-->
+  <!--            </div>-->
+  <!--         </div>-->
+  <div class="description">
+    <div>
+      <table class="pm10">
+        <thead>
+        <tr>
+          <th>지역</th>
+          <td class="areaName">서울</td>
+          <td class="areaName">부산</td>
+          <td class="areaName">대구</td>
+          <td class="areaName">인천</td>
+          <td class="areaName">광주</td>
+          <td class="areaName">대전</td>
+          <td class="areaName">울산</td>
+          <td class="areaName">세종시</td>
+          <td class="areaName">경기</td>
+          <td class="areaName">강원</td>
+          <td class="areaName">충북</td>
+          <td class="areaName">충남</td>
+          <td class="areaName">전북</td>
+          <td class="areaName">전남</td>
+          <td class="areaName">경북</td>
+          <td class="areaName">경남</td>
+          <td class="areaName">제주</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th>미세먼지 등급</th>
+          <td class="seoulStatus" th:text="${pm10List.get(0).getSeoul()}"></td>
+          <td class="busanStatus" th:text="${pm10List.get(0).getBusan()}"></td>
+          <td class="daeguStatus" th:text="${pm10List.get(0).getDaegu()}"></td>
+          <td class="incheonStatus" th:text="${pm10List.get(0).getIncheon()}"></td>
+          <td class="gwangjuStatus" th:text="${pm10List.get(0).getGwangju()}"></td>
+          <td class="daejeonStatus" th:text="${pm10List.get(0).getDaejeon()}"></td>
+          <td class="ulsanStatus" th:text="${pm10List.get(0).getUlsan()}"></td>
+          <td class="sejongStatus" th:text="${pm10List.get(0).getSejong()}"></td>
+          <td class="gyeonggiStatus" th:text="${pm10List.get(0).getGyeonggi()}"></td>
+          <td class="gangwonStatus" th:text="${pm10List.get(0).getGangwon()}"></td>
+
+
+
+
+          <td class="chungbukStatus" th:text="${pm10List.get(0).getChungbuk()}"></td>
+          <td class="chungnamStatus" th:text="${pm10List.get(0).getChungnam()}"></td>
+          <td class="jenbukStatus" th:text="${pm10List.get(0).getJenbuk()}"></td>
+          <td class="jeonnamStatus" th:text="${pm10List.get(0).getJeonnam()}"></td>
+          <td class="gyeongbukStatus" th:text="${pm10List.get(0).getGyeongbuk()}"></td>
+          <td class="gyeongnamStatus" th:text="${pm10List.get(0).getGyeongnam()}"></td>
+          <td class="jejuStatus" th:text="${pm10List.get(0).getJeju()}"></td>
+
+
+
+
+          <!-- 나머지 지역들의 열을 추가 -->
+        </tr>
+        <tr>
+          <th>초미세먼지 등급</th>
+          <td class="seoulStatus25" th:text="${pm25List.get(0).getSeoul()}"></td>
+          <td class="busanStatus25" th:text="${pm25List.get(0).getBusan()}"></td>
+          <td class="daeguStatus25" th:text="${pm25List.get(0).getDaegu()}"></td>
+          <td class="incheonStatus25" th:text="${pm25List.get(0).getIncheon()}"></td>
+          <td class="gwangjuStatus25" th:text="${pm25List.get(0).getGwangju()}"></td>
+          <td class="daejeonStatus25" th:text="${pm25List.get(0).getDaejeon()}"></td>
+          <td class="ulsanStatus25" th:text="${pm25List.get(0).getUlsan()}"></td>
+          <td class="sejongStatus25" th:text="${pm25List.get(0).getSejong()}"></td>
+          <td class="gyeonggiSouthStatus25" th:text="${pm25List.get(0).getGyeonggiSouth()}"></td>
+          <td class="gyeonggiNorthStatus25" th:text="${pm25List.get(0).getGyeonggiNorth()}"></td>
+          <td class="yeongdongStatus25" th:text="${pm25List.get(0).getYeongdong()}"></td>
+          <td class="yeongseoStatus25" th:text="${pm25List.get(0).getYeongseo()}"></td>
+          <td class="chungbukStatus25" th:text="${pm25List.get(0).getChungbuk()}"></td>
+          <td class="chungnamStatus25" th:text="${pm25List.get(0).getChungnam()}"></td>
+          <td class="jenbukStatus25" th:text="${pm25List.get(0).getJenbuk()}"></td>
+          <td class="jeonnamStatus25" th:text="${pm25List.get(0).getJeonnam()}"></td>
+          <td class="gyeongbukStatus25" th:text="${pm25List.get(0).getGyeongbuk()}"></td>
+          <td class="gyeongnamStatus25" th:text="${pm25List.get(0).getGyeongnam()}"></td>
+          <td class="jejuStatus25" th:text="${pm25List.get(0).getJeju()}"></td>
+
+          <!-- 나머지 지역들의 열을 추가 -->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+    <table class ="overall">
+      <thead>
+      <tr>
+        <th id = "time">통보시간</th>
+        <th id = "code">통보코드</th>
+        <th id = "">예보개황</th>
+        <th>발생원인</th>
+        <th>예보등급</th>
+        <th>예측일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="each : ${overallList}">
+        <td th:text="${each.getDataTime()}"></td>
+        <td th:text="${each.getInformCode()}"></td>
+        <td th:text="${each.getInformOverall()}"></td>
+        <td th:text="${each.getInformCause()}"></td>
+        <td th:text="${each.getSeoul()}"></td>
+        <td th:text="${each.getInformData()}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+  <!--    <div class="inform">-->
+  <!--    <table class ="overall">-->
+  <!--        <thead>-->
+  <!--        <tr>-->
+  <!--            <th id = "time">통보시간</th>-->
+  <!--            <th id = "code">통보코드</th>-->
+  <!--            <th id = "">예보개황</th>-->
+  <!--            <th>발생원인</th>-->
+  <!--            <th>예보등급</th>-->
+  <!--            <th>예측일</th>-->
+  <!--        </tr>-->
+  <!--        </thead>-->
+  <!--        <tbody>-->
+  <!--        <tr th:each="each : ${overallList}">-->
+  <!--            <td th:text="${each.getDataTime()}"></td>-->
+  <!--            <td th:text="${each.getInformCode()}"></td>-->
+  <!--            <td th:text="${each.getInformOverall()}"></td>-->
+  <!--            <td th:text="${each.getInformCause()}"></td>-->
+  <!--            <td th:text="${each.getSeoul()}"></td>-->
+  <!--            <td th:text="${each.getInformData()}"></td>-->
+  <!--        </tr>-->
+  <!--        </tbody>-->
+  <!--    </table>-->
+  <!--    </div>-->
+
+  <script>
+    let seoul = document.querySelector('.seoulStatus');
+    let busan = document.querySelector('.busanStatus');
+    let deagu = document.querySelector('.daeguStatus');
+    let incheon = document.querySelector('.incheonStatus');
+    let gwangju = document.querySelector('.gwangjuStatus');
+    let daejeon = document.querySelector('.daejeonStatus');
+    let ulsan = document.querySelector('.ulsanStatus');
+    let sejong = document.querySelector('.sejongStatus');
+    let gyeonggi = document.querySelector('.gyeonggiStatus');
+    let b;
+    let chungbuk = document.querySelector('.chungbukStatus');
+    let chungnam = document.querySelector('.chungnamStatus');
+    let jenbuk = document.querySelector('.jenbukStatus');
+    let jeonnam = document.querySelector('.jeonnamStatus');
+    let gyeongbuk = document.querySelector('.gyeongbukStatus');
+    let gyeongnam = document.querySelector('.gyeongnamStatus');
+    let jeju = document.querySelector('.jejuStatus');
+
+
+
+    let pathElement = document.querySelector('#seoulPath');
+    let pathElement2 = document.querySelector('#busanPath');
+    let pathElement3 = document.querySelector('#daeguPath');
+    let pathElement4 = document.querySelector('#incheonPath');
+    let pathElement5 = document.querySelector('#gwangjuPath');
+    let pathElement6 = document.querySelector('#daejeonPath')
+    let pathElement7 = document.querySelector('#ulsanPath');
+    let pathElement8 = document.querySelector('#sejongPath');
+    let pathElement9 = document.querySelector('#gyeonggiPath')
+    // let 10;
+    let pathElement11 = document.querySelector('#chungbukPath');
+    let pathElement12 = document.querySelector('#chungnamPath');
+    let pathElement13 = document.querySelector('#jenbukPath');
+    let pathElement14 = document.querySelector('#jeonnamPath');
+    let pathElement15= document.querySelector('#gyeongbukPath');
+    let pathElement16= document.querySelector('#gyeongnamPath');
+    let pathElement17 = document.querySelector('#jejuPath');
+
+
+    const setColor = (element, status) => {
+      if (status === "좋음") {
+        element.style.fill = "#00a9fe";
+      } else if (status === "보통") {
+        element.style.fill = "#51ca66";
+      } else if (status === "나쁨") {
+        element.style.fill = "#fde801";
+      } else {
+        element.style.fill = "#fd0042";
+      }
+    };
+
+
+
+
+
+    // 글자에 따라 표의 바탕색도 바뀌게 하기!
+
+
+
+    setColor(pathElement, seoul.innerText);
+    setColor(pathElement2, busan.innerText);
+    setColor(pathElement3, deagu.innerText);
+    setColor(pathElement4, incheon.innerText);
+    setColor(pathElement5, gwangju.innerText);
+    setColor(pathElement6, daejeon.innerText);
+    setColor(pathElement7, ulsan.innerText);
+    setColor(pathElement8, sejong.innerText);
+    setColor(pathElement9, gyeonggi.innerText);
+    // setColor(pathElement10, daejeon.innerText);
+    setColor(pathElement11, chungbuk.innerText);
+    setColor(pathElement12, chungnam.innerText);
+    setColor(pathElement13, jenbuk.innerText);
+    setColor(pathElement14, jeonnam.innerText);
+    setColor(pathElement15, gyeongbuk.innerText);
+    setColor(pathElement16, gyeongnam.innerText);
+    setColor(pathElement17, jeju.innerText);
+
+
+
+    function addStatusClass(element, status) {
+      if (status === "좋음") {
+        element.classList.add("goodStatus");
+        // element.innerHTML += '<img src="/img/level1.svg" width="24px"  height="24px" alt="좋음">';
+      } else if (status === "보통") {
+        element.classList.add("normalStatus");
+      } else if (status === "나쁨") {
+        element.classList.add("badStatus");
+      } else {
+        element.classList.add("terribleStatus");
+      }
+    }
+
+    addStatusClass(seoul, seoul.innerText);
+    addStatusClass(busan, busan.innerText);
+    addStatusClass(deagu, deagu.innerText);
+    addStatusClass(incheon, incheon.innerText);
+    addStatusClass(gwangju, gwangju.innerText);
+    addStatusClass(daejeon, daejeon.innerText);
+    addStatusClass(ulsan, ulsan.innerText);
+    addStatusClass(sejong, sejong.innerText);
+
+    addStatusClass(gyeonggi, gyeonggi.innerText);
+    // addStatusClass(, .innerText);
+
+    addStatusClass(chungbuk, chungbuk.innerText);
+    addStatusClass(chungnam, chungnam.innerText);
+    addStatusClass(jenbuk, jenbuk.innerText);
+    addStatusClass(jeonnam, jeonnam.innerText);
+    addStatusClass(gyeongbuk, gyeongbuk.innerText);
+    addStatusClass(gyeongnam, gyeongnam.innerText);
+    addStatusClass(jeju, jeju.innerText);
+
+
+    let seoul25 = document.querySelector('.seoulStatus25');
+    let busan25= document.querySelector('.busanStatus25');
+    let deagu25 = document.querySelector('.daeguStatus25');
+    let incheon25 = document.querySelector('.incheonStatus25');
+    let gwangju25 = document.querySelector('.gwangjuStatus25');
+    let daejeon25 = document.querySelector('.daejeonStatus25');
+    let ulsan25 = document.querySelector('.ulsanStatus25');
+    let sejong25 = document.querySelector('.sejongStatus25');
+    let a25;
+    let b25;
+    let chungbuk25 = document.querySelector('.chungbukStatus25');
+    let chungnam25 = document.querySelector('.chungnamStatus25');
+    let jenbuk25 = document.querySelector('.jenbukStatus25');
+    let jeonnam25 = document.querySelector('.jeonnamStatus25');
+    let gyeongbuk25 = document.querySelector('.gyeongbukStatus25');
+    let gyeongnam25 = document.querySelector('.gyeongnamStatus25');
+    let jeju25 = document.querySelector('.jejuStatus25');
+
+    addStatusClass(seoul25, seoul25.innerText);
+    addStatusClass(busan25, busan25.innerText);
+    addStatusClass(deagu25, deagu25.innerText);
+    addStatusClass(incheon25, incheon25.innerText);
+    addStatusClass(gwangju25, gwangju25.innerText);
+    addStatusClass(daejeon25, daejeon25.innerText);
+    addStatusClass(ulsan25, ulsan25.innerText);
+    addStatusClass(sejong25, sejong25.innerText);
+
+    // addStatusClass(, .innerText);
+    // addStatusClass(, .innerText);
+
+    addStatusClass(chungbuk25, chungbuk25.innerText);
+    addStatusClass(chungnam25, chungnam25.innerText);
+    addStatusClass(jenbuk25, jenbuk25.innerText);
+    addStatusClass(jeonnam25, jeonnam25.innerText);
+    addStatusClass(gyeongbuk25, gyeongbuk25.innerText);
+    addStatusClass(gyeongnam25, gyeongnam25.innerText);
+    addStatusClass(jeju25, jeju25.innerText);
+
+
+
+
+
+
+  </script>
+</div>
+
+</body>
+
+
+
+
+
+
+</html>
