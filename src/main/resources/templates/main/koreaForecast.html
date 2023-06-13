@@ -25,7 +25,7 @@
 
   .footer { grid-area: footer; }
 
-  #map { grid-area: map; }
+    #map { grid-area: map; }
 
   .description { grid-area: description; }
 
@@ -116,13 +116,13 @@
 
   .overall {
     border-collapse: collapse;
-    width: 400px;
+    /*width: 400px;*/
 
     margin: 50px;
   }
 
   .overall thead th {
-    background-color: #ffcccc; /* 머그런 핑크색 */
+    background-color: darkslategray;
     font-weight: bold;
     color: #fff; /* 흰색 글자 */
   }
@@ -130,7 +130,7 @@
   .overall th, .overall td {
     border-bottom: 1px solid #ddd;
     text-align: center;
-    width: 50px;
+    /*width: 50px;*/
   }
 
   .overall tbody tr:nth-child(even) {
@@ -145,6 +145,33 @@
     font-size: 14px;
     color: #333; /* 어두운 회색 글자 */
   }
+
+
+  #kinds {
+    width: 150px;
+  }
+
+  #time {
+    width: 150px;
+    }
+
+  #code {
+    width: 70px;
+  }
+
+  #InformOverall {
+    width: 240px;
+  }
+
+  #cause {
+    width: 240px;
+  }
+
+  #expectedDay {
+    width: 120px;
+  }
+
+
 
 
   .titleName {
@@ -319,8 +346,6 @@
         <div class="button-group">
           <button onclick="setGradeValue('pm10')">미세먼지</button>
           <button onclick="setGradeValue('pm25')">초미세먼지</button>
-          <!--                    <button id = "pm10btn">미세먼지</button>-->
-          <!--                    <button id = "pm25btn">초미세먼지</button>-->
         </div>
 
         <tr>
@@ -388,28 +413,36 @@
         </tbody>
       </table>
     </div>
-    <table class ="overall">
-      <thead>
-      <tr>
-        <th id = "time">통보시간</th>
-        <th id = "code">통보코드</th>
-<!--        <th id = "">예보개황</th>-->
-<!--        <th>발생원인</th>-->
-        <th id = "grade">예보등급</th>
-        <th id = "expectedDay">예측일</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="each : ${overallList}">
-        <td th:text="${each.getDataTime()}"></td>
-        <td th:text="${each.getInformCode()}"></td>
-<!--        <td th:text="${each.getInformOverall()}"></td>-->
-<!--        <td th:text="${each.getInformCause()}"></td>-->
-        <td th:text="${each.getSeoul()}"></td>
-        <td th:text="${each.getInformData()}"></td>
-      </tr>
-      </tbody>
-    </table>
+
+    <div>
+      <table class ="overall">
+        <thead>
+        <tr>
+          <th id= "kinds">종류</th>
+          <th id = "time">통보시간</th>
+          <th id = "code">통보코드</th>
+          <th id = "InformOverall">예보개황</th>
+          <th id = "cause">발생원인</th>
+          <th id = "expectedDay">예측일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="each : ${overallList}">
+          <td>
+          <span th:if="${each.getInformCode() == 'PM10'}">미세먼지</span>
+          <span th:if="${each.getInformCode() == 'PM25'}">초미세먼지</span>
+          <span th:if="${each.getInformCode() == 'O3'}">오존</span>
+          </td>
+          <td th:text="${each.getDataTime()}"></td>
+          <td th:text="${each.getInformCode()}"></td>
+          <td th:text="${each.getInformOverall()}"></td>
+          <td th:text="${each.getInformCause()}"></td>
+          <td th:text="${each.getInformData()}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 
