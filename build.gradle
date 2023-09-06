@@ -31,6 +31,8 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-core'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1'
 
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
 
 
 }
